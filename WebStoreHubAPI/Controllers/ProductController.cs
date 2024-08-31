@@ -19,16 +19,58 @@ namespace WebStoreHubAPI.Controllers
             return View();
         }
 
-
-        [HttpPost("add")]
+        [HttpPost("addProduct")]
         public async Task<IActionResult> AddProduct(ProductModel model)
         {
             var result = await _productService.CreateProductAsync(model);
-            if (result == null)
-            {
-                return BadRequest("Product could not be created.");
-            }
             return Ok(result);
+        }
+
+        [HttpGet("getAllProducts")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            var products = await _productService.GetAllProductsAsync();
+            return Ok(products);
+        }
+
+        [HttpGet("byProductId/{productId}")]
+        public async Task<IActionResult> GetProductByProductId(int productId)
+        {
+            var product = await _productService.GetProductByProductIdAsync(productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
+        [HttpPut("update/{productId}")]
+        public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductModel updatedProduct)
+        {
+            if (productId != updatedProduct.ProductId)
+            {
+                return BadRequest("Product ID mismatch");
+            }
+
+            var product = await _productService.UpdateProductAsync(productId, updatedProduct);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
+        [HttpDelete("delete/{productId}")]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            var success = await _productService.DeleteProductAsync(productId);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return NoContent(); 
         }
     }
 }

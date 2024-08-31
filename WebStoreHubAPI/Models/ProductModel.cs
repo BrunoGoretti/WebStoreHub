@@ -1,7 +1,12 @@
-﻿namespace WebStoreHubAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebStoreHubAPI.Models
 {
     public class ProductModel
     {
+        [Key]
+        public int Id { get; set; }
+
         public int ProductId { get; set; }
 
         public string Name { get; set; }
