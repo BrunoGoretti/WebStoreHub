@@ -33,7 +33,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok(products);
         }
 
-        [HttpGet("byProductId/{productId}")]
+        [HttpGet("getProductById")]
         public async Task<IActionResult> GetProductByProductId(int productId)
         {
             var product = await _productService.GetProductByProductIdAsync(productId);
@@ -44,7 +44,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok(product);
         }
 
-        [HttpPut("update/{productId}")]
+        [HttpPut("updateProduct")]
         public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductModel updatedProduct)
         {
             if (productId != updatedProduct.ProductId)
@@ -61,7 +61,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok(product);
         }
 
-        [HttpDelete("delete/{productId}")]
+        [HttpDelete("deleteProduct")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var success = await _productService.DeleteProductAsync(productId);

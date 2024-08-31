@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*using System.ComponentModel.DataAnnotations;
 
 namespace WebStoreHubAPI.Models
 {
@@ -17,3 +17,4 @@ namespace WebStoreHubAPI.Models
         public string Status { get; set; }
     }
 }
+*/

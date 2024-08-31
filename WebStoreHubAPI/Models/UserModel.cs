@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*using System.ComponentModel.DataAnnotations;
 
 namespace WebStoreHubAPI.Models
 {
@@ -19,3 +19,4 @@ namespace WebStoreHubAPI.Models
         public DateTime CreatedAt { get; set; }
     }
 }
+*/

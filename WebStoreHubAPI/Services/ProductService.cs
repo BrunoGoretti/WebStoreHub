@@ -2,6 +2,7 @@
 using WebStoreHubAPI.Services.Interfaces;
 using WebStoreHubAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace WebStoreHubAPI.Services
 {
@@ -9,25 +10,30 @@ namespace WebStoreHubAPI.Services
     {
         private readonly AppDbContext _products;
 
+        public ProductService(AppDbContext context)
+        {
+            _products = context;
+        }
+
         public async Task<ProductModel> CreateProductAsync(ProductModel product)
         {
-            _products.Products.Add(product);
+            _products.DbProducts.Add(product);
             await _products.SaveChangesAsync();
             return product;
         }
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
-            return await _products.Products.ToListAsync();
+            return await _products.DbProducts.ToListAsync();
         }
 
         public async Task<ProductModel> GetProductByProductIdAsync(int productId)
         {
-            return await _products.Products
+            return await _products.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
         public async Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct)
         {
-            var existingProduct = await _products.Products
+            var existingProduct = await _products.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (existingProduct == null)
@@ -48,7 +54,7 @@ namespace WebStoreHubAPI.Services
 
         public async Task<bool> DeleteProductAsync(int productId)
         {
-            var product = await _products.Products
+            var product = await _products.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (product == null)
@@ -56,7 +62,7 @@ namespace WebStoreHubAPI.Services
                 return false;
             }
 
-            _products.Products.Remove(product);
+            _products.DbProducts.Remove(product);
             await _products.SaveChangesAsync();
             return true;
         }
