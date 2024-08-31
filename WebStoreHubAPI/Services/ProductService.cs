@@ -10,6 +10,7 @@ namespace WebStoreHubAPI.Services
         public void AddProduct(int productId, string name, string description, decimal price, int stock, string imageUrl)
         {
 
+
         }
     }
 }
