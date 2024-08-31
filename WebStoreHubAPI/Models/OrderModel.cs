@@ -1,6 +1,6 @@
 ﻿namespace WebStoreHubAPI.Models
 {
-    public class Order
+    public class OrderModel
     {
         public int OrderId { get; set; }
 

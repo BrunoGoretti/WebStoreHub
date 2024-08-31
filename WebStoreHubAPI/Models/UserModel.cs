@@ -1,6 +1,6 @@
 ﻿namespace WebStoreHubAPI.Models
 {
-    public class User
+    public class UserModel
     {
         public int UserId { get; set; }
 

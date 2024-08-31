@@ -10,9 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IProductService, ProductService>();
 /*builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddSingleton<IOrderService, OrderService>();
-builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddSingleton<IUserService, UserService>();*/
 
 var app = builder.Build();

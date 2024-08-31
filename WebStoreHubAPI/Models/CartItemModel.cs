@@ -1,6 +1,6 @@
 ﻿namespace WebStoreHubAPI.Models
 {
-    public class CartItem
+    public class CartItemModel
     {
         public int CartItemId { get; set; }
 
@@ -11,6 +11,6 @@
         public int Quantity { get; set; }
 
         // Navigation property to establish relationship with the Product entity
-        public Product Product { get; set; }
+        public ProductModel Product { get; set; }
     }
 }

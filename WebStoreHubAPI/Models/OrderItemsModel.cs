@@ -13,7 +13,7 @@
         public decimal Price { get; set; }
 
         // Navigation properties to establish relationships with Order and Product entities
-        public Order Order { get; set; }
-        public Product Product { get; set; }
+        public OrderModel Order { get; set; }
+        public ProductModel Product { get; set; }
     }
 }
