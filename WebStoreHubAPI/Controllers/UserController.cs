@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
@@ -19,10 +20,20 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("registration")]
-        public async Task<IActionResult> Registration(UserModel user)
+        public async Task<IActionResult> Registration(UserRegistrationDto userDto)
         {
-            var result = await _userService.CreateUserAsync(user);
+            var userModel = new UserModel
+            {
+                Username = userDto.Username,
+                PasswordHash = userDto.PasswordHash,
+                Email = userDto.Email,
+                FullName = userDto.FullName,
+            };
+
+            var result = await _userService.CreateUserAsync(userModel);
             return Ok(result);
         }
+
+
     }
 }
