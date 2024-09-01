@@ -1,11 +1,10 @@
-﻿/*using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebStoreHubAPI.Models
 {
     public class UserModel
     {
         [Key]
-        public int Id { get; set; }
         public int UserId { get; set; }
 
         public string Username { get; set; }
@@ -19,4 +18,3 @@ namespace WebStoreHubAPI.Models
         public DateTime CreatedAt { get; set; }
     }
 }
-*/
