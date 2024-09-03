@@ -1,4 +1,5 @@
-﻿using WebStoreHubAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebStoreHubAPI.Data;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
@@ -17,6 +18,19 @@ namespace WebStoreHubAPI.Services
             _userService.DbUsers.Add(user);
             await _userService.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<UserModel> LoginUserAsync(string email, string password)
+        {
+            var user = await _userService.DbUsers
+                .FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user != null && user.PasswordHash == password)
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }
