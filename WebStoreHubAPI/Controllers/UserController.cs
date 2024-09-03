@@ -41,11 +41,9 @@ namespace WebStoreHubAPI.Controllers
             var user = await _userService.LoginUserAsync(loginRequest.Email, loginRequest.PasswordHash);
             if (user != null)
             {
-                // If login is successful, you might return a token or user details
                 return Ok(user);
             }
 
-            // If login fails, return an unauthorized status
             return Unauthorized("Invalid username or password");
         }
     }
