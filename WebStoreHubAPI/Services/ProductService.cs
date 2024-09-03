@@ -31,6 +31,7 @@ namespace WebStoreHubAPI.Services
             return await _products.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
+
         public async Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct)
         {
             var existingProduct = await _products.DbProducts

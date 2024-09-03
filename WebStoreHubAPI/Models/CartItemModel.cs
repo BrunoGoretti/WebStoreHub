@@ -1,4 +1,4 @@
-﻿/*using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebStoreHubAPI.Models
 {
@@ -17,4 +17,3 @@ namespace WebStoreHubAPI.Models
         public ProductModel Product { get; set; }
     }
 }
-*/

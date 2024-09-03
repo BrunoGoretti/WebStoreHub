@@ -22,6 +22,30 @@ namespace WebStoreHubAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebStoreHubAPI.Models.CartItemModel", b =>
+                {
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("WebStoreHubAPI.Models.ProductModel", b =>
                 {
                     b.Property<int>("ProductId")
@@ -83,6 +107,17 @@ namespace WebStoreHubAPI.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("DbUsers");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.CartItemModel", b =>
+                {
+                    b.HasOne("WebStoreHubAPI.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }
