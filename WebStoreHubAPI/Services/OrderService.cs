@@ -1,6 +1,8 @@
-﻿namespace WebStoreHubAPI.Services
+﻿using WebStoreHubAPI.Services.Interfaces;
+
+namespace WebStoreHubAPI.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
     }
 }

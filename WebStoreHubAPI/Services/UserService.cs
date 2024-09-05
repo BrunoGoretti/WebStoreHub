@@ -7,22 +7,22 @@ namespace WebStoreHubAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly AppDbContext _userService;
+        private readonly AppDbContext _dbContext;
 
         public UserService(AppDbContext context)
         {
-            _userService = context;
+            _dbContext = context;
         }
         public async Task<UserModel> CreateUserAsync(UserModel user)
         {
-            _userService.DbUsers.Add(user);
-            await _userService.SaveChangesAsync();
+            _dbContext.DbUsers.Add(user);
+            await _dbContext.SaveChangesAsync();
             return user;
         }
 
         public async Task<UserModel> LoginUserAsync(string email, string password)
         {
-            var user = await _userService.DbUsers
+            var user = await _dbContext.DbUsers
                 .FirstOrDefaultAsync(u => u.Email == email);
 
             if (user != null && user.PasswordHash == password)
