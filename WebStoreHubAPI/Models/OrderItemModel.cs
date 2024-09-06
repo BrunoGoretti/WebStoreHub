@@ -2,7 +2,7 @@
 
 namespace WebStoreHubAPI.Models
 {
-    public class OrderItem
+    public class OrderItemModel
     {
         [Key]
         public int OrderItemId { get; set; }

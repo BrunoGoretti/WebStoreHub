@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
@@ -6,16 +6,24 @@ namespace WebStoreHubAPI.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ICartService cartService)
         {
             _orderService = orderService;
+            _cartService = cartService;
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateOrder(int userId, decimal totalAmount)
+        public async Task<IActionResult> CreateOrder(int userId)
         {
-            var order = await _orderService.CreateOrderAsync(userId, totalAmount);
+            var cartItems = await _cartService.GetCartItems(userId);
+            if (cartItems == null || !cartItems.Any())
+            {
+                return BadRequest("No items in the cart.");
+            }
+
+            var order = await _orderService.CreateOrderAsync(userId, cartItems);
             return Ok(order);
         }
 
@@ -25,9 +33,8 @@ namespace WebStoreHubAPI.Controllers
             var order = await _orderService.GetOrderByIdAsync(orderId);
             if (order == null)
             {
-                return NotFound();
+                return NotFound("Order not found.");
             }
-
             return Ok(order);
         }
 
@@ -38,29 +45,15 @@ namespace WebStoreHubAPI.Controllers
             return Ok(orders);
         }
 
-        [HttpPut("updateStatus")]
-        public async Task<IActionResult> UpdateOrderStatus(int orderId, string status)
+        [HttpPut("{orderId}/updateStatus")]
+        public async Task<IActionResult> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
         {
-            var result = await _orderService.UpdateOrderStatusAsync(orderId, status);
-            if (!result)
+            var success = await _orderService.UpdateOrderStatusAsync(orderId, newStatus);
+            if (!success)
             {
-                return NotFound();
+                return NotFound("Order not found.");
             }
-
-            return Ok("Order status updated");
-        }
-
-        [HttpDelete("delete/{orderId}")]
-        public async Task<IActionResult> DeleteOrder(int orderId)
-        {
-            var result = await _orderService.DeleteOrderAsync(orderId);
-            if (!result)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            return Ok("Order status updated.");
         }
     }
 }
-*/

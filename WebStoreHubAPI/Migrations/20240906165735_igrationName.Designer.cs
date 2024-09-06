@@ -12,7 +12,7 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240906130142_igrationName")]
+    [Migration("20240906165735_igrationName")]
     partial class igrationName
     {
         /// <inheritdoc />
@@ -47,6 +47,32 @@ namespace WebStoreHubAPI.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.OrderModel", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.ProductModel", b =>
