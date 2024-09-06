@@ -21,6 +21,7 @@ namespace WebStoreHubAPI.Services
             await _dbContext.SaveChangesAsync();
             return product;
         }
+
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
             return await _dbContext.DbProducts.ToListAsync();
@@ -39,10 +40,9 @@ namespace WebStoreHubAPI.Services
 
             if (existingProduct == null)
             {
-                return null; // Or throw an exception if you prefer
+                return null; 
             }
 
-            // Update properties
             existingProduct.Name = updatedProduct.Name;
             existingProduct.Description = updatedProduct.Description;
             existingProduct.Price = updatedProduct.Price;

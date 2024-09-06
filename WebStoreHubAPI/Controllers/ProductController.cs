@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
@@ -20,10 +21,24 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("addProduct")]
-        public async Task<IActionResult> AddProduct(ProductModel model)
+        public async Task<IActionResult> AddProduct(ProductCreationDto dto)
         {
-            var result = await _productService.CreateProductAsync(model);
-            return Ok(result);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var product = new ProductModel
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                Price = dto.Price,
+                Stock = dto.Stock,
+                ImageUrl = dto.ImageUrl
+            };
+
+            var result = await _productService.CreateProductAsync(product);
+            return CreatedAtAction(nameof(GetProductByProductId), new { productId = result.ProductId }, result);
         }
 
         [HttpGet("getAllProducts")]
