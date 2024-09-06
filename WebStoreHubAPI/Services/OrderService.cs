@@ -23,7 +23,13 @@ namespace WebStoreHubAPI.Services
                 UserId = userId,
                 OrderDate = DateTime.Now,
                 TotalAmount = totalAmount,
-                Status = "Pending"
+                Status = "Pending",
+                OrderItems = cartItems.Select(c => new OrderItemModel
+                {
+                    ProductId = c.ProductId,
+                    Quantity = c.Quantity,
+                    Price = c.Product.Price
+                }).ToList()
             };
 
             await _dbContext.Orders.AddAsync(order);

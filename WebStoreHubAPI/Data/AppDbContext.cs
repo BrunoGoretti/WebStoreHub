@@ -22,6 +22,19 @@ namespace WebStoreHubAPI.Data
             modelBuilder.Entity<CartItemModel>()
                 .Property(c => c.CartItemId)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<OrderItemModel>()
+            .HasKey(oi => oi.OrderItemId);
+
+            modelBuilder.Entity<OrderItemModel>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<OrderItemModel>()
+                .HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId);
         }
     }
 }

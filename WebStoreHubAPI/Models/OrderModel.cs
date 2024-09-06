@@ -14,5 +14,7 @@ namespace WebStoreHubAPI.Models
         public decimal TotalAmount { get; set; }
 
         public string Status { get; set; }
+
+        public ICollection<OrderItemModel> OrderItems { get; set; }
     }
 }
