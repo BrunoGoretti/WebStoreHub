@@ -11,8 +11,17 @@ namespace WebStoreHubAPI.Data
         public DbSet<UserModel> DbUsers { get; set; }
         public DbSet<ProductModel> DbProducts { get; set; }
         public DbSet<CartItemModel> CartItems { get; set; }
-        public DbSet<OrderModel> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
+        /*        public DbSet<OrderModel> Orders { get; set; }
+                public DbSet<OrderItem> OrderItems { get; set; }*/
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CartItemModel>()
+                .HasKey(c => new { c.UserId, c.ProductId });
+
+            modelBuilder.Entity<CartItemModel>()
+                .Property(c => c.CartItemId)
+                .ValueGeneratedOnAdd();
+        }
     }
 }

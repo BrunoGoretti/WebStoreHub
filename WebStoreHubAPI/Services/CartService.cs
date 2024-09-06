@@ -16,15 +16,31 @@ namespace WebStoreHubAPI.Services
 
         public async Task AddToCart(int userId, int productId, int quantity)
         {
+            // Check if user and product exist (as shown in previous response)
+            var userExists = await _dbContext.DbUsers.AnyAsync(u => u.UserId == userId);
+            if (!userExists)
+            {
+                throw new ArgumentException("Invalid user ID.");
+            }
+
+            var productExists = await _dbContext.DbProducts.AnyAsync(p => p.ProductId == productId);
+            if (!productExists)
+            {
+                throw new ArgumentException("Invalid product ID.");
+            }
+
+            // Check if the cart item already exists
             var cartItem = await _dbContext.CartItems
                 .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
 
             if (cartItem != null)
             {
+                // Update the quantity
                 cartItem.Quantity += quantity;
             }
             else
             {
+                // Create a new cart item
                 cartItem = new CartItemModel
                 {
                     UserId = userId,

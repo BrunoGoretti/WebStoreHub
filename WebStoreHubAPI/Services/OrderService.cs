@@ -2,7 +2,7 @@
 
 namespace WebStoreHubAPI.Services
 {
-    public class OrderService : IOrderService
+    public class OrderService 
     {
     }
 }
