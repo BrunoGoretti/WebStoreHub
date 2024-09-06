@@ -20,14 +20,14 @@ namespace WebStoreHubAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{cartItemId}")]
         public async Task<IActionResult> UpdateCartItem(int userId, int cartItemId, int quantity)
         {
             await _cartService.UpdateCartItem(userId, cartItemId, quantity);
             return Ok();
         }
 
-        [HttpDelete("remove")]
+        [HttpDelete("remove/{cartItemId}")]
         public async Task<IActionResult> RemoveFromCart(int userId, int cartItemId)
         {
             await _cartService.RemoveFromCart(userId, cartItemId);
