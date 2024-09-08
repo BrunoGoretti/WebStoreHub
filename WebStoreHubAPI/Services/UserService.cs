@@ -13,8 +13,10 @@ namespace WebStoreHubAPI.Services
         {
             _dbContext = context;
         }
+
         public async Task<UserModel> CreateUserAsync(UserModel user)
         {
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
             _dbContext.DbUsers.Add(user);
             await _dbContext.SaveChangesAsync();
             return user;
@@ -25,12 +27,17 @@ namespace WebStoreHubAPI.Services
             var user = await _dbContext.DbUsers
                 .FirstOrDefaultAsync(u => u.Email == email);
 
-            if (user != null && user.PasswordHash == password)
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
                 return user;
             }
 
             return null;
+        }
+
+        public async Task<bool> IsUsernameTakenAsync(string username)
+        {
+            return await _dbContext.DbUsers.AnyAsync(u => u.Username == username);
         }
     }
 }

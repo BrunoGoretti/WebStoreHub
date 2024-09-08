@@ -23,6 +23,11 @@ namespace WebStoreHubAPI.Controllers
         [HttpPost("registration")]
         public async Task<IActionResult> Registration(UserRegistrationDto userDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var userModel = new UserModel
             {
                 Username = userDto.Username,
