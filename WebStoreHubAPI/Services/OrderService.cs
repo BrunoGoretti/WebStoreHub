@@ -8,38 +8,84 @@ namespace WebStoreHubAPI.Services
     public class OrderService : IOrderService
     {
         private readonly AppDbContext _dbContext;
+        private readonly IProductService _productService;
 
-        public OrderService(AppDbContext dbContext)
+
+        public OrderService(AppDbContext dbContext, IProductService productService)
         {
             _dbContext = dbContext;
+            _productService = productService;
         }
 
         public async Task<OrderModel> CreateOrderAsync(int userId, List<CartItemModel> cartItems)
         {
-            var totalAmount = cartItems.Sum(c => c.Product.Price * c.Quantity);
-
-            var order = new OrderModel
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                UserId = userId,
-                OrderDate = DateTime.Now,
-                TotalAmount = totalAmount,
-                Status = "Pending",
-                OrderItems = cartItems.Select(c => new OrderItemModel
+                try
                 {
-                    ProductId = c.ProductId,
-                    Quantity = c.Quantity,
-                    Price = c.Product.Price
-                }).ToList()
-            };
+                    var totalAmount = cartItems.Sum(c => c.Product.Price * c.Quantity);
 
-            await _dbContext.Orders.AddAsync(order);
-            await _dbContext.SaveChangesAsync();
+                    var order = new OrderModel
+                    {
+                        UserId = userId,
+                        OrderDate = DateTime.Now,
+                        TotalAmount = totalAmount,
+                        Status = "Pending",
+                        OrderItems = cartItems.Select(c => new OrderItemModel
+                        {
+                            ProductId = c.ProductId,
+                            Quantity = c.Quantity,
+                            Price = c.Product.Price
+                        }).ToList()
+                    };
 
-            // Clear the cart after creating the order
-            _dbContext.CartItems.RemoveRange(cartItems);
-            await _dbContext.SaveChangesAsync();
+                    var paymentSuccess = SimulatePayment(totalAmount);
+                    if (!paymentSuccess)
+                    {
+                        throw new InvalidOperationException("Payment failed.");
+                    }
 
-            return order;
+                    foreach (var cartItem in cartItems)
+                    {
+                        var product = await _productService.GetProductByProductIdAsync(cartItem.ProductId);
+                        if (product.Stock >= cartItem.Quantity)
+                        {
+                            product.Stock -= cartItem.Quantity;
+                            await _productService.UpdateProductAsync(product.ProductId, product);
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException($"Insufficient stock for product {product.Name}");
+                        }
+                    }
+
+                    await _dbContext.Orders.AddAsync(order);
+                    await _dbContext.SaveChangesAsync();
+
+                    _dbContext.CartItems.RemoveRange(cartItems);
+                    await _dbContext.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    order.Status = "Confirmed";
+                    await _dbContext.SaveChangesAsync();
+
+                    return order;
+                }
+                catch (Exception ex)
+                {
+                    // If any exception occurs, rollback the transaction
+                    await transaction.RollbackAsync();
+                    throw new InvalidOperationException($"Order creation failed: {ex.Message}");
+                }
+            }
+        }
+
+        // Simulate payment (placeholder method)
+        private bool SimulatePayment(decimal totalAmount)
+        {
+            // Simulate a payment success
+            return true;
         }
 
         public async Task<OrderModel> GetOrderByIdAsync(int orderId)
