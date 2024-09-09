@@ -17,15 +17,22 @@ namespace WebStoreHubAPI.Services
         public async Task AddToCart(int userId, int productId, int quantity)
         {
             var userExists = await _dbContext.DbUsers.AnyAsync(u => u.UserId == userId);
+
             if (!userExists)
             {
                 throw new ArgumentException("Invalid user ID.");
             }
 
-            var productExists = await _dbContext.DbProducts.AnyAsync(p => p.ProductId == productId);
-            if (!productExists)
+
+            var productExists = await _dbContext.DbProducts.FirstOrDefaultAsync(p => p.ProductId == productId);
+            if (productExists == null)
             {
                 throw new ArgumentException("Invalid product ID.");
+            }
+
+            if (productExists.Stock <= 0)
+            {
+                throw new InvalidOperationException($"Product {productExists.Name} is out of stock.");
             }
 
             var cartItem = await _dbContext.CartItems

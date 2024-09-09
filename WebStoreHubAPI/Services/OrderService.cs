@@ -57,6 +57,7 @@ namespace WebStoreHubAPI.Services
                         {
                             throw new InvalidOperationException($"Insufficient stock for product {product.Name}");
                         }
+
                     }
 
                     await _dbContext.Orders.AddAsync(order);
