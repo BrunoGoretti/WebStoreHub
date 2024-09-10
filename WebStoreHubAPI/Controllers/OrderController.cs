@@ -27,7 +27,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok(order);
         }
 
-        [HttpGet("{orderId}")]
+        [HttpGet("orders/{id}")]
         public async Task<IActionResult> GetOrderById(int orderId)
         {
             var order = await _orderService.GetOrderByIdAsync(orderId);

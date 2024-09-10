@@ -33,13 +33,6 @@ namespace WebStoreHubAPI.Services
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
-        public async Task<IEnumerable<ProductModel>> GetProductsByTypeAsync(string productType)
-        {
-            return await _dbContext.DbProducts
-                .Where(p => p.ProductType == productType)
-                .ToListAsync();
-        }
-
         public async Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct)
         {
             var existingProduct = await _dbContext.DbProducts
