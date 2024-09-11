@@ -16,6 +16,16 @@ namespace WebStoreHubAPI.Services
 
         public async Task<ProductModel> CreateProductAsync(ProductModel product)
         {
+            var productType = await _dbContext.DbProductTypes
+                .FirstOrDefaultAsync(pt => pt.ProductTypeId == product.ProductTypeId);
+
+            if (productType == null)
+            {
+                throw new Exception("Invalid ProductTypeId");
+            }
+
+            product.ProductType = productType;
+
             _dbContext.DbProducts.Add(product);
             await _dbContext.SaveChangesAsync();
             return product;
@@ -23,12 +33,15 @@ namespace WebStoreHubAPI.Services
 
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
-            return await _dbContext.DbProducts.ToListAsync();
+            return await _dbContext.DbProducts
+               .Include(p => p.ProductType)
+               .ToListAsync();
         }
 
         public async Task<ProductModel> GetProductByIdAsync(int productId)
         {
             return await _dbContext.DbProducts
+                .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 

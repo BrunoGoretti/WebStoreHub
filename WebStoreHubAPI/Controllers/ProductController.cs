@@ -34,7 +34,8 @@ namespace WebStoreHubAPI.Controllers
                 Description = dto.Description,
                 Price = dto.Price,
                 Stock = dto.Stock,
-                ImageUrl = dto.ImageUrl
+                ImageUrl = dto.ImageUrl,
+                ProductTypeId = dto.ProductTypeId 
             };
 
             var result = await _productService.CreateProductAsync(product);

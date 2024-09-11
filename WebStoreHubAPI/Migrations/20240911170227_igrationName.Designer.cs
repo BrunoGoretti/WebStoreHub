@@ -12,7 +12,7 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240911145503_igrationName")]
+    [Migration("20240911170227_igrationName")]
     partial class igrationName
     {
         /// <inheritdoc />
@@ -127,10 +127,15 @@ namespace WebStoreHubAPI.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("DbProducts");
                 });
@@ -209,6 +214,17 @@ namespace WebStoreHubAPI.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.ProductModel", b =>
+                {
+                    b.HasOne("WebStoreHubAPI.Models.ProductTypeModel", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.OrderModel", b =>

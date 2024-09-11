@@ -124,10 +124,15 @@ namespace WebStoreHubAPI.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("DbProducts");
                 });
@@ -206,6 +211,17 @@ namespace WebStoreHubAPI.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.ProductModel", b =>
+                {
+                    b.HasOne("WebStoreHubAPI.Models.ProductTypeModel", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.OrderModel", b =>

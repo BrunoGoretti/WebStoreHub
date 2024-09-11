@@ -12,23 +12,6 @@ namespace WebStoreHubAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DbProducts",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DbProducts", x => x.ProductId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DbProductTypes",
                 columns: table => new
                 {
@@ -71,6 +54,30 @@ namespace WebStoreHubAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DbProducts",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DbProducts", x => x.ProductId);
+                    table.ForeignKey(
+                        name: "FK_DbProducts_DbProductTypes_ProductTypeId",
+                        column: x => x.ProductTypeId,
+                        principalTable: "DbProductTypes",
+                        principalColumn: "ProductTypeId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,6 +135,11 @@ namespace WebStoreHubAPI.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DbProducts_ProductTypeId",
+                table: "DbProducts",
+                column: "ProductTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
@@ -145,9 +157,6 @@ namespace WebStoreHubAPI.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "DbProductTypes");
-
-            migrationBuilder.DropTable(
                 name: "DbUsers");
 
             migrationBuilder.DropTable(
@@ -158,6 +167,9 @@ namespace WebStoreHubAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "DbProductTypes");
         }
     }
 }
