@@ -38,7 +38,7 @@ namespace WebStoreHubAPI.Controllers
             };
 
             var result = await _productService.CreateProductAsync(product);
-            return CreatedAtAction(nameof(GetProductByProductId), new { productId = result.ProductId }, result);
+            return CreatedAtAction(nameof(GetProductById), new { productId = result.ProductId }, result);
         }
 
         [HttpGet("getAllProducts")]
@@ -49,9 +49,9 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpGet("getProductById")]
-        public async Task<IActionResult> GetProductByProductId(int productId)
+        public async Task<IActionResult> GetProductById(int productId)
         {
-            var product = await _productService.GetProductByProductIdAsync(productId);
+            var product = await _productService.GetProductByIdAsync(productId);
             if (product == null)
             {
                 return NotFound();

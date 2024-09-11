@@ -47,7 +47,7 @@ namespace WebStoreHubAPI.Services
 
                     foreach (var cartItem in cartItems)
                     {
-                        var product = await _productService.GetProductByProductIdAsync(cartItem.ProductId);
+                        var product = await _productService.GetProductByIdAsync(cartItem.ProductId);
                         if (product.Stock >= cartItem.Quantity)
                         {
                             product.Stock -= cartItem.Quantity;

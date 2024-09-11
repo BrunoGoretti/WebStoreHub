@@ -2,7 +2,6 @@
 using WebStoreHubAPI.Services.Interfaces;
 using WebStoreHubAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace WebStoreHubAPI.Services
 {
@@ -27,7 +26,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbProducts.ToListAsync();
         }
 
-        public async Task<ProductModel> GetProductByProductIdAsync(int productId)
+        public async Task<ProductModel> GetProductByIdAsync(int productId)
         {
             return await _dbContext.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
