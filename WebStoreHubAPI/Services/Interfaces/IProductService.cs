@@ -6,8 +6,8 @@ namespace WebStoreHubAPI.Services.Interfaces
     {
         Task<ProductModel> CreateProductAsync(ProductModel product);
         Task<IEnumerable<ProductModel>> GetAllProductsAsync();
-        Task<ProductModel> GetProductByProductIdAsync(int productId);
-        Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct);
+        Task<ProductModel> GetProductByIdAsync(int productId);
+        Task<ProductModel> UpdateProductAsync(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl);
         Task<bool> DeleteProductAsync(int productId);
     }
 }

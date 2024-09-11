@@ -29,6 +29,19 @@ namespace WebStoreHubAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DbProductTypes",
+                columns: table => new
+                {
+                    ProductTypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DbProductTypes", x => x.ProductTypeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DbUsers",
                 columns: table => new
                 {
@@ -37,8 +50,7 @@ namespace WebStoreHubAPI.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +95,7 @@ namespace WebStoreHubAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItemModel",
+                name: "OrderItems",
                 columns: table => new
                 {
                     OrderItemId = table.Column<int>(type: "int", nullable: false)
@@ -95,15 +107,15 @@ namespace WebStoreHubAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItemModel", x => x.OrderItemId);
+                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
                     table.ForeignKey(
-                        name: "FK_OrderItemModel_DbProducts_ProductId",
+                        name: "FK_OrderItems_DbProducts_ProductId",
                         column: x => x.ProductId,
                         principalTable: "DbProducts",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItemModel_Orders_OrderId",
+                        name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
@@ -116,13 +128,13 @@ namespace WebStoreHubAPI.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItemModel_OrderId",
-                table: "OrderItemModel",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItemModel_ProductId",
-                table: "OrderItemModel",
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
                 column: "ProductId");
         }
 
@@ -133,10 +145,13 @@ namespace WebStoreHubAPI.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
+                name: "DbProductTypes");
+
+            migrationBuilder.DropTable(
                 name: "DbUsers");
 
             migrationBuilder.DropTable(
-                name: "OrderItemModel");
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "DbProducts");

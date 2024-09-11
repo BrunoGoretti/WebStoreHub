@@ -72,7 +72,7 @@ namespace WebStoreHubAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItemModel");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.OrderModel", b =>
@@ -132,6 +132,23 @@ namespace WebStoreHubAPI.Migrations
                     b.ToTable("DbProducts");
                 });
 
+            modelBuilder.Entity("WebStoreHubAPI.Models.ProductTypeModel", b =>
+                {
+                    b.Property<int>("ProductTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductTypeId"));
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductTypeId");
+
+                    b.ToTable("DbProductTypes");
+                });
+
             modelBuilder.Entity("WebStoreHubAPI.Models.UserModel", b =>
                 {
                     b.Property<int>("UserId")
@@ -139,9 +156,6 @@ namespace WebStoreHubAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()

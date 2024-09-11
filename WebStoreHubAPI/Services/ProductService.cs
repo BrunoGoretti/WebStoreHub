@@ -2,7 +2,6 @@
 using WebStoreHubAPI.Services.Interfaces;
 using WebStoreHubAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace WebStoreHubAPI.Services
 {
@@ -27,34 +26,26 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbProducts.ToListAsync();
         }
 
-        public async Task<ProductModel> GetProductByProductIdAsync(int productId)
+        public async Task<ProductModel> GetProductByIdAsync(int productId)
         {
             return await _dbContext.DbProducts
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
-        public async Task<IEnumerable<ProductModel>> GetProductsByTypeAsync(string productType)
+        public async Task<ProductModel> UpdateProductAsync(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
         {
-            return await _dbContext.DbProducts
-                .Where(p => p.ProductType == productType)
-                .ToListAsync();
-        }
-
-        public async Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct)
-        {
-            var existingProduct = await _dbContext.DbProducts
-                .FirstOrDefaultAsync(p => p.ProductId == productId);
+            var existingProduct = await _dbContext.DbProducts.FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (existingProduct == null)
             {
                 return null; 
             }
 
-            existingProduct.Name = updatedProduct.Name;
-            existingProduct.Description = updatedProduct.Description;
-            existingProduct.Price = updatedProduct.Price;
-            existingProduct.Stock = updatedProduct.Stock;
-            existingProduct.ImageUrl = updatedProduct.ImageUrl;
+            existingProduct.Name = updateProductName;
+            existingProduct.Description = updatedDescription;
+            existingProduct.Price = updatePrice;
+            existingProduct.Stock = updatedStock;
+            existingProduct.ImageUrl = updateImageUrl;
 
             await _dbContext.SaveChangesAsync();
             return existingProduct;

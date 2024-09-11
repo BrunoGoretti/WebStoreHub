@@ -47,11 +47,11 @@ namespace WebStoreHubAPI.Services
 
                     foreach (var cartItem in cartItems)
                     {
-                        var product = await _productService.GetProductByProductIdAsync(cartItem.ProductId);
+                        var product = await _productService.GetProductByIdAsync(cartItem.ProductId);
                         if (product.Stock >= cartItem.Quantity)
                         {
                             product.Stock -= cartItem.Quantity;
-                            await _productService.UpdateProductAsync(product.ProductId, product);
+                            await _productService.UpdateProductAsync(product.ProductId, product.Name, product.Description, product.Price, product.Stock, product.ImageUrl);
                         }
                         else
                         {
@@ -92,14 +92,18 @@ namespace WebStoreHubAPI.Services
         public async Task<OrderModel> GetOrderByIdAsync(int orderId)
         {
             return await _dbContext.Orders
-                .FirstOrDefaultAsync(o => o.OrderId == orderId);
+                   .Include(o => o.OrderItems)
+                       .ThenInclude(oi => oi.Product)
+                   .FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
 
         public async Task<IEnumerable<OrderModel>> GetOrdersByUserIdAsync(int userId)
         {
             return await _dbContext.Orders
-                .Where(o => o.UserId == userId)
-                .ToListAsync();
+                    .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                    .Where(o => o.UserId == userId)
+                    .ToListAsync();
         }
 
         public async Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus)
