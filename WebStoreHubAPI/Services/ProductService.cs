@@ -32,21 +32,20 @@ namespace WebStoreHubAPI.Services
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
-        public async Task<ProductModel> UpdateProductAsync(int productId, ProductModel updatedProduct)
+        public async Task<ProductModel> UpdateProductAsync(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
         {
-            var existingProduct = await _dbContext.DbProducts
-                .FirstOrDefaultAsync(p => p.ProductId == productId);
+            var existingProduct = await _dbContext.DbProducts.FirstOrDefaultAsync(p => p.ProductId == productId);
 
             if (existingProduct == null)
             {
                 return null; 
             }
 
-            existingProduct.Name = updatedProduct.Name;
-            existingProduct.Description = updatedProduct.Description;
-            existingProduct.Price = updatedProduct.Price;
-            existingProduct.Stock = updatedProduct.Stock;
-            existingProduct.ImageUrl = updatedProduct.ImageUrl;
+            existingProduct.Name = updateProductName;
+            existingProduct.Description = updatedDescription;
+            existingProduct.Price = updatePrice;
+            existingProduct.Stock = updatedStock;
+            existingProduct.ImageUrl = updateImageUrl;
 
             await _dbContext.SaveChangesAsync();
             return existingProduct;

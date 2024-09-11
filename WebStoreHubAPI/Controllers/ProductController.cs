@@ -60,14 +60,10 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPut("updateProduct")]
-        public async Task<IActionResult> UpdateProduct(int productId, [FromBody] ProductModel updatedProduct)
+        public async Task<IActionResult> UpdateProduct(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
         {
-            if (productId != updatedProduct.ProductId)
-            {
-                return BadRequest("Product ID mismatch");
-            }
+            var product = await _productService.UpdateProductAsync(productId, updateProductName, updatedDescription, updatePrice, updatedStock, updateImageUrl);
 
-            var product = await _productService.UpdateProductAsync(productId, updatedProduct);
             if (product == null)
             {
                 return NotFound();
