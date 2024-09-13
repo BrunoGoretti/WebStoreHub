@@ -15,11 +15,6 @@ namespace WebStoreHubAPI.Controllers
             _productService = productService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost("addProduct")]
         public async Task<IActionResult> AddProduct(ProductCreationDto dto)
         {

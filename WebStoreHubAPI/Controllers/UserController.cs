@@ -15,11 +15,6 @@ namespace WebStoreHubAPI.Controllers
             _userService = userService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost("registration")]
         public async Task<IActionResult> Registration(UserRegistrationDto userDto)
         {
