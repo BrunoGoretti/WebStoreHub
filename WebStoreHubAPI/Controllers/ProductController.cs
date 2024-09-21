@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
+    [Route("api/[controller]")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
