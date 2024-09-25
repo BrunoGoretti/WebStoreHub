@@ -14,5 +14,13 @@ namespace WebStoreHubAPI.Models
         public string Email { get; set; }
 
         public string FullName { get; set; }
+
+        public UserRole Role { get; set; }
+    }
+
+    public enum UserRole
+    {
+        User = 0,
+        Admin = 1
     }
 }
