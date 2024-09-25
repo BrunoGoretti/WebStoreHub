@@ -12,7 +12,7 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240911170227_igrationName")]
+    [Migration("20240922165405_igrationName")]
     partial class igrationName
     {
         /// <inheritdoc />

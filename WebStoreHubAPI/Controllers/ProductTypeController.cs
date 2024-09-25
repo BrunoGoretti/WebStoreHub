@@ -64,5 +64,17 @@ namespace WebStoreHubAPI.Controllers
 
             return Ok(productType);
         }
+
+        [HttpDelete("deleteProductType")]
+        public async Task<IActionResult> DeleteProductType(int productTypeId)
+        {
+            var success = await _productTypeService.RemoveProductTypeAsync(productTypeId);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
