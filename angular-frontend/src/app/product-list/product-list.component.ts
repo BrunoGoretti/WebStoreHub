@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product';
 import { HttpClientModule } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-product-list',
@@ -14,12 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
 export class ProductListComponent {
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
-
+  constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data;
-      console.log(this.products);  // Check if products are correctly assigned
     });
   }
 }

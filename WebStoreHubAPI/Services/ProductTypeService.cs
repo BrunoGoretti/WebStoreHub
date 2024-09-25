@@ -52,14 +52,14 @@ namespace WebStoreHubAPI.Services
         {
             var productType = await _dbContext.DbProductTypes.FirstOrDefaultAsync(p => p.ProductTypeId == productTypeId);
 
-            if (productType != null)
+            if (productType == null) 
             {
                 return false;
             }
 
             _dbContext.DbProductTypes.Remove(productType);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return true; 
         }
     }
 }
