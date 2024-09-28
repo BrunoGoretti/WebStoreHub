@@ -6,6 +6,7 @@ using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -29,6 +30,7 @@ namespace WebStoreHubAPI.Controllers
                 PasswordHash = userDto.PasswordHash,
                 Email = userDto.Email,
                 FullName = userDto.FullName,
+                Role = UserRole.User
             };
 
             var result = await _userService.CreateUserAsync(userModel);
@@ -38,13 +40,13 @@ namespace WebStoreHubAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser(LoginRequestDto loginRequest)
         {
-            var user = await _userService.LoginUserAsync(loginRequest.Email, loginRequest.PasswordHash);
-            if (user != null)
+            var token = await _userService.LoginUserAsync(loginRequest.Email, loginRequest.PasswordHash);
+            if (token != null)
             {
-                return Ok(user);
+                return Ok(new { Token = token }); // Return the token in the response
             }
 
-            return Unauthorized("Invalid username or password");
+            return Unauthorized("Invalid username or password"); // Handle the case where token is null
         }
     }
 }

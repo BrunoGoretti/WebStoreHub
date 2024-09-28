@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
@@ -16,6 +17,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("addProduct")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProduct(ProductCreationDto dto)
         {
             if (!ModelState.IsValid)
@@ -56,6 +58,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPut("updateProduct")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
         {
             var product = await _productService.UpdateProductAsync(productId, updateProductName, updatedDescription, updatePrice, updatedStock, updateImageUrl);
@@ -69,6 +72,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpDelete("deleteProduct")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var success = await _productService.DeleteProductAsync(productId);

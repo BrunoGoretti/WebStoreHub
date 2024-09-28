@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
+    [Authorize(Roles = "Admin, User")]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebStoreHubAPI.Data;
 using WebStoreHubAPI.Dtos;
@@ -8,6 +9,7 @@ using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
+    [Route("api/[controller]")]
     public class ProductTypeController : ControllerBase
     {
         private readonly IProductTypeService _productTypeService;
@@ -18,6 +20,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("addProductType")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductType(AddTypeDto type)
         {
             if (!ModelState.IsValid)
@@ -53,6 +56,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPut("updateProductType")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProductType(int productTypeId, string updatedProductType)
         {
             var productType = await _productTypeService.UpdateProductTypeAsync(productTypeId, updatedProductType);
@@ -66,6 +70,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpDelete("deleteProductType")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProductType(int productTypeId)
         {
             var success = await _productTypeService.RemoveProductTypeAsync(productTypeId);
