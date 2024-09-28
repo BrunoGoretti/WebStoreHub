@@ -54,17 +54,17 @@ namespace WebStoreHubAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, user.Role.ToString()) // Include user role as a claim
+                new Claim(ClaimTypes.Role, user.Role.ToString()) 
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey)); // Use the JWT key from configuration
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey)); 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "YourIssuer",
                 audience: "YourAudience",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30), // Token expiration time
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
