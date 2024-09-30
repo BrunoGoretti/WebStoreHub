@@ -9,5 +9,7 @@
         public string ImageUrl { get; set; }
 
         public int ProductTypeId { get; set; }
+
+        public int BrandId { get; set; }
     }
 }

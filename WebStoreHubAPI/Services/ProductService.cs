@@ -19,12 +19,21 @@ namespace WebStoreHubAPI.Services
             var productType = await _dbContext.DbProductTypes
                 .FirstOrDefaultAsync(pt => pt.ProductTypeId == product.ProductTypeId);
 
+            var brand = await _dbContext.DbBrands
+                .FirstOrDefaultAsync(b => b.BrandId == product.BrandId);
+
             if (productType == null)
             {
                 throw new Exception("Invalid ProductTypeId");
             }
 
+            if (brand == null)
+            {
+                throw new Exception("Invalid BrandId");
+            }
+
             product.ProductType = productType;
+            product.Brand = brand;
 
             _dbContext.DbProducts.Add(product);
             await _dbContext.SaveChangesAsync();
@@ -35,6 +44,7 @@ namespace WebStoreHubAPI.Services
         {
             return await _dbContext.DbProducts
                .Include(p => p.ProductType)
+               .Include(p => p.Brand)
                .ToListAsync();
         }
 
@@ -42,6 +52,7 @@ namespace WebStoreHubAPI.Services
         {
             return await _dbContext.DbProducts
                 .Include(p => p.ProductType)
+                .Include(p => p.Brand)
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 

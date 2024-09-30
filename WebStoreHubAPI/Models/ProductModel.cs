@@ -13,10 +13,13 @@ namespace WebStoreHubAPI.Models
         public int Stock { get; set; }
         public string ImageUrl { get; set; }
 
-        // Foreign key for ProductType
         public int ProductTypeId { get; set; }
+        public int BrandId { get; set; }
 
-        [ForeignKey("ProductTypeId")]
+        [ForeignKey("ProductTypeId")] // Foreign key for ProductType
         public ProductTypeModel ProductType { get; set; }
+
+        [ForeignKey("BrandId")] // Foreign key for Brand
+        public BrandModel Brand { get; set; }
     }
 }

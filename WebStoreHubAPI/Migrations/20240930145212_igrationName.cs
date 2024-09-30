@@ -12,6 +12,19 @@ namespace WebStoreHubAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DbBrands",
+                columns: table => new
+                {
+                    BrandId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DbBrands", x => x.BrandId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DbProductTypes",
                 columns: table => new
                 {
@@ -68,11 +81,18 @@ namespace WebStoreHubAPI.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductTypeId = table.Column<int>(type: "int", nullable: false)
+                    ProductTypeId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DbProducts", x => x.ProductId);
+                    table.ForeignKey(
+                        name: "FK_DbProducts_DbBrands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "DbBrands",
+                        principalColumn: "BrandId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DbProducts_DbProductTypes_ProductTypeId",
                         column: x => x.ProductTypeId,
@@ -136,6 +156,11 @@ namespace WebStoreHubAPI.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DbProducts_BrandId",
+                table: "DbProducts",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DbProducts_ProductTypeId",
                 table: "DbProducts",
                 column: "ProductTypeId");
@@ -168,6 +193,9 @@ namespace WebStoreHubAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "DbBrands");
 
             migrationBuilder.DropTable(
                 name: "DbProductTypes");

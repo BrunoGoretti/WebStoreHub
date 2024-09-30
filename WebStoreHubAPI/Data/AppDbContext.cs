@@ -5,8 +5,8 @@ namespace WebStoreHubAPI.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) 
-                : base(options){}
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+                : base(options) { }
 
         public DbSet<UserModel> DbUsers { get; set; }
         public DbSet<ProductModel> DbProducts { get; set; }
@@ -14,6 +14,8 @@ namespace WebStoreHubAPI.Data
         public DbSet<CartItemModel> CartItems { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<OrderItemModel> OrderItems { get; set; }
+        public DbSet<BrandModel> DbBrands { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

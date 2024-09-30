@@ -22,6 +22,23 @@ namespace WebStoreHubAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebStoreHubAPI.Models.BrandModel", b =>
+                {
+                    b.Property<int>("BrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"));
+
+                    b.Property<string>("BrandName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BrandId");
+
+                    b.ToTable("DbBrands");
+                });
+
             modelBuilder.Entity("WebStoreHubAPI.Models.CartItemModel", b =>
                 {
                     b.Property<int>("UserId")
@@ -109,6 +126,9 @@ namespace WebStoreHubAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,6 +151,8 @@ namespace WebStoreHubAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("ProductTypeId");
 
@@ -218,11 +240,19 @@ namespace WebStoreHubAPI.Migrations
 
             modelBuilder.Entity("WebStoreHubAPI.Models.ProductModel", b =>
                 {
+                    b.HasOne("WebStoreHubAPI.Models.BrandModel", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebStoreHubAPI.Models.ProductTypeModel", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("ProductType");
                 });
