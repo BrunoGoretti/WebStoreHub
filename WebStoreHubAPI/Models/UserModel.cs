@@ -16,6 +16,10 @@ namespace WebStoreHubAPI.Models
         public string FullName { get; set; }
 
         public UserRole Role { get; set; }
+
+        public string? PasswordResetToken { get; set; }
+
+        public DateTime? PasswordResetTokenExpiration { get; set; }
     }
 
     public enum UserRole
