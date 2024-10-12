@@ -196,6 +196,12 @@ namespace WebStoreHubAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiration")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 

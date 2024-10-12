@@ -9,5 +9,10 @@ namespace WebStoreHubAPI.Services.Interfaces
         Task<string?> LoginUserAsync(string email, string password);
         Task<bool> IsUsernameTakenAsync(string username);
 
+        Task<string> GeneratePasswordResetTokenAsync(UserModel user);
+
+        Task SendPasswordResetEmailAsync(string email, string token);
+
+        Task<UserModel?> GetUserByEmailAsync(string email);
     }
 }

@@ -43,10 +43,27 @@ namespace WebStoreHubAPI.Controllers
             var token = await _userService.LoginUserAsync(loginRequest.Email, loginRequest.PasswordHash);
             if (token != null)
             {
-                return Ok(new { Token = token }); // Return the token in the response
+                return Ok(new { Token = token }); 
             }
 
-            return Unauthorized("Invalid username or password"); // Handle the case where token is null
+            return Unauthorized("Invalid username or password"); 
+        }
+
+        [HttpPost("request-password-reset")]
+        public async Task<IActionResult> RequestPasswordReset(PasswordResetRequestDto request)
+        {
+            var user = await _userService.GetUserByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var token = await _userService.GeneratePasswordResetTokenAsync(user);
+
+            // Send token via email
+            await _userService.SendPasswordResetEmailAsync(user.Email, token);
+
+            return Ok("Password reset email sent.");
         }
     }
 }

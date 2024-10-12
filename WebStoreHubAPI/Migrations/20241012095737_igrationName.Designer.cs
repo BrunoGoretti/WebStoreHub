@@ -12,7 +12,7 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240930145212_igrationName")]
+    [Migration("20241012095737_igrationName")]
     partial class igrationName
     {
         /// <inheritdoc />
@@ -198,6 +198,12 @@ namespace WebStoreHubAPI.Migrations
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiration")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
