@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
+using OfficeOpenXml;
 
 namespace WebStoreHubAPI.Controllers
 {
@@ -10,14 +11,15 @@ namespace WebStoreHubAPI.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-
-        public ProductController(IProductService productService)
+        private readonly IDiscountService _discountService;
+        public ProductController(IProductService productService, IDiscountService discountService) 
         {
             _productService = productService;
+            _discountService = discountService;
         }
 
         [HttpPost("addProduct")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProduct(ProductCreationDto dto)
         {
             if (!ModelState.IsValid)
@@ -83,6 +85,42 @@ namespace WebStoreHubAPI.Controllers
             }
 
             return NoContent(); 
+        }
+
+        [HttpPost("uploadDiscounts")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UploadDiscounts(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            if (_discountService == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Discount service is not available.");
+            }
+
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    stream.Position = 0;
+
+                    // Import discounts from the Excel file
+                    var discounts = await _discountService.ImportDiscountsFromExcelAsync(stream);
+
+                    // Apply discounts to the products
+                    await _discountService.ApplyDiscountsAsync(discounts);
+                }
+
+                return Ok("Discounts applied successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while processing the file: {ex.Message}");
+            }
         }
     }
 }

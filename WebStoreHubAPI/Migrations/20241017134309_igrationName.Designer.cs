@@ -12,7 +12,7 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241012095737_igrationName")]
+    [Migration("20241017134309_igrationName")]
     partial class igrationName
     {
         /// <inheritdoc />
@@ -64,6 +64,43 @@ namespace WebStoreHubAPI.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.DiscountModel", b =>
+                {
+                    b.Property<int>("DiscountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiscountId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("DiscountId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.OrderItemModel", b =>
@@ -135,6 +172,9 @@ namespace WebStoreHubAPI.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("DiscountedPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -218,6 +258,17 @@ namespace WebStoreHubAPI.Migrations
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.CartItemModel", b =>
+                {
+                    b.HasOne("WebStoreHubAPI.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebStoreHubAPI.Models.DiscountModel", b =>
                 {
                     b.HasOne("WebStoreHubAPI.Models.ProductModel", "Product")
                         .WithMany()

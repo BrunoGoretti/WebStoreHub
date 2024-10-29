@@ -81,6 +81,7 @@ namespace WebStoreHubAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountedPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductTypeId = table.Column<int>(type: "int", nullable: false),
@@ -118,6 +119,31 @@ namespace WebStoreHubAPI.Migrations
                     table.PrimaryKey("PK_CartItems", x => new { x.UserId, x.ProductId });
                     table.ForeignKey(
                         name: "FK_CartItems_DbProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "DbProducts",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Discounts",
+                columns: table => new
+                {
+                    DiscountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    DiscountPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Discounts", x => x.DiscountId);
+                    table.ForeignKey(
+                        name: "FK_Discounts_DbProducts_ProductId",
                         column: x => x.ProductId,
                         principalTable: "DbProducts",
                         principalColumn: "ProductId",
@@ -168,6 +194,11 @@ namespace WebStoreHubAPI.Migrations
                 column: "ProductTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Discounts_ProductId",
+                table: "Discounts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
@@ -186,6 +217,9 @@ namespace WebStoreHubAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "DbUsers");
+
+            migrationBuilder.DropTable(
+                name: "Discounts");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");

@@ -20,7 +20,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("addProductType")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductType(AddTypeDto type)
         {
             if (!ModelState.IsValid)
