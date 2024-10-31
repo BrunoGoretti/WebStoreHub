@@ -47,46 +47,85 @@ public class DiscountService : IDiscountService
         foreach (var discount in discounts)
         {
             var product = await _dbContext.DbProducts.FirstOrDefaultAsync(p => p.ProductId == discount.ProductId);
-            if (product != null && discount.IsActive)
+
+            if (product != null)
             {
                 decimal newDiscountedPrice = product.Price; // Start with the original price
 
-                // Apply discount logic to calculate the new discounted price
-                if (discount.DiscountPercentage > 0)
+                // Apply the discount if it's active and not expired
+                if (discount.IsActive && discount.EndDate >= DateTime.Now)
                 {
-                    var discountAmount = product.Price * (discount.DiscountPercentage / 100);
-                    newDiscountedPrice -= discountAmount;
+                    // Calculate the discounted price
+                    if (discount.DiscountPercentage > 0)
+                    {
+                        var discountAmount = product.Price * (discount.DiscountPercentage / 100);
+                        newDiscountedPrice -= discountAmount;
+                    }
+                    else if (discount.DiscountAmount > 0)
+                    {
+                        newDiscountedPrice -= discount.DiscountAmount;
+                    }
+
+                    // Ensure the discounted price doesn't drop below zero
+                    if (newDiscountedPrice < 0) newDiscountedPrice = 0;
+
+                    product.DiscountedPrice = newDiscountedPrice;
                 }
-                else if (discount.DiscountAmount > 0)
+                else
                 {
-                    newDiscountedPrice -= discount.DiscountAmount;
+                    // Reset DiscountedPrice to null if the discount is not active or has expired
+                    product.DiscountedPrice = null;
                 }
 
-                // Ensure the discounted price doesn't drop below zero
-                if (newDiscountedPrice < 0) newDiscountedPrice = 0;
-
-                // Update the discounted price instead of the original price
-                product.DiscountedPrice = newDiscountedPrice;
-
-                // Save the product price update
                 _dbContext.DbProducts.Update(product);
 
-                // Create a new DiscountModel and add it to the Discounts table
-                var discountModel = new DiscountModel
-                {
-                    ProductId = discount.ProductId,
-                    DiscountPercentage = discount.DiscountPercentage,
-                    DiscountAmount = discount.DiscountAmount,
-                    StartDate = discount.StartDate,
-                    EndDate = discount.EndDate,
-                    IsActive = discount.IsActive,
-                    Description = $"Discount applied to product {product.Name}" // You can set a custom description
-                };
+                // Look for an existing discount with the same ProductId, StartDate, and EndDate
+                var existingDiscount = await _dbContext.Discounts
+                    .FirstOrDefaultAsync(d => d.ProductId == discount.ProductId
+                                              && d.StartDate == discount.StartDate
+                                              && d.EndDate == discount.EndDate);
 
-                _dbContext.Discounts.Add(discountModel); // Save the discount details in the Discount table
+                if (existingDiscount != null)
+                {
+                    // Update the existing discount properties
+                    existingDiscount.IsActive = discount.IsActive;
+                    existingDiscount.DiscountAmount = discount.DiscountAmount;
+                    existingDiscount.DiscountPercentage = discount.DiscountPercentage;
+
+                    Console.WriteLine($"Updated existing discount for ProductId {discount.ProductId}, DiscountId: {existingDiscount.DiscountId}");
+                }
+                else
+                {
+                    // Add a new discount if no match is found
+                    var newDiscount = new DiscountModel
+                    {
+                        ProductId = discount.ProductId,
+                        DiscountPercentage = discount.DiscountPercentage,
+                        DiscountAmount = discount.DiscountAmount,
+                        StartDate = discount.StartDate,
+                        EndDate = discount.EndDate,
+                        IsActive = discount.IsActive,
+                        Description = $"Discount applied to product {product.Name}"
+                    };
+
+                    _dbContext.Discounts.Add(newDiscount);
+                    Console.WriteLine($"Added new discount for ProductId {discount.ProductId}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Product with ProductId {discount.ProductId} not found.");
             }
         }
 
-        await _dbContext.SaveChangesAsync();
+        try
+        {
+            await _dbContext.SaveChangesAsync();
+            Console.WriteLine("Database changes saved.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving changes to database: {ex.Message}");
+        }
     }
 }
