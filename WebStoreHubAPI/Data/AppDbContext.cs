@@ -15,6 +15,7 @@ namespace WebStoreHubAPI.Data
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<OrderItemModel> OrderItems { get; set; }
         public DbSet<BrandModel> DbBrands { get; set; }
+        public DbSet<DiscountModel> Discounts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +39,14 @@ namespace WebStoreHubAPI.Data
                 .HasOne(oi => oi.Product)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId);
+
+            modelBuilder.Entity<DiscountModel>()
+              .HasKey(d => d.DiscountId);
+
+            modelBuilder.Entity<DiscountModel>()
+                .HasOne(d => d.Product)
+                .WithMany() 
+                .HasForeignKey(d => d.ProductId);
         }
     }
 }
