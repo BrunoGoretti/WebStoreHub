@@ -28,12 +28,11 @@ public class DiscountService : IDiscountService
                 // Reading data from the Excel file and mapping it to the DiscountDto
                 var discountDto = new DiscountDto
                 {
-                    ProductId = int.Parse(worksheet.Cells[row, 1].Text), // Assuming ProductId is in the first column
-                    DiscountPercentage = decimal.TryParse(worksheet.Cells[row, 2].Text, out var percentage) ? percentage : 0, // Assuming DiscountPercentage is in the second column
-                    DiscountAmount = decimal.TryParse(worksheet.Cells[row, 3].Text, out var amount) ? amount : 0, // Assuming DiscountAmount is in the third column
-                    StartDate = DateTime.Parse(worksheet.Cells[row, 4].Text), // Assuming StartDate is in the fourth column
-                    EndDate = DateTime.Parse(worksheet.Cells[row, 5].Text), // Assuming EndDate is in the fifth column
-                    IsActive = bool.Parse(worksheet.Cells[row, 6].Text) // Assuming IsActive is in the sixth column
+                    ProductId = int.Parse(worksheet.Cells[row, 1].Text),
+                    DiscountPercentage = decimal.TryParse(worksheet.Cells[row, 2].Text, out var percentage) ? percentage : 0,
+                    StartDate = DateTime.Parse(worksheet.Cells[row, 3].Text), 
+                    EndDate = DateTime.Parse(worksheet.Cells[row, 4].Text), 
+                    IsActive = bool.Parse(worksheet.Cells[row, 5].Text) 
                 };
                 discounts.Add(discountDto);
             }
@@ -61,10 +60,6 @@ public class DiscountService : IDiscountService
                         var discountAmount = product.Price * (discount.DiscountPercentage / 100);
                         newDiscountedPrice -= discountAmount;
                     }
-                    else if (discount.DiscountAmount > 0)
-                    {
-                        newDiscountedPrice -= discount.DiscountAmount;
-                    }
 
                     // Ensure the discounted price doesn't drop below zero
                     if (newDiscountedPrice < 0) newDiscountedPrice = 0;
@@ -89,7 +84,6 @@ public class DiscountService : IDiscountService
                 {
                     // Update the existing discount properties
                     existingDiscount.IsActive = discount.IsActive;
-                    existingDiscount.DiscountAmount = discount.DiscountAmount;
                     existingDiscount.DiscountPercentage = discount.DiscountPercentage;
 
                     Console.WriteLine($"Updated existing discount for ProductId {discount.ProductId}, DiscountId: {existingDiscount.DiscountId}");
@@ -101,7 +95,7 @@ public class DiscountService : IDiscountService
                     {
                         ProductId = discount.ProductId,
                         DiscountPercentage = discount.DiscountPercentage,
-                        DiscountAmount = discount.DiscountAmount,
+                        //DiscountAmount = discount.DiscountAmount,
                         StartDate = discount.StartDate,
                         EndDate = discount.EndDate,
                         IsActive = discount.IsActive,
