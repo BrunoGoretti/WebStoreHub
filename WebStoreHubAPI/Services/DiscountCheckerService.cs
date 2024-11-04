@@ -58,10 +58,6 @@ public class DiscountCheckerService : BackgroundService
                             var discountAmount = product.Price * (discount.DiscountPercentage / 100);
                             newDiscountedPrice -= discountAmount;
                         }
-                        else if (discount.DiscountAmount > 0)
-                        {
-                            newDiscountedPrice -= discount.DiscountAmount;
-                        }
 
                         if (newDiscountedPrice < 0) newDiscountedPrice = 0;
                         product.DiscountedPrice = newDiscountedPrice;
