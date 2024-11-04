@@ -5,7 +5,7 @@ using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
-    [Authorize(Roles = "Admin, User")]
+   // [Authorize(Roles = "Admin, User")]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;

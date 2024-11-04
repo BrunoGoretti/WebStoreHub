@@ -23,7 +23,8 @@ namespace WebStoreHubAPI.Services
             {
                 try
                 {
-                    var totalAmount = cartItems.Sum(c => c.Product.Price * c.Quantity);
+                    var totalAmount = cartItems.Sum(c =>
+                        (c.Product.DiscountedPrice ?? c.Product.Price) * c.Quantity);
 
                     var order = new OrderModel
                     {
@@ -103,7 +104,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.Orders
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Product)
-                        .ThenInclude(p => p.ProductType) 
+                        .ThenInclude(p => p.ProductType)
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
         }
