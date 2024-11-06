@@ -155,11 +155,11 @@ namespace WebStoreHubAPI.Services
                 int yPosition = 100;
                 foreach (var item in order.OrderItems)
                 {
-                    gfx.DrawString($"{item.Product.Name} - Quantity: {item.Quantity} - Price: {item.Price}", font, XBrushes.Black, new XPoint(20, yPosition));
+                    gfx.DrawString($"{item.Product.Name} - Quantity: {item.Quantity} - Price: ${item.Price}", font, XBrushes.Black, new XPoint(20, yPosition));
                     yPosition += 20;
                 }
 
-                gfx.DrawString($"Total Amount: {order.TotalAmount}", font, XBrushes.Black, new XPoint(20, yPosition + 20));
+                gfx.DrawString($"Total Amount: ${order.TotalAmount}", font, XBrushes.Black, new XPoint(20, yPosition + 20));
 
                 using (var stream = new MemoryStream())
                 {
