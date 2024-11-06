@@ -206,6 +206,7 @@ namespace WebStoreHubAPI.Services
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
             }
+
         }
     }
 }
