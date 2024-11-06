@@ -45,7 +45,7 @@ namespace WebStoreHubAPI.Data
 
             modelBuilder.Entity<DiscountModel>()
                 .HasOne(d => d.Product)
-                .WithMany() 
+                .WithMany()
                 .HasForeignKey(d => d.ProductId);
         }
     }

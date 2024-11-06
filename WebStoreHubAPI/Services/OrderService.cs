@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MailKit.Net.Smtp;
+using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using WebStoreHubAPI.Data;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
@@ -36,7 +38,7 @@ namespace WebStoreHubAPI.Services
                         {
                             ProductId = c.ProductId,
                             Quantity = c.Quantity,
-                            Price = c.Product.Price
+                            Price = c.Product.DiscountedPrice ?? c.Product.Price
                         }).ToList()
                     };
 
