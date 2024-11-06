@@ -16,7 +16,5 @@ namespace WebStoreHubAPI.Models
         public string Status { get; set; }
 
         public ICollection<OrderItemModel> OrderItems { get; set; }
-
-        public UserModel User { get; set; }
     }
 }

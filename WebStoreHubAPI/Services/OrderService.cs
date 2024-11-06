@@ -11,14 +11,12 @@ namespace WebStoreHubAPI.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IProductService _productService;
-        private readonly IPdfService _pdfService;
 
 
-        public OrderService(AppDbContext dbContext, IProductService productService, IPdfService pdfService)
+        public OrderService(AppDbContext dbContext, IProductService productService)
         {
             _dbContext = dbContext;
             _productService = productService;
-            _pdfService = pdfService;
         }
 
         public async Task<OrderModel> CreateOrderAsync(int userId, List<CartItemModel> cartItems)
@@ -100,7 +98,6 @@ namespace WebStoreHubAPI.Services
                    .Include(o => o.OrderItems)
                        .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.ProductType)
-                         .Include(o => o.User)
                    .FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
 
@@ -127,45 +124,6 @@ namespace WebStoreHubAPI.Services
             order.Status = newStatus;
             await _dbContext.SaveChangesAsync();
             return true;
-        }
-
-        public async Task SendOrderConfirmationEmailAsync(OrderModel order)
-        {
-            try
-            {
-                var emailMessage = new MimeMessage();
-                emailMessage.From.Add(new MailboxAddress("Your Store", "yourstore@example.com"));
-                emailMessage.To.Add(new MailboxAddress("Customer", order.User.Email));
-                emailMessage.Subject = "Order Confirmation";
-
-                var bodyBuilder = new BodyBuilder
-                {
-                    TextBody = $"Thank you for your order, {order.User.FullName}! Please find the order details attached."
-                };
-
-                // Generate the PDF and attach it to the email
-                var pdfBytes = _pdfService.GenerateOrderPdf(order);
-                if (pdfBytes == null || pdfBytes.Length == 0)
-                {
-                    throw new Exception("Failed to generate PDF content.");
-                }
-
-                bodyBuilder.Attachments.Add("OrderDetails.pdf", pdfBytes, ContentType.Parse("application/pdf"));
-                emailMessage.Body = bodyBuilder.ToMessageBody();
-
-                using (var client = new SmtpClient())
-                {
-                    await client.ConnectAsync("smtp.example.com", 587, false);
-                    await client.AuthenticateAsync("your_username", "your_password");
-                    await client.SendAsync(emailMessage);
-                    await client.DisconnectAsync(true);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error or handle it accordingly
-                Console.WriteLine($"Failed to send order confirmation email: {ex.Message}");
-            }
         }
     }
 }

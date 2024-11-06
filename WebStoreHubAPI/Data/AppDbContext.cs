@@ -47,13 +47,6 @@ namespace WebStoreHubAPI.Data
                 .HasOne(d => d.Product)
                 .WithMany()
                 .HasForeignKey(d => d.ProductId);
-
-            modelBuilder.Entity<OrderModel>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId);
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

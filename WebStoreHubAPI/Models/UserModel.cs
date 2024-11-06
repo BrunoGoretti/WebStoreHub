@@ -20,8 +20,6 @@ namespace WebStoreHubAPI.Models
         public string? PasswordResetToken { get; set; }
 
         public DateTime? PasswordResetTokenExpiration { get; set; }
-
-        public ICollection<OrderModel> Orders { get; set; }
     }
 
     public enum UserRole

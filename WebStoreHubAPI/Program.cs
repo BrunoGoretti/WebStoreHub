@@ -83,7 +83,6 @@ builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddHostedService<DiscountCheckerService>();
-builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
