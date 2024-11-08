@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebStoreHubAPI.Models
 {
@@ -12,6 +13,9 @@ namespace WebStoreHubAPI.Models
         public string ImageUrl { get; set; } 
 
         public ImageMain MainPicture { get; set; }
+
+        [ForeignKey("ProductId")]
+        public ProductModel Product { get; set; }
     }
 
     public enum ImageMain

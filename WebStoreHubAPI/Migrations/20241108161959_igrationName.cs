@@ -83,7 +83,6 @@ namespace WebStoreHubAPI.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DiscountedPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductTypeId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -126,6 +125,27 @@ namespace WebStoreHubAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DbImgbbImages",
+                columns: table => new
+                {
+                    ImageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MainPicture = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DbImgbbImages", x => x.ImageId);
+                    table.ForeignKey(
+                        name: "FK_DbImgbbImages_DbProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "DbProducts",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Discounts",
                 columns: table => new
                 {
@@ -133,7 +153,6 @@ namespace WebStoreHubAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     DiscountPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -184,6 +203,11 @@ namespace WebStoreHubAPI.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DbImgbbImages_ProductId",
+                table: "DbImgbbImages",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DbProducts_BrandId",
                 table: "DbProducts",
                 column: "BrandId");
@@ -214,6 +238,9 @@ namespace WebStoreHubAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "DbImgbbImages");
 
             migrationBuilder.DropTable(
                 name: "DbUsers");
