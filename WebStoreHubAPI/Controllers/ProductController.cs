@@ -33,7 +33,6 @@ namespace WebStoreHubAPI.Controllers
                 Description = dto.Description,
                 Price = dto.Price,
                 Stock = dto.Stock,
-                ImageUrl = dto.ImageUrl,
                 ProductTypeId = dto.ProductTypeId,
                 BrandId = dto.BrandId
             };
@@ -62,9 +61,9 @@ namespace WebStoreHubAPI.Controllers
 
         [HttpPut("updateProduct")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProduct(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
+        public async Task<IActionResult> UpdateProduct(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock)
         {
-            var product = await _productService.UpdateProductAsync(productId, updateProductName, updatedDescription, updatePrice, updatedStock, updateImageUrl);
+            var product = await _productService.UpdateProductAsync(productId, updateProductName, updatedDescription, updatePrice, updatedStock);
 
             if (product == null)
             {
