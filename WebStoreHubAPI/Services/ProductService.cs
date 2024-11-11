@@ -56,7 +56,7 @@ namespace WebStoreHubAPI.Services
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
-        public async Task<ProductModel> UpdateProductAsync(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock, string updateImageUrl)
+        public async Task<ProductModel> UpdateProductAsync(int productId, string updateProductName, string updatedDescription, decimal updatePrice, int updatedStock)
         {
             var existingProduct = await _dbContext.DbProducts.FirstOrDefaultAsync(p => p.ProductId == productId);
 
@@ -69,7 +69,6 @@ namespace WebStoreHubAPI.Services
             existingProduct.Description = updatedDescription;
             existingProduct.Price = updatePrice;
             existingProduct.Stock = updatedStock;
-            existingProduct.ImageUrl = updateImageUrl;
 
             await _dbContext.SaveChangesAsync();
             return existingProduct;

@@ -12,7 +12,6 @@ namespace WebStoreHubAPI.Models
         public decimal Price { get; set; } // Original price
         public decimal? DiscountedPrice { get; set; } // New property for discounted price
         public int Stock { get; set; }
-        public string ImageUrl { get; set; }
 
         public int ProductTypeId { get; set; }
         public int BrandId { get; set; }

@@ -58,7 +58,7 @@ namespace WebStoreHubAPI.Services
                         if (product.Stock >= cartItem.Quantity)
                         {
                             product.Stock -= cartItem.Quantity;
-                            await _productService.UpdateProductAsync(product.ProductId, product.Name, product.Description, product.Price, product.Stock, product.ImageUrl);
+                            await _productService.UpdateProductAsync(product.ProductId, product.Name, product.Description, product.Price, product.Stock);
                         }
                         else
                         {
