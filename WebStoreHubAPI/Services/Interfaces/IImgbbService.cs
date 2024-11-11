@@ -4,7 +4,8 @@ namespace WebStoreHubAPI.Services.Interfaces
 {
     public interface IImgbbService
     {
-        Task<ImgbbModel> AddImageAsync(ImgbbModel image);
+        Task<ImgbbModel> AddImageAsync(IFormFile imageFile, int productId, ImageMain mainPicture);
         Task<bool> RemoveImageAsync(int imageId);
+
     }
 }

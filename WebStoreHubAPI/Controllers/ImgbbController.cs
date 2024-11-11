@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 
@@ -16,9 +17,24 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("AddImage")]
-        public async Task<IActionResult> AddImage()
+        public async Task<IActionResult> AddImage([FromForm] AddImageDto addImageDto)
         {
-   
+            if (addImageDto.Image == null)
+            {
+                return BadRequest("Image file is required.");
+            }
+
+            var addedImage = await _imgbbService.AddImageAsync(addImageDto.Image, addImageDto.ProductId, addImageDto.MainPicture);
+
+            var responseDto = new ImgbbResponseDto
+            {
+                ImageId = addedImage.ImageId,
+                ProductId = addedImage.ProductId,
+                ImageUrl = addedImage.ImageUrl,
+                MainPicture = addedImage.MainPicture
+            };
+
+            return CreatedAtAction(nameof(AddImage), new { id = responseDto.ImageId }, responseDto);
         }
 
         [HttpDelete("RemoveImage/{imageId}")]
