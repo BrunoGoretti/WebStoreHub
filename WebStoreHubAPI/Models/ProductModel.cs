@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static PdfSharp.Capabilities.Features;
 
 namespace WebStoreHubAPI.Models
 {
@@ -21,5 +22,6 @@ namespace WebStoreHubAPI.Models
 
         [ForeignKey("BrandId")]
         public BrandModel Brand { get; set; }
+        public List<ImgbbModel> Images { get; set; }
     }
 }

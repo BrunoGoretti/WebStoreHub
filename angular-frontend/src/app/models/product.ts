@@ -4,5 +4,6 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
-  imageUrl: string;
+  images: { imageUrl: string; mainPicture: number }[]; // Include images array
+  imageUrl?: string;  // Add this line for the imageUrl
 }

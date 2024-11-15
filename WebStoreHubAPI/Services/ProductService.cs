@@ -45,6 +45,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbProducts
                .Include(p => p.ProductType)
                .Include(p => p.Brand)
+               .Include(p => p.Images)
                .ToListAsync();
         }
 
@@ -53,6 +54,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbProducts
                 .Include(p => p.ProductType)
                 .Include(p => p.Brand)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 

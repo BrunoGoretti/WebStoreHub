@@ -50,9 +50,9 @@ namespace WebStoreHubAPI.Data
                 .HasForeignKey(d => d.ProductId);
 
             modelBuilder.Entity<ImgbbModel>()
-               .HasOne(i => i.Product)
-               .WithMany()
-               .HasForeignKey(i => i.ProductId);
+                .HasOne(i => i.Product)
+                .WithMany(p => p.Images) 
+                .HasForeignKey(i => i.ProductId);
         }
     }
 }
