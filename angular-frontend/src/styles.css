@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Make background cover the whole page */
+html, body {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
