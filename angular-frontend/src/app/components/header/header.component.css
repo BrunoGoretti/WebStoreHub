@@ -5,17 +5,28 @@
   background-color: #0066ff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px 20px;
+  height: 60px;
   color: white;
   font-family: 'Arial', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding-top: 60px;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
-/* General button styles */
 nav .button {
   display: inline-block;
   padding: 10px 20px;
@@ -25,21 +36,19 @@ nav .button {
   text-align: center;
   text-decoration: none;
   color: white;
-  background-color: #007bff; /* Bootstrap blue */
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   cursor: pointer;
 }
 
-/* Hover effect */
 nav .button:hover {
-  background-color: #0056b3; /* Darker blue */
-  transform: scale(1.05); /* Slight zoom effect */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
-/* Active effect */
 nav .button:active {
-  background-color: #003f7f; /* Even darker blue */
-  transform: scale(0.95); /* Slight shrink effect */
+  background-color: #003f7f;
+  transform: scale(0.95);
 }

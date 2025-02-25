@@ -2,8 +2,9 @@
   <div class="header-content">
     <h1>My Sticky Header</h1>
     <nav>
-      <a routerLink="/login" class="button">Log In</a>
-      <a routerLink="/registration" class="button">Sign Up</a>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="button">Log In</a>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/registration" class="button">Sign Up</a>
+      <a *ngIf="authService.isLoggedIn()" (click)="logout()" class="button">Log Out</a>
     </nav>
   </div>
 </header>
