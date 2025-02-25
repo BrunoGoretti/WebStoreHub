@@ -1,1 +1,17 @@
-<p>registration works!</p>
+<body>
+  <div class="login-container">
+    <h2>Registration</h2>
+    <form (ngSubmit)="onRegister()">
+      <label for="email">Username:</label>
+      <input type="username" id="username" class="input-field" [(ngModel)]="username" name="username" required />
+      <label for="email">Full name:</label>
+      <input type="fullname" id="fullname" class="input-field" [(ngModel)]="fullname" name="fullname" required />
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="input-field" [(ngModel)]="email" name="email" required />
+      <label for="password">Password:</label>
+      <input type="password" id="password" class="input-field" [(ngModel)]="password" name="password" required />
+      <button type="submit" class="btn">Register</button>
+    </form>
+    <!-- <button class="btn secondary" (click)="redirectToRegistration()">Go to Registration</button> -->
+  </div>
+</body>

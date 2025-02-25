@@ -17,16 +17,16 @@ export class LogInComponent {
   constructor(private router: Router, private authService: AuthService) {}
 
   onSubmit(): void {
-    console.log('Submitting form with:', { email: this.email, password: this.password }); // Debugging
+    console.log('Submitting form with:', { email: this.email, password: this.password });
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('Login successful', response); // Debugging
-        localStorage.setItem('token', response.token); // Store the token
-        this.router.navigate(['/products']); // Redirect to products page
+        console.log('Login successful', response);
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/products']);
       },
       error: (error) => {
-        console.error('Login failed', error); // Debugging
-        alert('Login failed. Please check your credentials.'); // User feedback
+        console.error('Login failed', error);
+        alert('Login failed. Please check your credentials.');
       },
     });
   }

@@ -36,4 +36,23 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.isAuthenticated || !!localStorage.getItem('token');
   }
+
+  Register(username: string, fullname: string, email: string, password: string): Observable<any> {
+    const params = new HttpParams()
+      .set('Username', username)
+      .set('FullName', fullname)
+      .set('Email', email)
+      .set('PasswordHash', password);
+
+    const url = `${this.baseUrl}/user/registration`
+      return this.http.post<any>(url, {}, { params }).pipe(
+        tap((response) => {
+          if (response.token) {
+            localStorage.setItem('token', response.token);
+            this.isAuthenticated = true;
+            console.log('Token stored', response.token);
+          }
+        })
+      )
+  }
 }
