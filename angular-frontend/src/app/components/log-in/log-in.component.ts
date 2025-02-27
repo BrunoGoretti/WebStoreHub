@@ -22,6 +22,7 @@ export class LogInComponent {
       next: (response) => {
         console.log('Login successful', response);
         localStorage.setItem('token', response.token);
+        console.log('Username:', response.username);
         this.router.navigate(['/products']);
       },
       error: (error) => {

@@ -10,6 +10,6 @@ namespace WebStoreHubAPI.Dtos
 
         [Required]
         [PasswordValidation]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
     }
 }

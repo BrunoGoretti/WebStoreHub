@@ -6,7 +6,8 @@ namespace WebStoreHubAPI.Services.Interfaces
     {
         Task<UserModel> CreateUserAsync(UserModel user);
 
-        Task<string?> LoginUserAsync(string email, string password);
+        Task<(string Token, string Username, UserRole Role, string FullName)> LoginUserAsync(string email, string password);
+
         Task<bool> IsUsernameTakenAsync(string username);
 
         Task<string> GeneratePasswordResetTokenAsync(UserModel user);

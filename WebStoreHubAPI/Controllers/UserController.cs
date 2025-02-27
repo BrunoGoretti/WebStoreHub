@@ -38,15 +38,21 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser(LoginRequestDto loginRequest)
+        public async Task<IActionResult> LoginUser([FromQuery] string email, [FromQuery] string password)
         {
-            var token = await _userService.LoginUserAsync(loginRequest.Email, loginRequest.PasswordHash);
-            if (token != null)
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                return Ok(new { Token = token }); 
+                return BadRequest("Email and password are required.");
             }
 
-            return Unauthorized("Invalid username or password"); 
+            (string? token, string? username, UserRole role, string? fullName) = await _userService.LoginUserAsync(email, password);
+
+            if (token != null)
+            {
+                return Ok(new { Token = token, Username = username, FullName = fullName, Role = role });
+            }
+
+            return Unauthorized("Invalid email or password");
         }
 
         [HttpPost("request-password-reset")]

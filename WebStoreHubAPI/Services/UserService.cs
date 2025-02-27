@@ -33,18 +33,17 @@ namespace WebStoreHubAPI.Services
             return user;
         }
 
-        public async Task<string> LoginUserAsync(string email, string password)
+        public async Task<(string Token, string Username, UserRole Role, string FullName)> LoginUserAsync(string email, string password)
         {
-            var user = await _dbContext.DbUsers
-                .FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _dbContext.DbUsers.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
-                var token = await GenerateJwtToken(user);
-                return token; 
+                var token = GenerateJwtToken(user);
+                return (token, user.Username, user.Role, user.FullName); 
             }
 
-            return null;
+            return (null, null, default, null); 
         }
 
         public async Task<bool> IsUsernameTakenAsync(string username)
@@ -52,26 +51,33 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbUsers.AnyAsync(u => u.Username == username);
         }
 
-        public async Task<string> GenerateJwtToken(UserModel user)
+        public string GenerateJwtToken(UserModel user) // Removed async
         {
+            if (string.IsNullOrEmpty(_configuration["Jwt:Key"]))
+                throw new InvalidOperationException("JWT Key is not configured");
+
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, user.Role.ToString()) 
-            };
+        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role.ToString())
+    };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey)); 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "YourIssuer",
-                audience: "YourAudience",
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                expires: DateTime.UtcNow.AddMinutes(30),
+                signingCredentials: creds
+            );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token); // Directly return string
         }
 
         public async Task<string> GeneratePasswordResetTokenAsync(UserModel user)
