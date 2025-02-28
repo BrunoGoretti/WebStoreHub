@@ -21,4 +21,8 @@ export class ProductListComponent {
       this.products = data;
     });
   }
+
+  onProductClick(product: Product): void {
+     console.log("Product clicked:" + product);
+  }
 }

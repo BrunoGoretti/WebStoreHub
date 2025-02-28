@@ -1,5 +1,5 @@
 <div *ngIf="products.length > 0; else noProducts" class="product-list-container">
-  <div *ngFor="let product of products" class="product-card">
+  <div *ngFor="let product of products" class="product-card" (click)="onProductClick(product)" style="cursor: pointer;">
     <img [src]="product.imageUrl" alt="{{ product.name }}" width="200" />
     <h3>{{ product.name }}</h3>
     <p>Price: {{ product.price | currency }}</p>
