@@ -1,0 +1,12 @@
+<div *ngIf="product; else loading">
+  <h1>{{ product.name }}</h1>
+  <img *ngIf="product?.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300">
+  <p>{{ product.description }}</p>
+  <p>Price: {{ product.price | currency }}</p>
+  <p>Brand: {{ product.brand.brandName }}</p>
+  <p>Stock: {{ product.stock }}</p>
+</div>
+
+<ng-template #loading>
+  <p>Loading product details...</p>
+</ng-template>
