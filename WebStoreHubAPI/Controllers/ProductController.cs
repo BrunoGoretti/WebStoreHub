@@ -48,7 +48,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok(products);
         }
 
-        [HttpGet("getProductById")]
+        [HttpGet("getProductById/{productId}")]
         public async Task<IActionResult> GetProductById(int productId)
         {
             var product = await _productService.GetProductByIdAsync(productId);
