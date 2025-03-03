@@ -1,6 +1,8 @@
 <header class="sticky-header">
   <div class="header-content">
-    <h1>My Sticky Header</h1>
+    <a routerLink="/products" class="logo-link">
+      <div class="logo"></div>
+    </a>
     <nav>
       <span *ngIf="isLoggedIn">Welcome, {{ username }}</span>
       <a *ngIf="!isLoggedIn" routerLink="/login" class="button">Log In</a>

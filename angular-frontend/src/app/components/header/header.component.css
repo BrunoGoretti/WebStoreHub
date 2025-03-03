@@ -52,3 +52,14 @@ nav .button:active {
   background-color: #003f7f;
   transform: scale(0.95);
 }
+
+.logo {
+  background-image: url(../../images/WebStoreHubLogo.png);
+  width: 210px;
+  height: 39px;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+}
