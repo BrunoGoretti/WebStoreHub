@@ -9,10 +9,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-page.component.html',
-  styleUrl: './product-page.component.css',
+  styleUrls: ['./product-page.component.css'],
 })
 export class ProductPageComponent {
   product: Product | null = null;
+  isModalOpen: boolean = false;
+  selectedImageUrl: string = '';
 
   constructor(private route: ActivatedRoute, private productService: ProductService) {}
 
@@ -27,5 +29,17 @@ export class ProductPageComponent {
         (error) => console.error('Error fetching product:', error)
       );
     }
+  }
+
+  // Open the modal with the clicked image
+  openImage(imageUrl: string): void {
+    this.selectedImageUrl = imageUrl;
+    this.isModalOpen = true;
+  }
+
+  // Close the modal
+  closeImage(): void {
+    this.isModalOpen = false;
+    this.selectedImageUrl = '';
   }
 }
