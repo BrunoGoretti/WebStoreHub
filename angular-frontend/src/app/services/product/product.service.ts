@@ -39,6 +39,7 @@ export class ProductService {
           brandName: product.brand?.brandName || 'Unknown',
         },
         imageUrl: product.images?.[0]?.imageUrl || '',
+        images: product.images || [],
       }))
     );
   }
