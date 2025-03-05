@@ -4,6 +4,11 @@
       <img src="WebStoreHubLogo.png" class="logo" alt="logo">
     </a>
     <nav style="display: flex; align-items: center; gap: 15px;">
+      <a routerLink="/useritemcart" class="user-item-cart">
+        <button *ngIf="isLoggedIn" class="cart-button">
+          <img src ="CartItemIcon.png" alt="Cart Item Icon" class="cart-item-icon"> My Cart
+        </button>
+      </a>
       <span *ngIf="isLoggedIn" class="username">
         <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}
       </span>

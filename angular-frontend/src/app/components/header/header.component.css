@@ -29,7 +29,7 @@ main {
 
 nav .button {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 7px 12px;
   margin: 5px;
   font-size: 16px;
   font-weight: bold;
@@ -64,7 +64,7 @@ nav .button:active {
 
 .username {
   position: relative;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   font-size: 18px;
   font-weight: bold;
   color: #333; /* Adjust to fit your theme */
@@ -73,9 +73,43 @@ nav .button:active {
   border-radius: 8px;
 }
 
+.user-item-cart {
+  text-decoration: none; /* Removes underline */
+}
+
+.user-item-cart:visited {
+  text-decoration: none;
+}
+
+.user-item-cart button {
+  all: unset; /* Removes default button styles */
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  padding: 5px 15px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-item-cart button:hover {
+  background-color: #ddd;
+}
+
 .shop-icon {
   width: 20px;
   height: 20px;
   margin-right: 5px;
   vertical-align: sub;
 }
+
+.cart-item-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: sub;
+}
+
