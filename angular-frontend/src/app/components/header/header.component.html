@@ -1,12 +1,12 @@
 <header class="sticky-header">
   <div class="header-content">
     <a routerLink="/products" class="logo-link">
-      <!-- <div class="logo"></div> -->
       <img src="WebStoreHubLogo.png" class="logo" alt="logo">
-
     </a>
-    <nav>
-      <span *ngIf="isLoggedIn">Welcome, {{ username }}</span>
+    <nav style="display: flex; align-items: center; gap: 15px;">
+      <span *ngIf="isLoggedIn" class="username">
+        <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}
+      </span>
       <a *ngIf="!isLoggedIn" routerLink="/login" class="button">Log In</a>
       <a *ngIf="!isLoggedIn" routerLink="/registration" class="button">Sign Up</a>
       <a *ngIf="isLoggedIn" (click)="logout()" class="button">Log Out</a>
