@@ -61,3 +61,21 @@ nav .button:active {
   background-position: center;
   background-color: black;
 }
+
+.username {
+  position: relative;
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Adjust to fit your theme */
+  padding: 5px 10px;
+  background-color: #f3f3f3; /* Subtle background */
+  border-radius: 8px;
+}
+
+.shop-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: sub;
+}
