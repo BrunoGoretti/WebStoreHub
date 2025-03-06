@@ -40,10 +40,10 @@ namespace WebStoreHubAPI.Services
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
                 var token = GenerateJwtToken(user);
-                return (token, user.Username, user.Role, user.FullName); 
+                return (token, user.Username, user.Role, user.FullName);
             }
 
-            return (null, null, default, null); 
+            return (null, null, default, null);
         }
 
         public async Task<bool> IsUsernameTakenAsync(string username)
@@ -58,13 +58,13 @@ namespace WebStoreHubAPI.Services
 
             var claims = new[]
             {
-        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim(ClaimTypes.Email, user.Email),
-        new Claim(ClaimTypes.Role, user.Role.ToString())
-    };
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

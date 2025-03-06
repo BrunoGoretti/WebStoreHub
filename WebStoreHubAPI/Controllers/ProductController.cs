@@ -4,6 +4,8 @@ using WebStoreHubAPI.Dtos;
 using WebStoreHubAPI.Models;
 using WebStoreHubAPI.Services.Interfaces;
 using OfficeOpenXml;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebStoreHubAPI.Controllers
 {
@@ -57,6 +59,13 @@ namespace WebStoreHubAPI.Controllers
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        [HttpGet("searchProductsByName")]
+        public async Task<IActionResult> SearchProductsByName(string name)
+        {
+            var products = await _productService.SearchProductsByNameAsync(name);
+            return Ok(products);
         }
 
         [HttpPut("updateProduct")]

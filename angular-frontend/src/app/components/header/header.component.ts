@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
   username: string | null = '';
   isLoggedIn: boolean = false;
+  searchQuery: string = '';
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // Subscribe to authentication state changes
@@ -30,5 +32,11 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  onSearch(): void {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
+    }
   }
 }

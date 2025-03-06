@@ -25,6 +25,11 @@ main {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  position: relative;
+}
+
+.logo-link {
+  flex: 0 0 auto; /* Prevent the logo from growing or shrinking */
 }
 
 nav .button {
@@ -113,3 +118,53 @@ nav .button:active {
   vertical-align: sub;
 }
 
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: absolute; /* Position the search bar absolutely */
+  left: 50%; /* Center the search bar horizontally */
+  transform: translateX(-50%); /* Adjust for exact centering */
+  width: 40%; /* Set a fixed or percentage-based width */
+  max-width: 700px; /* Optional: Limit maximum width */
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 0 0 auto; /* Prevent the nav from growing or shrinking */
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+}
+
+.search-button {
+  padding: 7px 15px;
+  background-color: #ffffff;
+  /* border: none; */
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid #ccc;
+}
+
+.search-button:hover {
+  background-color: #d1d1d1;
+}
+
+.search-icon {
+  width: 23px;
+  height: 20px;
+  vertical-align: middle;
+}
