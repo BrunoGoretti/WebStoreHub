@@ -4,8 +4,8 @@
       <img src="WebStoreHubLogo.png" class="logo" alt="logo">
     </a>
     <div class="search-bar">
-      <input type="text" placeholder="Search products..." class="search-input">
-      <button class="search-button">
+      <input type="text" placeholder="Search products..." class="search-input" [(ngModel)]="searchQuery">
+      <button class="search-button" (click)="onSearch()">
         <img src="SearchIcon.png" alt="Search Icon" class="search-icon">
       </button>
     </div>

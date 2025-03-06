@@ -43,4 +43,19 @@ export class ProductService {
       }))
     );
   }
+
+  searchProductsByName(name: string): Observable<Product[]> {
+    const url = `${
+      this.baseUrl
+    }/Product/searchProductsByName?name=${encodeURIComponent(name)}`;
+    return this.http.get<any[]>(url).pipe(
+      map((products) => {
+        return products.map((product) => ({
+          ...product,
+          brand: product.brand?.brandName || 'Unknown',
+          imageUrl: product.images?.[0]?.imageUrl || '',
+        }));
+      })
+    );
+  }
 }
