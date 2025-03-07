@@ -1,4 +1,5 @@
 <div class="search-results">
+  <p class="search-title"> Search results: {{ searchQuery }}</p>
   <div *ngIf="products.length > 0; else noProducts" class="search-list-container">
     <div *ngFor="let product of paginatedProducts" class="product-item" (click)="onProductClick(product)" style="cursor: pointer;">
       <img [src]="product.imageUrl" alt="{{ product.name }}" width="200" />

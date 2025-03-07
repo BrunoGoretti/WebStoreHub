@@ -2,7 +2,7 @@
   <h1>{{ product.name }}</h1>
 
   <!-- Main Image -->
-  <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300" (click)="openImage(product.imageUrl)">
+  <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300" (click)="openImage(product.imageUrl)" style="cursor: pointer;">
 
   <!-- Additional Images -->
   <div *ngIf="product.images && product.images.length > 0" class="additional-images-container">

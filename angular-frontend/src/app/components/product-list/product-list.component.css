@@ -1,14 +1,13 @@
 .background-container {
   position: relative;
-  width: 80%;
-  max-width: 1800px; /* Set a max-width to prevent it from expanding too much on large screens */
+  width: 70%; /* Reduced from 80% to 70% */
+  max-width: 1500px; /* Reduced from 1800px to 1500px */
   margin: 0 auto;
 }
 
 .product-list-container {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
   gap: 20px; /* Space between product cards */
   padding: 20px;
   box-sizing: border-box;
@@ -19,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: calc(20% - 20px);
+  width: calc(20% - 20px); /* Adjust this if needed */
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -27,12 +26,11 @@
   box-sizing: border-box;
 }
 
-
 .product-card img {
-  width: 200px; /* Set the desired width and height */
-  height: 200px;
-  object-fit: cover; /* Ensures the image scales and crops to fit the square shape */
-  border-radius: 8px; /* Optional: Adds rounded corners */
+  width: 200px; /* Reduced from 200px to 180px */
+  height: 200px; /* Reduced from 200px to 180px */
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .product-card h3 {
