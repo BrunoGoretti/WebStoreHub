@@ -24,6 +24,7 @@ export class ProductService {
           ...product,
           brand: product.brand?.brandName || 'Unknown',
           imageUrl: product.images?.[0]?.imageUrl || '',
+          discountedPrice: product.discountedPrice || null,
         }));
       })
     );
