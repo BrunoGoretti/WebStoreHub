@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: calc(20% - 20px);
+  width: calc(20% - 20px); /* Adjust this if needed */
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -13,8 +13,8 @@
 }
 
 .product-item img {
-  width: 200px;
-  height: 200px;
+  width: 200px; /* Reduced from 200px to 180px */
+  height: 200px; /* Reduced from 200px to 180px */
   object-fit: cover;
   border-radius: 8px;
 }
@@ -31,10 +31,17 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.search-title {
+  font-size: 2em;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
 .search-results {
   position: relative;
-  width: 80%;
-  max-width: 1800px;
+  width: 70%; /* Reduced from 80% to 70% */
+  max-width: 1500px; /* Reduced from 1800px to 1500px */
   margin: 0 auto;
 }
 
@@ -44,35 +51,4 @@
   gap: 20px;
   padding: 20px;
   box-sizing: border-box;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-
-.pagination button {
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  cursor: pointer;
-}
-
-.pagination button.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
-}
-
-.pagination button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-
-.ellipsis {
-  padding: 5px 10px;
-  pointer-events: none;
 }

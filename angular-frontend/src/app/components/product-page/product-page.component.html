@@ -1,10 +1,8 @@
 <div *ngIf="product; else loading">
   <h1>{{ product.name }}</h1>
 
-  <!-- Main Image -->
-  <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300" (click)="openImage(product.imageUrl)">
+  <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300" (click)="openImage(product.imageUrl)" style="cursor: pointer;">
 
-  <!-- Additional Images -->
   <div *ngIf="product.images && product.images.length > 0" class="additional-images-container">
     <h2>Additional Images</h2>
     <div class="images-row">
@@ -15,7 +13,17 @@
   </div>
 
   <p>{{ product.description }}</p>
-  <p>Price: {{ product.price | currency }}</p>
+  <p>
+    <span *ngIf="product.discountedPrice" style="text-decoration: line-through;">
+      {{ product.price | currency }}
+    </span>
+    <span *ngIf="product.discountedPrice" style="color: red;">
+      {{ product.discountedPrice | currency }}
+    </span>
+    <span *ngIf="!product.discountedPrice">
+      {{ product.price | currency }}
+    </span>
+  </p>
   <p>Brand: {{ product.brand.brandName }}</p>
   <p>Stock: {{ product.stock }}</p>
 </div>
@@ -24,7 +32,6 @@
   <p>Loading product details...</p>
 </ng-template>
 
-<!-- Modal for Larger Image -->
 <div *ngIf="isModalOpen" class="modal-overlay" (click)="closeImage()">
   <div class="modal-content">
     <img [src]="selectedImageUrl" alt="Enlarged view" class="enlarged-image">
