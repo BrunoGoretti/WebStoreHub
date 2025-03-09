@@ -199,11 +199,11 @@ nav {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   overflow-y: auto;
-  transition: left 0.3s ease; /* Add transition for smooth animation */
+  transition: left 0.3s ease;
 }
 
 .catalog-bar.open {
-  left: 0; /* Move to the visible area */
+  left: 0;
 }
 
 .catalog-bar a {
