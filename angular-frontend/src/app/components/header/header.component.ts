@@ -15,16 +15,15 @@ export class HeaderComponent implements OnInit {
   username: string | null = '';
   isLoggedIn: boolean = false;
   searchQuery: string = '';
+  isCatalogOpen: boolean = false;
 
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Subscribe to authentication state changes
     this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
     });
 
-    // Subscribe to username changes
     this.authService.getUsername().subscribe((username) => {
       this.username = username;
     });
@@ -38,5 +37,15 @@ export class HeaderComponent implements OnInit {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
     }
+  }
+
+  toggleCatalog(): void {
+    this.isCatalogOpen = !this.isCatalogOpen;
+  }
+
+  onLogoClick(): void {
+    this.router.navigate(['/products']).then(() => {
+      window.location.reload();
+    });
   }
 }

@@ -1,9 +1,18 @@
 <header class="sticky-header">
   <div class="header-content">
-    <a routerLink="/products" class="logo-link">
+    <a class="logo-link" (click)="onLogoClick()">
       <img src="WebStoreHubLogo.png" class="logo" alt="logo">
     </a>
-    <div class="search-bar">
+        <button class="catalog-button" (click)="toggleCatalog()">
+          <img src="Catalog.png" alt="Cart Item Icon" class="cart-item-icon"> Catalog
+        </button>
+        <div [class.open]="isCatalogOpen" class="catalog-bar">
+          <a routerLink="/category/electronics">Electronics</a>
+          <a routerLink="/category/clothing">Clothing</a>
+          <a routerLink="/category/books">Books</a>
+        </div>
+        <div [class.open]="isCatalogOpen" class="backdrop" (click)="toggleCatalog()"></div>
+        <div class="search-bar">
       <input type="text" placeholder="Search products..." class="search-input" [(ngModel)]="searchQuery">
       <button class="search-button" (click)="onSearch()">
         <img src="SearchIcon.png" alt="Search Icon" class="search-icon">
