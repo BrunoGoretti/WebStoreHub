@@ -7,6 +7,7 @@
           <img src="Catalog.png" alt="Cart Item Icon" class="cart-item-icon"> Catalog
         </button>
         <div [class.open]="isCatalogOpen" class="catalog-bar">
+          <button class="close-button" (click)="toggleCatalog()">X</button>
           <a routerLink="/category/electronics">Electronics</a>
           <a routerLink="/category/clothing">Clothing</a>
           <a routerLink="/category/books">Books</a>

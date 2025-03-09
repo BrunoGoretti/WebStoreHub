@@ -207,10 +207,11 @@ nav {
 }
 
 .catalog-bar a {
-  font-size: 18px;
   font-weight: bold;
   display: block;
   padding: 12px 16px;
+  position: relative;
+  top: 30px;
   color: #333;
   text-decoration: none;
   font-size: 16px;
@@ -236,4 +237,21 @@ nav {
 .backdrop.open {
   opacity: 1; /* Make visible */
   visibility: visible; /* Show */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #000000;
 }
