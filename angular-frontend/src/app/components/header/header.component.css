@@ -178,8 +178,8 @@ nav {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  position: relative;
-  right: 20%;
+  position: fixed;
+  left: 20%;
   transition: background-color 0.3s ease;
 }
 
