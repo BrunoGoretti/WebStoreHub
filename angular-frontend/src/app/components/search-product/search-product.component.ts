@@ -49,6 +49,7 @@ export class SearchProductComponent extends PaginationComponent implements OnIni
     } else {
       this.products = this.sortingService.sortProducts(this.products, sortOption);
     }
+    this.currentPage = 1;
     this.updatePaginatedProducts();
   }
 }
