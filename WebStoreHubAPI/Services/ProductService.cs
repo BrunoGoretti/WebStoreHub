@@ -46,6 +46,7 @@ namespace WebStoreHubAPI.Services
                .Include(p => p.ProductType)
                .Include(p => p.Brand)
                .Include(p => p.Images)
+               .Include(p => p.Discounts)
                .ToListAsync();
         }
 
@@ -55,6 +56,7 @@ namespace WebStoreHubAPI.Services
                 .Include(p => p.ProductType)
                 .Include(p => p.Brand)
                 .Include(p => p.Images)
+                .Include(p => p.Discounts)
                 .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
@@ -64,6 +66,7 @@ namespace WebStoreHubAPI.Services
                 .Where(p => p.Name.ToLower().Contains(name.ToLower()) || p.Description.ToLower().Contains(name.ToLower()))
                 .Include(p => p.Brand)
                 .Include(p => p.Images)
+                .Include(p => p.Discounts)
                 .ToListAsync();
         }
 

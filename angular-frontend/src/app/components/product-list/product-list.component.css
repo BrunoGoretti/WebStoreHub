@@ -40,3 +40,11 @@
 .product-card p {
   margin: 5px 0;
 }
+
+.price-container {
+  display: flex;
+  align-items: center; /* Vertically center the content */
+  gap: 8px; /* Space between elements */
+  flex-wrap: wrap; /* Allow wrapping if the container is too small */
+}
+

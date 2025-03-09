@@ -5,18 +5,20 @@
     <div *ngFor="let product of paginatedProducts" class="product-card" (click)="onProductClick(product)" style="cursor: pointer;">
       <img [src]="product.imageUrl" alt="{{ product.name }}" width="200" />
       <h3>{{ product.name }}</h3>
-      <p>
-        <span *ngIf="product.discountedPrice" style="text-decoration: line-through;">
-          {{ product.price | currency }}
-        </span>
+      <div class="price-container">
         <span *ngIf="product.discountedPrice" style="color: red;">
           {{ product.discountedPrice | currency }}
+        </span>
+        <span *ngIf="product.discountedPrice" style="text-decoration: line-through;">
+          {{ product.price | currency }}
         </span>
         <span *ngIf="!product.discountedPrice">
           {{ product.price | currency }}
         </span>
-      </p>
-      <p>{{ product.description }}</p>
+        <span *ngIf="(product.discountPercentage ?? 0) > 0" style="color: red;">
+          -{{ product.discountPercentage }}%
+        </span>
+      </div>
       <p>Brand: {{ product.brand }}</p>
       <p>Stock: {{ product.stock }}</p>
     </div>

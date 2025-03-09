@@ -11,8 +11,8 @@ export class SortingService {
         return [...products].sort((a, b) => a.price - b.price);
       case 'priceHighToLow':
         return [...products].sort((a, b) => b.price - a.price);
-      case 'discountHighToLow':
-        return [...products].sort((a, b) => (b.discountedPrice || 0) - (a.discountedPrice || 0));
+      case 'withbigdiscounts':
+        return [...products].sort((a, b) => (b.discountPercentage || 0) - (a.discountPercentage || 0));
       default:
         return products;
     }
