@@ -23,5 +23,7 @@ namespace WebStoreHubAPI.Models
         [ForeignKey("BrandId")]
         public BrandModel Brand { get; set; }
         public List<ImgbbModel> Images { get; set; }
+
+        public List<DiscountModel> Discounts { get; set; }
     }
 }

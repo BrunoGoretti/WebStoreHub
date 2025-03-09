@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   price: number;
   discountedPrice?: number;
+  discountPercentage?: number;
   brand: { brandId: number; brandName: string };
   stock: number;
   images: { imageUrl: string; mainPicture: number }[];

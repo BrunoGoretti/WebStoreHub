@@ -25,6 +25,7 @@ export class ProductService {
           brand: product.brand?.brandName || 'Unknown',
           imageUrl: product.images?.[0]?.imageUrl || '',
           discountedPrice: product.discountedPrice || null,
+          discountPercentage: product.discounts?.[0]?.discountPercentage || 0,
         }));
       })
     );
@@ -41,6 +42,7 @@ export class ProductService {
         },
         imageUrl: product.images?.[0]?.imageUrl || '',
         images: product.images || [],
+        discountPercentage: product.discounts?.[0]?.discountPercentage || 0,
       }))
     );
   }
@@ -55,6 +57,7 @@ export class ProductService {
           ...product,
           brand: product.brand?.brandName || 'Unknown',
           imageUrl: product.images?.[0]?.imageUrl || '',
+          discountPercentage: product.discounts?.[0]?.discountPercentage || 0,
         }));
       })
     );

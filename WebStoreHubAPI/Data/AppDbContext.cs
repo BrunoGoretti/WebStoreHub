@@ -46,7 +46,7 @@ namespace WebStoreHubAPI.Data
 
             modelBuilder.Entity<DiscountModel>()
                 .HasOne(d => d.Product)
-                .WithMany()
+                .WithMany(p => p.Discounts)
                 .HasForeignKey(d => d.ProductId);
 
             modelBuilder.Entity<ImgbbModel>()

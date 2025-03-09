@@ -15,7 +15,7 @@ export class FilterSortComponent {
     { value: '', label: 'Default' },
     { value: 'priceLowToHigh', label: 'Price Low To High' },
     { value: 'priceHighToLow', label: 'Price High To Low' },
-    { value: 'discountHighToLow', label: 'Discount High To Low' },
+    { value: 'withbigdiscounts', label: 'With big discounts' },
   ];
 
   onSortChange(event: Event): void {
