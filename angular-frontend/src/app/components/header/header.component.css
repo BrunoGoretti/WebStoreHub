@@ -73,7 +73,7 @@ nav .button:active {
   font-size: 18px;
   font-weight: bold;
   color: #333; /* Adjust to fit your theme */
-  padding: 5px 10px;
+  padding: 7px 10px;
   background-color: #f3f3f3; /* Subtle background */
   border-radius: 8px;
 }
@@ -93,7 +93,7 @@ nav .button:active {
   font-size: 18px;
   font-weight: bold;
   color: #333;
-  padding: 5px 15px;
+  padding: 7px 15px;
   background-color: #f3f3f3;
   border-radius: 8px;
   cursor: pointer;
@@ -170,7 +170,7 @@ nav {
 }
 
 .catalog-button {
-  padding: 5px 15px;
+  padding: 7px 15px;
   font-size: 18px;
   font-weight: bold;
   background-color: #f3f3f3;
