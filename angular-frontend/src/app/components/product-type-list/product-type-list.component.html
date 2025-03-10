@@ -1,0 +1,39 @@
+<div class="background-container">
+  <app-filter-sort (sortChange)="onSortChange($event)"></app-filter-sort>
+  <p class="type-title">Products of Type: {{ typeName }}</p>
+
+  <div *ngIf="products.length > 0; else noProducts" class="product-list-container">
+    <div *ngFor="let product of paginatedProducts" class="product-card" (click)="onProductClick(product)" style="cursor: pointer;">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" width="200" />
+      <h3>{{ product.name }}</h3>
+      <div class="price-container">
+        <span *ngIf="product.discountedPrice" style="color: red;">
+          {{ product.discountedPrice | currency }}
+        </span>
+        <span *ngIf="product.discountedPrice" style="text-decoration: line-through;">
+          {{ product.price | currency }}
+        </span>
+        <span *ngIf="!product.discountedPrice">
+          {{ product.price | currency }}
+        </span>
+        <span *ngIf="(product.discountPercentage ?? 0) > 0" style="color: red;">
+          -{{ product.discountPercentage }}%
+        </span>
+      </div>
+      <p>Brand: {{ product.brand.brandName }}</p>
+      <p>Stock: {{ product.stock }}</p>
+    </div>
+  </div>
+
+  <ng-template #noProducts>
+    <p>No products available for {{ typeName }}.</p>
+  </ng-template>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <button *ngFor="let page of pages" (click)="changePage(page)" [class.active]="page === currentPage" [disabled]="page === '...'">
+      {{ page }}
+    </button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
