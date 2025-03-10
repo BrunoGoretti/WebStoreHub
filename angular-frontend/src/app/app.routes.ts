@@ -6,6 +6,7 @@ import { UserItemCartComponent } from './components/user-item-cart/user-item-car
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchProductComponent } from './components/search-product/search-product.component';
+import { ProductTypeListComponent } from './components/product-type-list/product-type-list.component';
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'registration', component: RegistrationComponent },
   { path: 'search', component: SearchProductComponent },
+  { path: 'category/:typeName', component: ProductTypeListComponent },
 ];
 
 @NgModule({

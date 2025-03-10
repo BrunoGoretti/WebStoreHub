@@ -1,7 +1,7 @@
 import { Component, OnInit  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
-import { Product } from '../../models/product';
+import { Product } from '../../models/product-model';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SortingService } from '../../services/sorting/sorting.service';
