@@ -1,35 +1,50 @@
-<div *ngIf="product; else loading">
-  <h1>{{ product.name }}</h1>
-
-  <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" width="300" (click)="openImage(product.imageUrl)" style="cursor: pointer;">
-
-  <div *ngIf="product.images && product.images.length > 0" class="additional-images-container">
-    <h2>Additional Images</h2>
-    <div class="images-row">
-      <div *ngFor="let image of product.images" class="image-item">
-        <img [src]="image.imageUrl" alt="{{ product.name }}" width="200" (click)="openImage(image.imageUrl)">
-      </div>
-    </div>
+<div *ngIf="product; else loading" class="product-container">
+  <div class="product-header">
+    <h1>{{ product.name }}</h1>
+    <p class="brand">Brand: {{ product.brand.brandName }}</p>
   </div>
 
-  <p>{{ product.description }}</p>
-  <p>
-    <span *ngIf="product.discountedPrice" style="text-decoration: line-through;">
-      {{ product.price | currency }}
-    </span>
-    <span *ngIf="product.discountedPrice" style="color: red;">
-      {{ product.discountedPrice | currency }}
-    </span>
-    <span *ngIf="!product.discountedPrice">
-      {{ product.price | currency }}
-    </span>
-  </p>
-  <p>Brand: {{ product.brand.brandName }}</p>
-  <p>Stock: {{ product.stock }}</p>
+  <div class="product-content">
+    <div class="product-images">
+      <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" class="main-image" (click)="openImage(product.imageUrl)">
+
+      <div *ngIf="product.images && product.images.length > 0" class="additional-images">
+        <h2 class="additional-images-title">Additional Images</h2>
+        <div class="images-grid">
+          <div *ngFor="let image of product.images" class="image-item">
+            <img [src]="image.imageUrl" alt="{{ product.name }}" (click)="openImage(image.imageUrl)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-details">
+      <p class="description">{{ product.description }}</p>
+
+      <div class="price-section">
+        <span *ngIf="product.discountedPrice" class="original-price">
+          {{ product.price | currency }}
+        </span>
+        <span *ngIf="(product.discountPercentage ?? 0) > 0" style="color: red;">
+          -{{ product.discountPercentage }}%
+        </span>
+        <span *ngIf="product.discountedPrice" class="discounted-price">
+          {{ product.discountedPrice | currency }}
+        </span>
+        <span *ngIf="!product.discountedPrice" class="price">
+          {{ product.price | currency }}
+        </span>
+      </div>
+
+      <p class="stock">Stock: {{ product.stock }}</p>
+    </div>
+  </div>
 </div>
 
 <ng-template #loading>
-  <p>Loading product details...</p>
+  <div class="loading-container">
+    <p>Loading product details...</p>
+  </div>
 </ng-template>
 
 <div *ngIf="isModalOpen" class="modal-overlay" (click)="closeImage()">
