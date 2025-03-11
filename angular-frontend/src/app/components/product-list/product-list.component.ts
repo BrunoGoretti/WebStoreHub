@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
+import { ProductTypeService } from '../../services/productType/product-type.service';
+import { ProductTypeModel } from '../../models/product-type-model';
 
 @Component({
   selector: 'app-product-list',
@@ -17,8 +19,14 @@ import { FilterSortComponent } from '../../components/filter-sort/filter-sort.co
 })
 export class ProductListComponent extends PaginationComponent implements OnInit {
   originalProducts: Product[] = [];
+  typeName: string = '';
+  productTypes: ProductTypeModel[] = [];
 
-  constructor(private productService: ProductService, private router: Router, private sortingService: SortingService) {
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private sortingService: SortingService,
+    private productTypeService: ProductTypeService,) {
     super();
   }
 
@@ -27,6 +35,9 @@ export class ProductListComponent extends PaginationComponent implements OnInit 
       this.products = data;
       this.originalProducts = [...data];
       this.updatePaginatedProducts();
+    });
+    this.productTypeService.getAllProductTypes().subscribe((data) => {
+      this.productTypes = data;
     });
   }
 
@@ -43,5 +54,19 @@ export class ProductListComponent extends PaginationComponent implements OnInit 
     }
     this.currentPage = 1;
     this.updatePaginatedProducts();
+  }
+
+  loadProductsByType(typeName: string): void {
+    this.productService.getAllProducts().subscribe((data) => {
+      this.products = data.filter(product => product.productType?.typeName === typeName);
+      this.originalProducts = [...this.products];
+      this.currentPage = 1;
+      this.updatePaginatedProducts();
+    });
+  }
+
+  filterByProductType(typeName: string): void {
+    this.typeName = typeName;
+    this.loadProductsByType(typeName);
   }
 }
