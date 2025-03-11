@@ -8,14 +8,23 @@ namespace WebStoreHubAPI.Services
     public class ProductTypeService : IProductTypeService
     {
         private readonly AppDbContext _dbContext;
+        private readonly IImgbbService _imgbbService;
 
-        public ProductTypeService(AppDbContext context)
+        public ProductTypeService(AppDbContext context, IImgbbService imgbbService)
         {
             _dbContext = context;
+            _imgbbService = imgbbService;
         }
 
-        public async Task<ProductTypeModel> CreateProductTypeAsync(ProductTypeModel productType)
+        public async Task<ProductTypeModel> CreateProductTypeAsync(ProductTypeModel productType, IFormFile imageFile)
         {
+            if (imageFile != null)
+            {
+                var imageUrl = await _imgbbService.UploadToImgbbAsync(imageFile);
+                if (imageUrl == null) throw new Exception("Failed to upload image to Imgbb");
+                productType.ImageUrl = imageUrl;
+            }
+
             _dbContext.DbProductTypes.Add(productType);
             await _dbContext.SaveChangesAsync();
             return productType;
@@ -31,7 +40,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbProductTypes.FirstOrDefaultAsync(p => p.ProductTypeId == productTypeId);
         }
 
-        public async Task<ProductTypeModel> UpdateProductTypeAsync(int productTypeId, string ProductTypeName)
+        public async Task<ProductTypeModel> UpdateProductTypeAsync(int productTypeId, string productTypeName, IFormFile imageFile)
         {
             var existingType = await _dbContext.DbProductTypes.FirstOrDefaultAsync(p => p.ProductTypeId == productTypeId);
 
@@ -40,12 +49,17 @@ namespace WebStoreHubAPI.Services
                 return null;
             }
 
-            existingType.ProductTypeId = productTypeId;
-            existingType.TypeName = ProductTypeName;
+            existingType.TypeName = productTypeName;
+
+            if (imageFile != null)
+            {
+                var imageUrl = await _imgbbService.UploadToImgbbAsync(imageFile);
+                if (imageUrl == null) throw new Exception("Failed to upload image to Imgbb");
+                existingType.ImageUrl = imageUrl;
+            }
 
             await _dbContext.SaveChangesAsync();
             return existingType;
-
         }
 
         public async Task<bool> RemoveProductTypeAsync(int productTypeId)

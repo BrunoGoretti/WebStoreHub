@@ -7,5 +7,6 @@ namespace WebStoreHubAPI.Models
         [Key]
         public int ProductTypeId { get; set; }
         public string TypeName { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
