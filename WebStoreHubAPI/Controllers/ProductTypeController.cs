@@ -21,7 +21,7 @@ namespace WebStoreHubAPI.Controllers
 
         [HttpPost("addProductType")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddProductType(AddTypeDto type)
+        public async Task<IActionResult> AddProductType(AddTypeDto type, IFormFile imageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -33,7 +33,7 @@ namespace WebStoreHubAPI.Controllers
                 TypeName = type.TypeName
             };
 
-            var result = await _productTypeService.CreateProductTypeAsync(productType);
+            var result = await _productTypeService.CreateProductTypeAsync(productType, imageFile);
             return Ok(result);
         }
 
@@ -56,10 +56,10 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpPut("updateProductType")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProductType(int productTypeId, string updatedProductType)
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateProductType(int productTypeId, string updatedProductType, IFormFile imageFile)
         {
-            var productType = await _productTypeService.UpdateProductTypeAsync(productTypeId, updatedProductType);
+            var productType = await _productTypeService.UpdateProductTypeAsync(productTypeId, updatedProductType, imageFile);
 
             if (productType == null)
             {

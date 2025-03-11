@@ -13,6 +13,6 @@ export class ProductTypeService {
 
   getAllProductTypes(): Observable<ProductTypeModel[]> {
     const url = `${this.baseUrl}/ProductType/getAllProductTypes`;
-    return this.http.get<any>(url);
+    return this.http.get<ProductTypeModel[]>(url);
   }
 }

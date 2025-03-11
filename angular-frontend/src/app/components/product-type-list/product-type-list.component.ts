@@ -6,6 +6,8 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
+import { ProductTypeService } from '../../services/productType/product-type.service';
+import { ProductTypeModel } from '../../models/product-type-model';
 
 @Component({
   selector: 'app-product-type-list',
@@ -18,14 +20,26 @@ export class ProductTypeListComponent extends PaginationComponent implements OnI
   originalProducts: Product[] = [];
   typeName: string = '';
   searchQuery: string = '';
+  productTypes: ProductTypeModel[] = [];
 
-  constructor( private productService: ProductService, private route: ActivatedRoute, private router: Router, private sortingService: SortingService) { super();
+  constructor(
+    private productService: ProductService,
+    private productTypeService: ProductTypeService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private sortingService: SortingService
+  ) {
+    super();
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.typeName = params['typeName'];
       this.loadProductsByType(this.typeName);
+    });
+
+    this.productTypeService.getAllProductTypes().subscribe((data) => {
+      this.productTypes = data;
     });
   }
 
@@ -36,6 +50,11 @@ export class ProductTypeListComponent extends PaginationComponent implements OnI
       this.currentPage = 1;
       this.updatePaginatedProducts();
     });
+  }
+
+  filterByProductType(typeName: string): void {
+    this.typeName = typeName;
+    this.loadProductsByType(typeName);
   }
 
   onProductClick(product: Product): void {

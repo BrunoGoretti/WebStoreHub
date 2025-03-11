@@ -8,9 +8,12 @@
     </button>
     <div [class.open]="isCatalogOpen" class="catalog-bar">
       <button class="close-button" (click)="toggleCatalog()">X</button>
-      <a *ngFor="let type of productTypes" [routerLink]="['/category', type.typeName]" (click)="closeCatalog()">
-      {{ type.typeName }}
-   </a>
+      <div class="catalog-items">
+        <a *ngFor="let type of productTypes" [routerLink]="['/category', type.typeName]" (click)="closeCatalog()">
+          <img *ngIf="type.imageUrl" [src]="type.imageUrl" alt="{{ type.typeName }}" class="catalog-image">
+          {{ type.typeName }}
+        </a>
+      </div>
     </div>
     <div [class.open]="isCatalogOpen" class="backdrop" (click)="toggleCatalog()"></div>
     <div class="search-bar">

@@ -38,7 +38,7 @@ namespace WebStoreHubAPI.Services
             return image;
         }
 
-        private async Task<string> UploadToImgbbAsync(IFormFile imageFile)
+        public async Task<string> UploadToImgbbAsync(IFormFile imageFile)
         {
             var apiKey = _configuration["ImgbbSettings:ApiKey"];
             var uploadUrl = _configuration["ImgbbSettings:UploadUrl"];
