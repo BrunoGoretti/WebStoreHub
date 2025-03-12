@@ -1,41 +1,134 @@
-.additional-images-container {
-  margin-top: 20px;
+.product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.images-row {
-  display: flex; /* Make the container a flexbox */
-  flex-direction: row; /* Align items horizontally */
-  overflow-x: auto; /* Add horizontal scroll if images overflow */
-  gap: 10px; /* Add spacing between images */
-  padding: 10px 0; /* Add some padding */
+.product-header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.image-item {
-  flex: 0 0 auto; /* Prevent flex items from shrinking or growing */
+.product-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.brand {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.product-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-images {
+  flex: 1 1 60%;
+}
+
+.main-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.main-image:hover {
+  transform: scale(1.05);
+}
+
+.additional-images {
+  margin-top: 10px;
+}
+
+.additional-images-title {
+  margin-bottom: 10px;
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
 }
 
 .image-item img {
-  border: 1px solid #ddd; /* Optional: Add a border around images */
-  border-radius: 4px; /* Optional: Add rounded corners */
-  padding: 5px; /* Optional: Add padding inside the border */
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-/* Modal Overlay */
+.image-item img:hover {
+  transform: scale(1.05);
+}
+
+.product-details {
+  flex: 1 1 35%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.price-section {
+  margin: 20px 0;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
+
+.discounted-price {
+  font-size: 1.5rem;
+  color: #ff1900;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.stock {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top of everything */
+  z-index: 1000;
 }
 
-/* Modal Content */
 .modal-content {
   position: relative;
   background-color: white;
@@ -46,15 +139,13 @@
   overflow: auto;
 }
 
-/* Enlarged Image */
 .enlarged-image {
   max-width: 100%;
-  max-height: 80vh; /* Limit height to 80% of the viewport height */
+  max-height: 80vh;
   display: block;
   margin: 0 auto;
 }
 
-/* Close Button */
 .close-button {
   position: absolute;
   top: 10px;
@@ -68,4 +159,22 @@
 
 .close-button:hover {
   color: #000;
+}
+
+.add-to-cart-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
+
+.add-to-cart-button:hover {
+  background-color: #003f7f;
 }
