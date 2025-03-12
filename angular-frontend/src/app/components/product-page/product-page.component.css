@@ -48,7 +48,7 @@
 }
 
 .additional-images-title {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .images-grid {
@@ -116,7 +116,6 @@
   color: #666;
 }
 
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -130,7 +129,6 @@
   z-index: 1000;
 }
 
-/* Modal Content */
 .modal-content {
   position: relative;
   background-color: white;
@@ -141,7 +139,6 @@
   overflow: auto;
 }
 
-/* Enlarged Image */
 .enlarged-image {
   max-width: 100%;
   max-height: 80vh;
@@ -149,7 +146,6 @@
   margin: 0 auto;
 }
 
-/* Close Button */
 .close-button {
   position: absolute;
   top: 10px;
@@ -163,4 +159,22 @@
 
 .close-button:hover {
   color: #000;
+}
+
+.add-to-cart-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
+
+.add-to-cart-button:hover {
+  background-color: #003f7f;
 }

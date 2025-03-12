@@ -42,4 +42,10 @@ export class ProductPageComponent {
     this.isModalOpen = false;
     this.selectedImageUrl = '';
   }
+
+  addToCart(product: Product): void {
+    if (product) {
+      alert(`${product.name} has been added to the cart!`);
+    }
+  }
 }

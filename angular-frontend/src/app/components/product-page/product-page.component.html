@@ -20,7 +20,6 @@
 
     <div class="product-details">
       <p class="description">{{ product.description }}</p>
-
       <div class="price-section">
         <span *ngIf="product.discountedPrice" class="original-price">
           {{ product.price | currency }}
@@ -35,8 +34,8 @@
           {{ product.price | currency }}
         </span>
       </div>
-
       <p class="stock">Stock: {{ product.stock }}</p>
+      <button class="add-to-cart-button" (click)="addToCart(product)">Add to Cart</button>
     </div>
   </div>
 </div>
