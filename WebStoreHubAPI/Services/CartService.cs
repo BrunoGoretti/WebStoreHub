@@ -93,8 +93,11 @@ namespace WebStoreHubAPI.Services
         public async Task<List<CartItemModel>> GetCartItems(int userId)
         {
             return await _dbContext.CartItems
-                .Include(c => c.Product)
                 .Where(c => c.UserId == userId)
+                .Include(c => c.Product)
+                    .ThenInclude(p => p.Images)
+                .Include(c => c.Product)
+                    .ThenInclude(p => p.Discounts)
                 .ToListAsync();
         }
     }
