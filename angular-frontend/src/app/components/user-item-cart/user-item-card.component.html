@@ -1,1 +1,21 @@
-<p>user-item-card works!</p>
+<div *ngIf="cartItems.length > 0; else emptyCart" class="cart-container">
+  <h2>Your Cart</h2>
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <div class="item-image">
+      <img [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-image">
+    </div>
+    <div class="item-details">
+      <h3>{{ item.product.name }}</h3>
+      <p>Quantity: {{ item.quantity }}</p>
+      <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
+    </div>
+    <button (click)="removeItem(item.cartItemId)">Remove</button>
+  </div>
+  <button (click)="clearCart()">Clear Cart</button>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <p>Your cart is empty.</p>
+  </div>
+</ng-template>

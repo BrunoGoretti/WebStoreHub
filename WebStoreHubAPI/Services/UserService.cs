@@ -33,17 +33,17 @@ namespace WebStoreHubAPI.Services
             return user;
         }
 
-        public async Task<(string Token, string Username, UserRole Role, string FullName)> LoginUserAsync(string email, string password)
+        public async Task<(string Token, string Username, UserRole Role, string FullName, int UserId)> LoginUserAsync(string email, string password)
         {
             var user = await _dbContext.DbUsers.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
                 var token = GenerateJwtToken(user);
-                return (token, user.Username, user.Role, user.FullName);
+                return (token, user.Username, user.Role, user.FullName, user.UserId);
             }
 
-            return (null, null, default, null);
+            return (null, null, default, null, 0);
         }
 
         public async Task<bool> IsUsernameTakenAsync(string username)
@@ -51,7 +51,7 @@ namespace WebStoreHubAPI.Services
             return await _dbContext.DbUsers.AnyAsync(u => u.Username == username);
         }
 
-        public string GenerateJwtToken(UserModel user) // Removed async
+        public string GenerateJwtToken(UserModel user) 
         {
             if (string.IsNullOrEmpty(_configuration["Jwt:Key"]))
                 throw new InvalidOperationException("JWT Key is not configured");
@@ -63,7 +63,8 @@ namespace WebStoreHubAPI.Services
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("UserId", user.UserId.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

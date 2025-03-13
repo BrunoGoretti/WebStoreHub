@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'search', component: SearchProductComponent },
   { path: 'category/:typeName', component: ProductTypeListComponent },
+  { path: 'product/:id', component: ProductPageComponent },
 ];
 
 @NgModule({

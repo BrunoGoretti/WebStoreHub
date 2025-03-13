@@ -45,11 +45,11 @@ namespace WebStoreHubAPI.Controllers
                 return BadRequest("Email and password are required.");
             }
 
-            (string? token, string? username, UserRole role, string? fullName) = await _userService.LoginUserAsync(email, password);
+            (string? token, string? username, UserRole role, string? fullName, int userId) = await _userService.LoginUserAsync(email, password);
 
             if (token != null)
             {
-                return Ok(new { Token = token, Username = username, FullName = fullName, Role = role });
+                return Ok(new { Token = token, Username = username, FullName = fullName, Role = role, UserId = userId });
             }
 
             return Unauthorized("Invalid email or password");
