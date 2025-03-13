@@ -75,4 +75,8 @@ export class UserItemCartComponent implements OnInit {
     }
   }
 
+  buyItems(): void {
+    this.router.navigate(['/checkout']);
+  }
+
 }

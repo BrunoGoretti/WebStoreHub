@@ -3,7 +3,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto 0;
 }
 
 .cart-item {
@@ -53,4 +53,46 @@ button:hover {
   padding: 20px;
   font-size: 1.2em;
   color: #666;
+}
+
+.buy-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 1.1em;
+}
+
+.buy-button:hover {
+  background-color: #45a049;
+}
+
+.clear-cart-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cart-actions{
+  margin: 20px 0px 0px;
+}
+
+.remove-cart-button {
+  background-color: #d3d3d3;
+  color: rgb(41, 41, 41);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.remove-cart-button:hover {
+  background-color: #a9a9a9;
 }

@@ -9,9 +9,12 @@
       <p>Quantity: {{ item.quantity }}</p>
       <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
     </div>
-    <button (click)="removeItem(item.cartItemId)">Remove</button>
+    <button (click)="removeItem(item.cartItemId)" class="remove-cart-button">Remove</button>
   </div>
-  <button (click)="clearCart()">Clear Cart</button>
+  <div class="cart-actions">
+    <button (click)="clearCart()" class="clear-cart-button">Clear Cart</button>
+    <button (click)="buyItems()" class="buy-button">Buy Now</button>
+  </div>
 </div>
 
 <ng-template #emptyCart>
