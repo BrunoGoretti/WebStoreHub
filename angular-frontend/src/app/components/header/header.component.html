@@ -25,7 +25,8 @@
     <nav style="display: flex; align-items: center; gap: 15px;">
       <a routerLink="/useritemcart" class="user-item-cart">
         <button *ngIf="isLoggedIn" class="cart-button">
-          <img src ="CartItemIcon.png" alt="Cart Item Icon" class="cart-item-icon"> My Cart
+          <img src="CartItemIcon.png" alt="Cart Item Icon" class="cart-item-icon"> My Cart
+          <span *ngIf="cartItemCount > 0" class="cart-item-count">{{ cartItemCount }}</span>
         </button>
       </a>
       <span *ngIf="isLoggedIn" class="username">

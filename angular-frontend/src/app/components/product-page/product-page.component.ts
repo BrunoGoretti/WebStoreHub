@@ -47,13 +47,11 @@ export class ProductPageComponent {
       }
     }
 
-  // Open the modal with the clicked image
   openImage(imageUrl: string): void {
     this.selectedImageUrl = imageUrl;
     this.isModalOpen = true;
   }
 
-  // Close the modal
   closeImage(): void {
     this.isModalOpen = false;
     this.selectedImageUrl = '';

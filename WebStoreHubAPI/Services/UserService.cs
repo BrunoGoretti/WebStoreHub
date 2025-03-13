@@ -78,14 +78,14 @@ namespace WebStoreHubAPI.Services
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token); // Directly return string
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<string> GeneratePasswordResetTokenAsync(UserModel user)
         {
             var token = Guid.NewGuid().ToString();
             user.PasswordResetToken = token;
-            user.PasswordResetTokenExpiration = DateTime.UtcNow.AddHours(1); // Token expires in 1 hour
+            user.PasswordResetTokenExpiration = DateTime.UtcNow.AddHours(1);
             _dbContext.DbUsers.Update(user);
             await _dbContext.SaveChangesAsync();
 
@@ -99,20 +99,17 @@ namespace WebStoreHubAPI.Services
             var smtpEmail = _configuration["EmailSettings:EmailAddress"];
             var smtpPassword = _configuration["EmailSettings:EmailPassword"];
 
-            // Check for missing configurations
             if (string.IsNullOrEmpty(smtpServer) || string.IsNullOrEmpty(smtpPortString) ||
                 string.IsNullOrEmpty(smtpEmail) || string.IsNullOrEmpty(smtpPassword))
             {
                 throw new ArgumentException("SMTP configuration is missing or invalid.");
             }
 
-            // Parse SMTP Port
             if (!int.TryParse(smtpPortString, out var smtpPort))
             {
                 throw new ArgumentException("SMTP port is invalid.");
             }
 
-            // Create the email message
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("WebStoreHub", smtpEmail));
             message.To.Add(new MailboxAddress("", email));
@@ -147,7 +144,7 @@ namespace WebStoreHubAPI.Services
         public async Task ResetPasswordAsync(UserModel user, string newPassword)
         {
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
-            user.PasswordResetToken = null;  // Clear the token after use
+            user.PasswordResetToken = null;
             user.PasswordResetTokenExpiration = null;
             _dbContext.DbUsers.Update(user);
             await _dbContext.SaveChangesAsync();

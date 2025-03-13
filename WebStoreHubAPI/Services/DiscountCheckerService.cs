@@ -23,7 +23,6 @@ public class DiscountCheckerService : BackgroundService
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                // Fetch discounts that need to be deactivated
                 var discountsToDeactivate = await dbContext.Discounts
                     .Where(d => d.IsActive && d.EndDate < DateTime.Now)
                     .ToListAsync(stoppingToken);
@@ -39,7 +38,6 @@ public class DiscountCheckerService : BackgroundService
                     }
                 }
 
-                // Fetch discounts that need to be activated
                 var discountsToActivate = await dbContext.Discounts
                     .Where(d => !d.IsActive && d.StartDate <= DateTime.Now && d.EndDate >= DateTime.Now)
                     .ToListAsync(stoppingToken);
@@ -52,7 +50,6 @@ public class DiscountCheckerService : BackgroundService
                     {
                         decimal newDiscountedPrice = product.Price;
 
-                        // Calculate the discount
                         if (discount.DiscountPercentage > 0)
                         {
                             var discountAmount = product.Price * (discount.DiscountPercentage / 100);
@@ -69,7 +66,6 @@ public class DiscountCheckerService : BackgroundService
                 await dbContext.SaveChangesAsync(stoppingToken);
             }
 
-            // Delay before running the next check
             await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
         }
     }

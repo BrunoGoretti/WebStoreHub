@@ -20,11 +20,9 @@ namespace WebStoreHubAPI.Services
 
         public async Task<ImgbbModel> AddImageAsync(IFormFile imageFile, int productId, ImageMain mainPicture)
         {
-            // Step 1: Upload to Imgbb
             var imageUrl = await UploadToImgbbAsync(imageFile);
             if (imageUrl == null) throw new Exception("Failed to upload image to Imgbb");
 
-            // Step 2: Save in Database
             var image = new ImgbbModel
             {
                 ProductId = productId,

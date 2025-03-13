@@ -116,10 +116,8 @@ namespace WebStoreHubAPI.Controllers
                     await file.CopyToAsync(stream);
                     stream.Position = 0;
 
-                    // Import discounts from the Excel file
                     var discounts = await _discountService.ImportDiscountsFromExcelAsync(stream);
 
-                    // Apply discounts to the products
                     await _discountService.ApplyDiscountsAsync(discounts);
                 }
 
