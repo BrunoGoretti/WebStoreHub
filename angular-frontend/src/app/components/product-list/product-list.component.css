@@ -1,14 +1,14 @@
 .background-container {
   position: relative;
-  width: 70%; /* Reduced from 80% to 70% */
-  max-width: 1500px; /* Reduced from 1800px to 1500px */
+  width: 70%;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
 .product-list-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Space between product cards */
+  gap: 20px;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: calc(20% - 20px); /* Adjust this if needed */
+  width: calc(20% - 20px);
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -27,8 +27,8 @@
 }
 
 .product-card img {
-  width: 200px; /* Reduced from 200px to 180px */
-  height: 200px; /* Reduced from 200px to 180px */
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -43,9 +43,9 @@
 
 .price-container {
   display: flex;
-  align-items: center; /* Vertically center the content */
-  gap: 8px; /* Space between elements */
-  flex-wrap: wrap; /* Allow wrapping if the container is too small */
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .type-title {
@@ -71,7 +71,7 @@
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease;
-  width: 93px; /* Set a fixed width */
+  width: 93px;
 }
 
 .product-type-item:hover {

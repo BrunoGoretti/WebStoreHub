@@ -86,7 +86,6 @@ namespace WebStoreHubAPI.Services
                 }
                 catch (Exception ex)
                 {
-                    // If any exception occurs, rollback the transaction
                     await transaction.RollbackAsync();
                     throw new InvalidOperationException($"Order creation failed: {ex.Message}");
                 }

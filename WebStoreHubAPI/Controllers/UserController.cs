@@ -66,7 +66,6 @@ namespace WebStoreHubAPI.Controllers
 
             var token = await _userService.GeneratePasswordResetTokenAsync(user);
 
-            // Send token via email
             await _userService.SendPasswordResetEmailAsync(user.Email, token);
 
             return Ok("Password reset email sent.");

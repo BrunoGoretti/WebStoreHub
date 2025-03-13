@@ -29,7 +29,7 @@ main {
 }
 
 .logo-link {
-  flex: 0 0 auto; /* Prevent the logo from growing or shrinking */
+  flex: 0 0 auto;
 }
 
 nav .button {
@@ -72,9 +72,9 @@ nav .button:active {
   /* margin-left: 20px; */
   font-size: 18px;
   font-weight: bold;
-  color: #333; /* Adjust to fit your theme */
+  color: #333;
   padding: 7px 10px;
-  background-color: #f3f3f3; /* Subtle background */
+  background-color: #f3f3f3;
   border-radius: 8px;
 }
 
@@ -190,7 +190,7 @@ nav {
 .catalog-bar {
   position: fixed;
   top: 0;
-  left: -300px; /* Start off-screen */
+  left: -300px;
   height: 100%;
   width: 300px;
   background-color: white;
@@ -229,14 +229,14 @@ nav {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  opacity: 0; /* Start invisible */
-  visibility: hidden; /* Hide initially */
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* Add transition for smooth animation */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .backdrop.open {
-  opacity: 1; /* Make visible */
-  visibility: visible; /* Show */
+  opacity: 1;
+  visibility: visible;
 }
 
 .close-button {
@@ -298,5 +298,5 @@ nav {
 }
 
 .user-item-cart button {
-  position: relative; /* Ensure the button is the reference for positioning the count */
+  position: relative;
 }

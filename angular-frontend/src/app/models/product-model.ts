@@ -6,7 +6,7 @@ export interface Product {
   discountedPrice?: number;
   discountPercentage?: number;
   brand: { brandId: number; brandName: string };
-  productType: { productTypeId: number; typeName: string }; // Add this line
+  productType: { productTypeId: number; typeName: string };
   stock: number;
   images: { imageUrl: string; mainPicture: number }[];
   imageUrl?: string;

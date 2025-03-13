@@ -8,7 +8,6 @@ import { CartItemModel } from '../../models/user-item-model';
 })
 
 export class UserItemCartService {
-
   private baseUrl = 'https://localhost:7084/api';
   private cartItemCountSubject = new BehaviorSubject<number>(0);
   cartItemCount$ = this.cartItemCountSubject.asObservable();
@@ -17,13 +16,13 @@ export class UserItemCartService {
 
   addToCart(userId: number, productId: number, quantity: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/cart/addToCart`, { userId, productId, quantity }).pipe(
-      tap(() => this.incrementCartItemCount()) // Increment count
+      tap(() => this.incrementCartItemCount())
     );
   }
 
   updateCartItem(userId: number, cartItemId: number, quantity: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/cart/updateCart/${cartItemId}`, { userId, quantity }).pipe(
-      tap(() => this.refreshCartItemCount(userId)) // Refresh count
+      tap(() => this.refreshCartItemCount(userId))
     );
   }
 

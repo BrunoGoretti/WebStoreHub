@@ -31,7 +31,7 @@ export class UserItemCartComponent implements OnInit {
         this.loadCartItems();
       } else {
         console.error('User is not logged in.');
-        this.router.navigate(['/login']); // Redirect to login page
+        this.router.navigate(['/login']);
       }
     });
   }

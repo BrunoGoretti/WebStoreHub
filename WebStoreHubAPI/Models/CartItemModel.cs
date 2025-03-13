@@ -15,7 +15,6 @@ namespace WebStoreHubAPI.Models
 
         public int Quantity { get; set; }
 
-        // Navigation property to establish relationship with the Product entity
         public ProductModel Product { get; set; }
     }
 }

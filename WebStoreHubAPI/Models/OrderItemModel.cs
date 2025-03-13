@@ -15,7 +15,6 @@ namespace WebStoreHubAPI.Models
 
         public decimal Price { get; set; }
 
-        // Navigation properties to establish relationships with Order and Product entities
         public OrderModel Order { get; set; }
         public ProductModel Product { get; set; }
     }

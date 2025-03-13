@@ -25,7 +25,6 @@ public class DiscountService : IDiscountService
 
             for (int row = 2; row <= rowCount; row++)
             {
-                // Reading data from the Excel file and mapping it to the DiscountDto
                 var discountDto = new DiscountDto
                 {
                     ProductId = int.Parse(worksheet.Cells[row, 1].Text),
@@ -49,32 +48,27 @@ public class DiscountService : IDiscountService
 
             if (product != null)
             {
-                decimal newDiscountedPrice = product.Price; // Start with the original price
+                decimal newDiscountedPrice = product.Price; 
 
-                // Apply the discount if it's active and not expired
                 if (discount.IsActive && discount.EndDate >= DateTime.Now)
                 {
-                    // Calculate the discounted price
                     if (discount.DiscountPercentage > 0)
                     {
                         var discountAmount = product.Price * (discount.DiscountPercentage / 100);
                         newDiscountedPrice -= discountAmount;
                     }
 
-                    // Ensure the discounted price doesn't drop below zero
                     if (newDiscountedPrice < 0) newDiscountedPrice = 0;
 
                     product.DiscountedPrice = newDiscountedPrice;
                 }
                 else
                 {
-                    // Reset DiscountedPrice to null if the discount is not active or has expired
                     product.DiscountedPrice = null;
                 }
 
                 _dbContext.DbProducts.Update(product);
 
-                // Look for an existing discount with the same ProductId, StartDate, and EndDate
                 var existingDiscount = await _dbContext.Discounts
                     .FirstOrDefaultAsync(d => d.ProductId == discount.ProductId
                                               && d.StartDate == discount.StartDate
@@ -82,7 +76,6 @@ public class DiscountService : IDiscountService
 
                 if (existingDiscount != null)
                 {
-                    // Update the existing discount properties
                     existingDiscount.IsActive = discount.IsActive;
                     existingDiscount.DiscountPercentage = discount.DiscountPercentage;
 
@@ -90,12 +83,10 @@ public class DiscountService : IDiscountService
                 }
                 else
                 {
-                    // Add a new discount if no match is found
                     var newDiscount = new DiscountModel
                     {
                         ProductId = discount.ProductId,
                         DiscountPercentage = discount.DiscountPercentage,
-                        //DiscountAmount = discount.DiscountAmount,
                         StartDate = discount.StartDate,
                         EndDate = discount.EndDate,
                         IsActive = discount.IsActive,

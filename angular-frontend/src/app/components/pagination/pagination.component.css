@@ -26,5 +26,5 @@
 
 .ellipsis {
   padding: 5px 10px;
-  pointer-events: none; /* Disable clicks on the ellipsis */
+  pointer-events: none;
 }
