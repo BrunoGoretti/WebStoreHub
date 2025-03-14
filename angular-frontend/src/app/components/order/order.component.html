@@ -1,10 +1,24 @@
-<div *ngIf="cartItems.length > 0">
+<div *ngIf="cartItems.length > 0; else emptyCart" class="order-container">
   <h2>Cart Items</h2>
-  <ul>
-    <li *ngFor="let item of cartItems">
-      {{ item.product.name }} - Quantity: {{ item.quantity }} - Price: {{ item.product.discountedPrice || item.product.price }}
-    </li>
-  </ul>
-  <button (click)="createOrder()">Place Order</button>
+  <div *ngFor="let item of cartItems" class="order-item">
+    <div class="order-image">
+      <img
+        [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-order-image"/>
+    </div>
+    <div class="order-details">
+      <h3>{{ item.product.name }}</h3>
+      <p>Quantity: {{ item.quantity }}</p>
+      <p> Price:{{ item.product.discountedPrice || item.product.price | currency }} </p>
+    </div>
+  </div>
+  <h3 class="total-cost-button">Total Cost: {{ totalCost | currency }}</h3>
+  <div class="cart-actions">
+    <button (click)="createOrder()" class="order-button">Place Order</button>
+  </div>
 </div>
 
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <p>Your cart is empty.</p>
+  </div>
+</ng-template>

@@ -20,7 +20,7 @@ export class OrderComponent implements OnInit {
   orders: OrderModel[] = [];
   cartItems: CartItemModel[] = [];
   userId: number | null = null;
-
+  totalCost: number = 0;
 
   constructor(
     private orderService: OrderService,
@@ -42,8 +42,16 @@ export class OrderComponent implements OnInit {
     if (this.userId) {
       this.ItemCartService.getCartItems(this.userId).subscribe((items) => {
         this.cartItems = items;
+        this.calculateTotalCost();
       });
     }
+  }
+
+  calculateTotalCost(): void {
+    this.totalCost = this.cartItems.reduce((total, item) => {
+      const price = item.product.discountedPrice || item.product.price;
+      return total + (price * item.quantity);
+    }, 0);
   }
 
   loadOrders(): void {
