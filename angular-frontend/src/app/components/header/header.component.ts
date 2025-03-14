@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductTypeService } from '../../services/productType/product-type.service';
 import { ProductTypeModel } from '../../models/product-type-model';
-import { UserItemCartService } from '../../services/userItemCart/user-item-cart.Service ';
+import { ItemCartService } from '../../services/cartItem/cart-item.service';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private productTypeService: ProductTypeService,
-    private userItemCartService: UserItemCartService
+    private ItemCartService: ItemCartService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
       this.productTypes = types;
     });
 
-    this.userItemCartService.cartItemCount$.subscribe((count) => {
+    this.ItemCartService.cartItemCount$.subscribe((count) => {
       this.cartItemCount = count;
     });
   }
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
   loadCartItemCount(): void {
     const userId = Number(localStorage.getItem('userId'));
     if (userId) {
-      this.userItemCartService.getCartItems(userId).subscribe();
+      this.ItemCartService.getCartItems(userId).subscribe();
     }
   }
 
