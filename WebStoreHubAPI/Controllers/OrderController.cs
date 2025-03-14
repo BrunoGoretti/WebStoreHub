@@ -4,7 +4,8 @@ using WebStoreHubAPI.Services.Interfaces;
 
 namespace WebStoreHubAPI.Controllers
 {
-   // [Authorize(Roles = "Admin, User")]
+    [Route("api/[controller]")]
+    // [Authorize(Roles = "Admin, User")]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CartItemModel } from '../../models/user-item-model';
+import { CartItemModel } from '../../models/cart-item-model';
 import { AuthService } from '../../services/auth/auth.service';
-import { UserItemCartService } from '../../services/userItemCart/user-item-cart.Service ';
+import { ItemCartService } from '../../services/cartItem/cart-item.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -10,15 +10,15 @@ import { Router } from '@angular/router';
   selector: 'app-user-item-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './user-item-card.component.html',
-  styleUrl: './user-item-card.component.css'
+  templateUrl: './card-item.component.html',
+  styleUrl: './card-item.component.css'
 })
 export class UserItemCartComponent implements OnInit {
   cartItems: CartItemModel[] = [];
   userId: number | null = null;
 
   constructor(
-    private UserItemCartService: UserItemCartService,
+    private ItemCartService: ItemCartService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -38,7 +38,7 @@ export class UserItemCartComponent implements OnInit {
 
   loadCartItems(): void {
     if (this.userId) {
-      this.UserItemCartService.getCartItems(this.userId).subscribe(
+      this.ItemCartService.getCartItems(this.userId).subscribe(
         (items) => {
           this.cartItems = items;
         },
@@ -51,7 +51,7 @@ export class UserItemCartComponent implements OnInit {
 
   removeItem(cartItemId: number): void {
     if (this.userId) {
-      this.UserItemCartService.removeFromCart(this.userId, cartItemId).subscribe(
+      this.ItemCartService.removeFromCart(this.userId, cartItemId).subscribe(
         () => {
           this.cartItems = this.cartItems.filter(item => item.cartItemId !== cartItemId);
         },
@@ -64,7 +64,7 @@ export class UserItemCartComponent implements OnInit {
 
   clearCart(): void {
     if (this.userId) {
-      this.UserItemCartService.clearCart(this.userId).subscribe(
+      this.ItemCartService.clearCart(this.userId).subscribe(
         () => {
           this.cartItems = [];
         },
@@ -76,7 +76,7 @@ export class UserItemCartComponent implements OnInit {
   }
 
   buyItems(): void {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/order']);
   }
 
 }

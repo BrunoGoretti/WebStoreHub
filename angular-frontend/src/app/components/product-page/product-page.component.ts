@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/product-model';
 import { CommonModule } from '@angular/common';
-import { UserItemCartService } from '../../services/userItemCart/user-item-cart.Service ';
+import { ItemCartService } from '../../services/cartItem/cart-item.service';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProductPageComponent {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: UserItemCartService,
+    private ItemCartService: ItemCartService,
     private authService: AuthService ) {}
 
     ngOnInit(): void {
@@ -63,7 +63,7 @@ export class ProductPageComponent {
       return;
     }
 
-    this.cartService.addToCart(this.userId, product.productId, 1).subscribe(
+    this.ItemCartService.addToCart(this.userId, product.productId, 1).subscribe(
       () => {
         alert(`${product.name} has been added to the cart!`);
       },

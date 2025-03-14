@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { CartItemModel } from '../../models/user-item-model';
+import { CartItemModel } from '../../models/cart-item-model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class UserItemCartService {
+export class ItemCartService {
   private baseUrl = 'https://localhost:7084/api';
   private cartItemCountSubject = new BehaviorSubject<number>(0);
   cartItemCount$ = this.cartItemCountSubject.asObservable();
