@@ -29,9 +29,11 @@
           <span *ngIf="cartItemCount > 0" class="cart-item-count">{{ cartItemCount }}</span>
         </button>
       </a>
-      <span *ngIf="isLoggedIn" class="username">
-        <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}
-      </span>
+      <a routerLink="/orderitem" class="user-item-cart">
+        <button *ngIf="isLoggedIn" class="username">
+          <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}
+        </button>
+      </a>
       <a *ngIf="!isLoggedIn" routerLink="/login" class="button">Log In</a>
       <a *ngIf="!isLoggedIn" routerLink="/registration" class="button">Sign Up</a>
       <a *ngIf="isLoggedIn" (click)="logout()" class="button">Log Out</a>

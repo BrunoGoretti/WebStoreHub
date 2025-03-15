@@ -16,7 +16,7 @@ export class ItemCartService {
 
   addToCart(userId: number, productId: number, quantity: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/cart/addToCart`, { userId, productId, quantity }).pipe(
-      tap(() => this.incrementCartItemCount())
+      tap(() => this.refreshCartItemCount(userId))
     );
   }
 
@@ -42,10 +42,6 @@ export class ItemCartService {
     return this.http.get<CartItemModel[]>(`${this.baseUrl}/cart/cartItems?userId=${userId}`).pipe(
       tap((cartItems) => this.cartItemCountSubject.next(cartItems.length))
     );
-  }
-
-  private incrementCartItemCount(): void {
-    this.cartItemCountSubject.next(this.cartItemCountSubject.value + 1);
   }
 
   private decrementCartItemCount(): void {

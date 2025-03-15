@@ -117,11 +117,14 @@ namespace WebStoreHubAPI.Services
         public async Task<IEnumerable<OrderModel>> GetOrdersByUserIdAsync(int userId)
         {
             return await _dbContext.Orders
-                .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
-                        .ThenInclude(p => p.ProductType)
-                .Where(o => o.UserId == userId)
-                .ToListAsync();
+                   .Include(o => o.OrderItems)
+                       .ThenInclude(oi => oi.Product)
+                           .ThenInclude(p => p.Images) 
+                   .Include(o => o.OrderItems)
+                       .ThenInclude(oi => oi.Product)
+                           .ThenInclude(p => p.ProductType) 
+                   .Where(o => o.UserId == userId)
+                   .ToListAsync();
         }
 
         public async Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus)

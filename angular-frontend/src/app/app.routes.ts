@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { ProductTypeListComponent } from './components/product-type-list/product-type-list.component';
 import { OrderComponent } from './components/order/order.component';
+import { OrderItemComponent } from './components/order-item/order-item.component';
 import { DatePipe } from '@angular/common';
 
 export const routes: Routes = [
@@ -21,6 +22,8 @@ export const routes: Routes = [
   { path: 'category/:typeName', component: ProductTypeListComponent },
   { path: 'product/:id', component: ProductPageComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'orderitem', component: OrderItemComponent },
+
 ];
 
 @NgModule({
