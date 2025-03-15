@@ -6,6 +6,7 @@ import { CartItemModel } from '../../models/cart-item-model';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -25,7 +26,8 @@ export class OrderComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private ItemCartService: ItemCartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +35,6 @@ export class OrderComponent implements OnInit {
       this.userId = userId;
       if (this.userId) {
         this.loadCartItems();
-        this.loadOrders();
       }
     });
   }
@@ -54,32 +55,23 @@ export class OrderComponent implements OnInit {
     }, 0);
   }
 
-  loadOrders(): void {
+  createOrder(): void {
     if (this.userId) {
-      this.orderService.getOrdersByUserId(this.userId).subscribe((orders) => {
-        this.orders = orders;
+      this.orderService.createOrder(this.userId).subscribe({
+        next: (order) => {
+          console.log('Order created:', order);
+          this.router.navigate(['/orderitem']);
+        },
+        error: (err) => {
+          console.error('Error creating order:', err);
+        }
       });
     }
   }
 
-createOrder(): void {
-  if (this.userId) {
-    this.orderService.createOrder(this.userId).subscribe({
-      next: (order) => {
-        console.log('Order created:', order);
-        this.loadOrders();
-      },
-      error: (err) => {
-        console.error('Error creating order:', err);
-      }
-    });
-  }
-}
-
   updateOrderStatus(orderId: number, newStatus: string): void {
     this.orderService.updateOrderStatus(orderId, newStatus).subscribe(() => {
       console.log('Order status updated');
-      this.loadOrders();
     });
   }
 }

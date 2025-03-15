@@ -1,0 +1,26 @@
+<div *ngIf="orders.length > 0; else emptyCart" class="order-container">
+  <h2>Order History</h2>
+  <div *ngFor="let order of orders" class="order">
+    <h3>Order ID: {{ order.orderId }}</h3>
+    <p>Order Date: {{ order.orderDate | date }}</p>
+    <p>Total Amount: {{ order.totalAmount | currency }}</p>
+    <p>Status: {{ order.status }}</p>
+    <div *ngFor="let item of order.orderItems" class="order-item">
+      <div class="order-image">
+        <img *ngIf="item.product.images && item.product.images.length > 0"
+        [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-order-image"/>
+      </div>
+      <div class="order-details">
+        <h4>{{ item.product.name }}</h4>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <p>No orders found.</p>
+  </div>
+</ng-template>
