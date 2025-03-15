@@ -56,16 +56,20 @@ export class OrderComponent implements OnInit {
   }
 
   createOrder(): void {
-    if (this.userId) {
+    if (this.userId) { // Ensure userId is not null
       this.orderService.createOrder(this.userId).subscribe({
         next: (order) => {
           console.log('Order created:', order);
-          this.router.navigate(['/orderitem']);
+          this.ItemCartService.clearCart(this.userId!).subscribe(() => {
+            this.router.navigate(['/orderitem']);
+          });
         },
         error: (err) => {
           console.error('Error creating order:', err);
         }
       });
+    } else {
+      console.error('User ID is null. Cannot create order.');
     }
   }
 
