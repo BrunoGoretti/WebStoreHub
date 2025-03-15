@@ -56,7 +56,7 @@ export class OrderComponent implements OnInit {
   }
 
   createOrder(): void {
-    if (this.userId) { // Ensure userId is not null
+    if (this.userId) {
       this.orderService.createOrder(this.userId).subscribe({
         next: (order) => {
           console.log('Order created:', order);
