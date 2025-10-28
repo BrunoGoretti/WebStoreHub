@@ -300,3 +300,28 @@ nav {
 .user-item-cart button {
   position: relative;
 }
+
+.wishlist-button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 7px 15px;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wishlist-button:hover {
+  background-color: #d1d1d1;
+}
+
+.wishlist-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: sub;
+}
