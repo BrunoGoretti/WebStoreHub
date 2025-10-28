@@ -17,6 +17,7 @@ namespace WebStoreHubAPI.Data
         public DbSet<BrandModel> DbBrands { get; set; }
         public DbSet<DiscountModel> Discounts { get; set; }
         public DbSet<ImgbbModel> DbImgbbImages { get; set; }
+        public DbSet<WishlistItemModel> DbWishlist { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
