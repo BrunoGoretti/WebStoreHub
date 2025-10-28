@@ -32,7 +32,9 @@ namespace WebStoreHubAPI.Services
 
         public async Task<IEnumerable<ProductTypeModel>> GetAllProductsTypesAsync()
         {
-            return await _dbContext.DbProductTypes.ToListAsync();
+            return await _dbContext.DbProductTypes
+                .OrderBy(pt => pt.DisplayOrder) 
+                .ToListAsync();
         }
 
         public async Task<ProductTypeModel> GetProductTypeByIdAsync(int productTypeId)

@@ -8,5 +8,6 @@ namespace WebStoreHubAPI.Models
         public int ProductTypeId { get; set; }
         public string TypeName { get; set; }
         public string ImageUrl { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }
