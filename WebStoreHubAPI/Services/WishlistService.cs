@@ -41,7 +41,12 @@ namespace WebStoreHubAPI.Services
         public async Task<List<WishlistItemModel>> GetWishlistItems(int userId)
         {
             return await _dbContext.DbWishlist
-               .Where(c => c.UserId == userId).ToListAsync();
+               .Where(c => c.UserId == userId)
+                .Include(c => c.Product)
+                   .ThenInclude(p => p.Images)
+                   .Include(c => c.Product)
+                     .ThenInclude(p => p.Discounts)
+                    .ToListAsync();
         }
     }
 }

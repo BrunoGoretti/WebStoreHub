@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private productTypeService: ProductTypeService,
-    private ItemCartService: ItemCartService
+    private ItemCartService: ItemCartService,
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
     this.ItemCartService.cartItemCount$.subscribe((count) => {
       this.cartItemCount = count;
     });
+
   }
 
   loadCartItemCount(): void {
