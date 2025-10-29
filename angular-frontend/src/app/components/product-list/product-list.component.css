@@ -14,6 +14,7 @@
 }
 
 .product-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,4 +96,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+.wishlist-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+  z-index: 5;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-button img {
+  width: 30px;
+  height: 30px;
+}
+
+.wishlist-button:hover {
+
+  transform: scale(1.1);
 }

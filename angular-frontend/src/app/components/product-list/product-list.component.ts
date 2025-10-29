@@ -69,4 +69,10 @@ export class ProductListComponent extends PaginationComponent implements OnInit 
     this.typeName = typeName;
     this.loadProductsByType(typeName);
   }
+
+  toggleWishlist(product: any, event: MouseEvent) {
+  event.stopPropagation(); // prevent product click event
+  product.isWishlisted = !product.isWishlisted;
+  console.log(product.name, product.isWishlisted ? 'added to wishlist' : 'removed from wishlist');
+}
 }
