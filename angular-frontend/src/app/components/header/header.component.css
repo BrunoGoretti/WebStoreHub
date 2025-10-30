@@ -325,3 +325,22 @@ nav {
   margin-right: 5px;
   vertical-align: sub;
 }
+
+.wishlist-item-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: rgb(240, 32, 32);
+  color: white;
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+.wishlist-item-count button {
+  position: relative;
+}

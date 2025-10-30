@@ -22,7 +22,7 @@ namespace WebStoreHubAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("removeFromWishlist/{WishlistItemId}")]
+        [HttpDelete("removeFromWishlist")]
         public async Task<IActionResult> RemoveFromWishlist(int userId, int productID)
         {
             await _wishlistService.RemoveFromWishlist(userId, productID);

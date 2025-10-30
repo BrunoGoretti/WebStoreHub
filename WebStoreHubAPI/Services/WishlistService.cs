@@ -17,16 +17,20 @@ namespace WebStoreHubAPI.Services
 
         public async Task AddToWishlist(int userId, int productId)
         {
-            var addToWishlist = await _dbContext.DbWishlist.FirstOrDefaultAsync(u => u.UserId == userId && u.ProductId == productId);
+            var existingItem = await _dbContext.DbWishlist
+                .FirstOrDefaultAsync(u => u.UserId == userId && u.ProductId == productId);
 
-            addToWishlist = new WishlistItemModel
+            if (existingItem == null)
             {
-                UserId = userId,
-                ProductId = productId,
-            };
+                var newItem = new WishlistItemModel
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                };
 
-            _dbContext.DbWishlist.Add(addToWishlist);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.DbWishlist.Add(newItem);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task RemoveFromWishlist(int userId, int productId)

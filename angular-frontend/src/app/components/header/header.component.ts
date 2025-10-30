@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductTypeService } from '../../services/productType/product-type.service';
 import { ProductTypeModel } from '../../models/product-type-model';
 import { ItemCartService } from '../../services/cartItem/cart-item.service';
+import { WishlistService } from '../../services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-header',
@@ -22,12 +23,14 @@ export class HeaderComponent implements OnInit {
   isCatalogOpen: boolean = false;
   productTypes: ProductTypeModel[] = [];
   cartItemCount: number = 0;
+  wishItemCount: number = 0;
 
   constructor(
     public authService: AuthService,
     private router: Router,
     private productTypeService: ProductTypeService,
     private ItemCartService: ItemCartService,
+    private WishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +38,7 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = loggedIn;
       if (loggedIn) {
         this.loadCartItemCount();
+        this.loadWishlistItemCount();
       }
     });
 
@@ -50,12 +54,22 @@ export class HeaderComponent implements OnInit {
       this.cartItemCount = count;
     });
 
+    this.WishlistService.WishlistItemCount$.subscribe((count) => {
+      this.wishItemCount = count;
+    });
   }
 
   loadCartItemCount(): void {
     const userId = Number(localStorage.getItem('userId'));
     if (userId) {
       this.ItemCartService.getCartItems(userId).subscribe();
+    }
+  }
+
+  loadWishlistItemCount(): void {
+    const userId = Number(localStorage.getItem('userId'));
+    if (userId) {
+      this.WishlistService.getUserWishlist(userId).subscribe();
     }
   }
 

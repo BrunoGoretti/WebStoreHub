@@ -23,15 +23,21 @@
       </button>
     </div>
     <nav style="display: flex; align-items: center; gap: 15px;">
-       <a routerLink="/wishlistitem" class="user-item-cart">
-        <button class="wishlist-button">  <img src="wishlisticon.png" class="wishlist-icon">Wishlist</button>
+
+      <a routerLink="/wishlistitem" class="user-item-cart">
+        <button *ngIf="isLoggedIn" class="wishlist-button">
+        <img src="wishlisticon.png" class="wishlist-icon">Wishlist
+        <span *ngIf="wishItemCount > 0" class="wishlist-item-count">{{ wishItemCount }}</span>
+      </button>
       </a>
+
       <a routerLink="/useritemcart" class="user-item-cart">
         <button *ngIf="isLoggedIn" class="cart-button">
           <img src="CartItemIcon.png" alt="Cart Item Icon" class="cart-item-icon"> My Cart
           <span *ngIf="cartItemCount > 0" class="cart-item-count">{{ cartItemCount }}</span>
         </button>
       </a>
+
       <a routerLink="/orderitem" class="user-item-cart">
         <button *ngIf="isLoggedIn" class="username">
           <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}

@@ -13,16 +13,30 @@ export class WishlistService {
 
   constructor(private http: HttpClient) {}
 
-  AddToWishlist(userId: Number, productId: Number) {}
-  RemoveFromWishlist(userId: Number, productId: Number) {}
-  getUserWishlist(userId: Number) {
+  addToWishlist(userId: number, productId: number) {
+    const body = { userId, productId };
+    return this.http.post(`${this.baseUrl}/wishlist/addToWishlist`, body).pipe(
+      tap(() => this.refreshWishlistItemCount(userId))
+    );
+  }
 
+  removeFromWishlist(userId: number, productId: number) {
+    return this.http.delete(
+      `${this.baseUrl}/wishlist/removeFromWishlist?userId=${userId}&productId=${productId}`).pipe(
+    tap(() => this.refreshWishlistItemCount(userId))
+    );
+  }
+
+  getUserWishlist(userId: number) {
     return this.http
       .get<WishlistItemModel[]>(
         `${this.baseUrl}/wishlist/getWishlist?userId=${userId}`
       )
       .pipe(
-        tap((productId) => this.WishlistItemCountSubject.next(productId.length) )
+        tap((productId) => this.WishlistItemCountSubject.next(productId.length))
       );
+  }
+  private refreshWishlistItemCount(userId: number): void {
+    this.getUserWishlist(userId).subscribe();
   }
 }
