@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStoreHubAPI.Data;
 
@@ -11,9 +12,11 @@ using WebStoreHubAPI.Data;
 namespace WebStoreHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028153052_AddWishlistTable")]
+    partial class AddWishlistTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,11 +284,11 @@ namespace WebStoreHubAPI.Migrations
 
             modelBuilder.Entity("WebStoreHubAPI.Models.WishlistItemModel", b =>
                 {
-                    b.Property<int>("WishlistItemId")
+                    b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WishlistItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -293,11 +296,11 @@ namespace WebStoreHubAPI.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("WishlistItemId");
+                    b.HasKey("CartItemId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DbWishlist");
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("WebStoreHubAPI.Models.CartItemModel", b =>

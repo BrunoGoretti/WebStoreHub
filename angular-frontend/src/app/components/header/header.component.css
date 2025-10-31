@@ -300,3 +300,47 @@ nav {
 .user-item-cart button {
   position: relative;
 }
+
+.wishlist-button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 7px 15px;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.wishlist-button:hover {
+  background-color: #d1d1d1;
+}
+
+.wishlist-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: sub;
+}
+
+.wishlist-item-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: rgb(240, 32, 32);
+  color: white;
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+.wishlist-item-count button {
+  position: relative;
+}

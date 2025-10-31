@@ -1,0 +1,34 @@
+@import '../product-list/product-list.component.css';
+
+.type-title {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.wishlist-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+  z-index: 5;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-button img {
+  width: 30px;
+  height: 30px;
+}
+
+.wishlist-button:hover {
+  transform: scale(1.1);
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: #666;
+}

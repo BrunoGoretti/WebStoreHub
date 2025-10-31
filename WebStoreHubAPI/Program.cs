@@ -83,6 +83,7 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddHostedService<DiscountCheckerService>();
 builder.Services.AddScoped<IImgbbService, ImgbbService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

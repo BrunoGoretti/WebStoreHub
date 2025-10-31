@@ -3,6 +3,14 @@
   <app-filter-sort (sortChange)="onSortChange($event)"></app-filter-sort>
   <div *ngIf="products.length > 0; else noProducts" class="search-list-container">
     <div *ngFor="let product of paginatedProducts" class="product-item" (click)="onProductClick(product)" style="cursor: pointer;">
+
+    <div class="wishlist-button" (click)="toggleWishlist(product, $event)">
+      <img
+        [src]="wishlistedProducts.has(product.productId) ? 'wishlisticoncartred.png' : 'wishlisticoncart.png'"
+        alt="Wishlist"
+      />
+    </div>
+
       <img [src]="product.imageUrl" alt="{{ product.name }}" width="200" />
       <h3>{{ product.name }}</h3>
       <div class="price-container">

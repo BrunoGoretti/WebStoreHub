@@ -10,6 +10,7 @@ import { ProductTypeListComponent } from './components/product-type-list/product
 import { OrderComponent } from './components/order/order.component';
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { DatePipe } from '@angular/common';
+import { WishlistItemComponent } from './components/wishlist-item/wishlist-item.component';
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -23,7 +24,7 @@ export const routes: Routes = [
   { path: 'product/:id', component: ProductPageComponent },
   { path: 'order', component: OrderComponent },
   { path: 'orderitem', component: OrderItemComponent },
-
+  { path: 'wishlistitem', component: WishlistItemComponent },
 ];
 
 @NgModule({
