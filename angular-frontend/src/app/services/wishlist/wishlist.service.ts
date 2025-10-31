@@ -39,6 +39,7 @@ export class WishlistService {
         tap((productId) => this.WishlistItemCountSubject.next(productId.length))
       );
   }
+
   private refreshWishlistItemCount(userId: number): void {
     this.getUserWishlist(userId).subscribe();
   }

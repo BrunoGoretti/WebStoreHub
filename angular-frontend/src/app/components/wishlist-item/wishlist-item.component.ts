@@ -16,6 +16,7 @@ export class WishlistItemComponent {
   WishlistItems: WishlistItemModel[] = [];
   userId: number | null = null;
 
+
   constructor(
     private WishlistService: WishlistService,
     private router: Router,
@@ -34,9 +35,18 @@ export class WishlistItemComponent {
     })
   }
 
-  addTomWishlist(){}
-
-  removeFromWishlist(){}
+  removeFromWishlist(productId: number): void {
+    if (this.userId) {
+      this.WishlistService.removeFromWishlist(this.userId, productId).subscribe(
+       () => {
+        this.WishlistItems = this.WishlistItems.filter(item => item.productId !== productId);
+       },
+       (error) => {
+          console.error('Error removing item from wishlist:', error);
+       }
+      )
+    }
+  }
 
   loadUserWishlist(): void {
     if (this.userId) {

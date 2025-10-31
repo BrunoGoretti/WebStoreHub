@@ -84,7 +84,7 @@ button:hover {
   margin: 20px 0px 0px;
 }
 
-.remove-cart-button {
+.remove-from-wishlist-button {
   background-color: #d3d3d3;
   color: rgb(41, 41, 41);
   border: none;
@@ -93,6 +93,7 @@ button:hover {
   cursor: pointer;
 }
 
-.remove-cart-button:hover {
+.remove-from-wishlist-button:hover {
   background-color: #a9a9a9;
 }
+
