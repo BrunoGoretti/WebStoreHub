@@ -57,8 +57,13 @@ export class ProductListComponent
     this.authService.getUserId().subscribe((userId) => {
       if (userId) {
         this.userId = userId;
-        // ✅ Load wishlist items from backend
-        this.loadUserWishlist();
+        this.wishlistService.loadUserWishlist(userId);
+
+        this.wishlistService['wishlistSubject'].subscribe(
+          (wishlistSet: Set<number>) => {
+            this.wishlistedProducts = new Set(wishlistSet);
+          }
+        );
       }
     });
   }
@@ -97,45 +102,18 @@ export class ProductListComponent
     this.loadProductsByType(typeName);
   }
 
-toggleWishlist(product: Product, event: MouseEvent) {
-  event.stopPropagation();
+  toggleWishlist(product: Product, event: MouseEvent) {
+    event.stopPropagation();
 
-  if (this.userId == null) {
-    console.warn('User not logged in.');
-    return;
+    if (this.userId == null) {
+      console.warn('User not logged in.');
+      return;
+    }
+
+    this.wishlistService.toggleWishlist(
+      this.userId,
+      product.productId,
+      product.name
+    );
   }
-
-  if (this.wishlistedProducts.has(product.productId)) {
-    this.wishlistService.removeFromWishlist(this.userId, product.productId).subscribe({
-      next: () => {
-        this.wishlistedProducts.delete(product.productId);
-        console.log(`${product.name} removed from wishlist`);
-      },
-      error: (err) => console.error('Error removing from wishlist:', err),
-    });
-  } else {
-    this.wishlistService.addToWishlist(this.userId, product.productId).subscribe({
-      next: () => {
-        this.wishlistedProducts.add(product.productId);
-        console.log(`${product.name} added to wishlist`);
-      },
-      error: (err) => console.error('Error adding to wishlist:', err),
-    });
-  }
-}
-
-  private loadUserWishlist(): void {
-  if (!this.userId) return;
-
-  this.wishlistService.getUserWishlist(this.userId).subscribe({
-    next: (wishlistItems) => {
-      wishlistItems.forEach((item: any) => {
-        const productId = item.productId ?? item;
-        this.wishlistedProducts.add(productId);
-      });
-      console.log('Wishlist loaded:', this.wishlistedProducts);
-    },
-    error: (err) => console.error('Error loading wishlist:', err),
-  });
-}
 }
