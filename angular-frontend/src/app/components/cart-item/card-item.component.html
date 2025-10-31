@@ -1,16 +1,19 @@
 <div *ngIf="cartItems.length > 0; else emptyCart" class="cart-container">
   <h2>Your Cart</h2>
-  <div *ngFor="let item of cartItems" class="cart-item">
-    <div class="item-image">
-      <img [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-image">
-    </div>
-    <div class="item-details">
-      <h3>{{ item.product.name }}</h3>
-      <p>Quantity: {{ item.quantity }}</p>
-      <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
+  <div *ngFor="let item of cartItems" class="cart-item-wrapper">
+    <div class="cart-item-clickable" (click)="onProductClick(item.product)">
+      <div class="item-image">
+        <img [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-image">
+      </div>
+      <div class="item-details">
+        <h3>{{ item.product.name }}</h3>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
+      </div>
     </div>
     <button (click)="removeItem(item.cartItemId)" class="remove-cart-button">Remove</button>
   </div>
+
   <div class="cart-actions">
     <button (click)="clearCart()" class="clear-cart-button">Clear Cart</button>
     <button (click)="buyItems()" class="buy-button">Buy Now</button>

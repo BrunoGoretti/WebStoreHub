@@ -4,6 +4,7 @@ import { WishlistItemModel } from '../../models/wishlist-item-model';
 import { WishlistService } from '../../services/wishlist/wishlist.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { Product } from '../../models/product-model';
 
 @Component({
   selector: 'app-wishlist-item',
@@ -15,7 +16,7 @@ import { AuthService } from '../../services/auth/auth.service';
 export class WishlistItemComponent {
   WishlistItems: WishlistItemModel[] = [];
   userId: number | null = null;
-
+  originalProducts: Product[] = [];
 
   constructor(
     private WishlistService: WishlistService,
@@ -33,6 +34,11 @@ export class WishlistItemComponent {
         this.router.navigate(['/login']);
       }
     })
+  }
+
+  onProductClick(product: Product): void {
+    this.router.navigate(['/product', product.productId]);
+    console.log('Product clicked:', product);
   }
 
   removeFromWishlist(productId: number): void {

@@ -5,6 +5,7 @@ import { Product } from '../../models/product-model';
 import { CommonModule } from '@angular/common';
 import { ItemCartService } from '../../services/cartItem/cart-item.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { WishlistService } from '../../services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-page',
@@ -18,18 +19,25 @@ export class ProductPageComponent {
   isModalOpen: boolean = false;
   selectedImageUrl: string = '';
   userId: number | null = null;
+  wishlistedProducts = new Set<number>();
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private ItemCartService: ItemCartService,
-    private authService: AuthService ) {}
+    private authService: AuthService,
+    private wishlistService: WishlistService) {}
 
     ngOnInit(): void {
       this.authService.getUserId().subscribe((id) => {
         if (id) {
           this.userId = id;
           console.log('User ID retrieved:', this.userId);
+          this.wishlistService['wishlistSubject'].subscribe(
+          (wishlistSet: Set<number>) => {
+            this.wishlistedProducts = new Set(wishlistSet);
+          }
+        );
         } else {
           console.warn('User is not logged in.');
         }
@@ -71,6 +79,21 @@ export class ProductPageComponent {
         console.error('Error adding product to cart:', error);
         alert('Failed to add product to cart.');
       }
+    );
+  }
+
+  toggleWishlist(product: Product, event: MouseEvent) {
+    event.stopPropagation();
+
+    if (this.userId == null) {
+      console.warn('User not logged in.');
+      return;
+    }
+
+    this.wishlistService.toggleWishlist(
+      this.userId,
+      product.productId,
+      product.name
     );
   }
 }

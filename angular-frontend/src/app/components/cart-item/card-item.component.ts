@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { ItemCartService } from '../../services/cartItem/cart-item.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Product } from '../../models/product-model';
 
 @Component({
   selector: 'app-user-item-card',
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 export class UserItemCartComponent implements OnInit {
   cartItems: CartItemModel[] = [];
   userId: number | null = null;
+  originalProducts: Product[] = [];
 
   constructor(
     private ItemCartService: ItemCartService,
@@ -34,6 +36,11 @@ export class UserItemCartComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  onProductClick(product: Product): void {
+    this.router.navigate(['/product', product.productId]);
+    console.log('Product clicked:', product);
   }
 
   loadCartItems(): void {

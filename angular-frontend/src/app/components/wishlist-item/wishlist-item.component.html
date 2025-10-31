@@ -1,19 +1,40 @@
-<div *ngIf="WishlistItems.length > 0; else emptyWishlist" class="wishlist-container">
-  <h2>Your Wishlist</h2>
-  <div *ngFor="let item of WishlistItems" class="wishlist-item">
-    <div class="wishlist-image">
-      <img [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" class="product-image">
-    </div>
-    <div class="wishlist-details">
-      <h3>{{ item.product.name }}</h3>
-      <p>Price: {{ item.product.discountedPrice || item.product.price | currency }}</p>
-    </div>
-    <button (click)="removeFromWishlist(item.productId)" class="remove-from-wishlist-button">Remove</button>
-  </div>
-</div>
+<div class="background-container">
+  <h2 class="type-title">Your Wishlist</h2>
 
-<ng-template #emptyWishlist>
-  <div class="empty-emptyWishlist">
-    <p>Your wishlist is empty.</p>
+  <div *ngIf="WishlistItems.length > 0; else emptyWishlist" class="product-list-container">
+    <div *ngFor="let item of WishlistItems" class="product-card" (click)="onProductClick(item.product)" style="cursor: pointer;">
+
+      <div class="wishlist-button" (click)="removeFromWishlist(item.product.productId); $event.stopPropagation()">
+        <img src="wishlisticoncartred.png" alt="Remove from Wishlist" />
+      </div>
+
+      <img [src]="item.product.images[0].imageUrl" alt="{{ item.product.name }}" />
+
+      <h3>{{ item.product.name }}</h3>
+
+      <div class="price-container">
+        <span *ngIf="item.product.discountedPrice" style="color: red;">
+          {{ item.product.discountedPrice | currency }}
+        </span>
+        <span *ngIf="item.product.discountedPrice" style="text-decoration: line-through;">
+          {{ item.product.price | currency }}
+        </span>
+        <span *ngIf="!item.product.discountedPrice">
+          {{ item.product.price | currency }}
+        </span>
+        <span *ngIf="(item.product.discountPercentage ?? 0) > 0" style="color: red;">
+          -{{ item.product.discountPercentage }}%
+        </span>
+      </div>
+
+      <p>Brand: {{ item.product.brand }}</p>
+      <p>Stock: {{ item.product.stock }}</p>
+    </div>
   </div>
-</ng-template>
+
+  <ng-template #emptyWishlist>
+    <div class="empty-cart">
+      <p>Your wishlist is empty.</p>
+    </div>
+  </ng-template>
+</div>

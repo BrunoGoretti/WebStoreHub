@@ -96,3 +96,21 @@ button:hover {
 .remove-cart-button:hover {
   background-color: #a9a9a9;
 }
+
+.cart-item-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-clickable {
+  display: flex;
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.cart-item-wrapper button {
+  flex-shrink: 0;
+}

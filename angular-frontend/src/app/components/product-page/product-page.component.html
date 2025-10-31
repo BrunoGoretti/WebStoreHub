@@ -1,3 +1,5 @@
+
+
 <div *ngIf="product; else loading" class="product-container">
   <div class="product-header">
     <h1>{{ product.name }}</h1>
@@ -7,7 +9,6 @@
   <div class="product-content">
     <div class="product-images">
       <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" class="main-image" (click)="openImage(product.imageUrl)">
-
       <div *ngIf="product.images && product.images.length > 0" class="additional-images">
         <h2 class="additional-images-title">Additional Images</h2>
         <div class="images-grid">
@@ -17,8 +18,13 @@
         </div>
       </div>
     </div>
-
     <div class="product-details">
+       <div class="wishlist-button" (click)="toggleWishlist(product, $event)">
+      <img
+        [src]="wishlistedProducts.has(product.productId) ? 'wishlisticoncartred.png' : 'wishlisticoncart.png'"
+        alt="Wishlist"
+      />
+    </div>
       <p class="description">{{ product.description }}</p>
       <div class="price-section">
         <span *ngIf="product.discountedPrice" class="original-price">

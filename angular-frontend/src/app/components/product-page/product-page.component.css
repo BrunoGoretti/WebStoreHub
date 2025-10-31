@@ -178,3 +178,26 @@
 .add-to-cart-button:hover {
   background-color: #003f7f;
 }
+
+.wishlist-button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f3f3;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.wishlist-button img {
+  width: 32px;
+  height: 32px;
+}
+
+.wishlist-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}

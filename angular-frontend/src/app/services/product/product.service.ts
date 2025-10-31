@@ -13,7 +13,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getAllProducts(): Observable<Product[]> {
-    const url = `${this.baseUrl}/Product/getAllProducts`;
+    const url = `${this.baseUrl}/product/getAllProducts`;
     return this.http.get<any>(url).pipe(
       map((response) => {
         const products = response?.$values || response;
