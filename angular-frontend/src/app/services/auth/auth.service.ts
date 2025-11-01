@@ -42,6 +42,7 @@ export class AuthService {
           this.isAuthenticated.next(true);
           this.username.next(response.username);
           this.userId.next(response.userId);
+          this.userRole.next(response.role);
           console.log('Token stored:', response.token);
           console.log('Username stored:', response.username);
           console.log('UserId stored:', response.userId);
