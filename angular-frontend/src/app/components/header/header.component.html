@@ -41,6 +41,9 @@
       <a routerLink="/orderitem" class="user-item-cart">
         <button *ngIf="isLoggedIn" class="username">
           <img src="UserIcon.png" alt="Shop Icon" class="shop-icon"> {{ username }}
+          <span *ngIf="role === 1" title="Admin">
+            <img src="Crown.png" class="crown-logo" alt="crown-logo">
+          </span>
         </button>
       </a>
       <a *ngIf="!isLoggedIn" routerLink="/login" class="button">Log In</a>

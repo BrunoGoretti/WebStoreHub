@@ -13,6 +13,7 @@ import { Product } from '../../models/product-model';
   templateUrl: './wishlist-item.component.html',
   styleUrl: './wishlist-item.component.css',
 })
+
 export class WishlistItemComponent {
   WishlistItems: WishlistItemModel[] = [];
   userId: number | null = null;
