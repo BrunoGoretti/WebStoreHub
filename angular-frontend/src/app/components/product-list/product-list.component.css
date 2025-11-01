@@ -118,19 +118,20 @@
 }
 
 .wishlist-button {
-    all: unset;
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    padding: 7px 15px;
-    background-color: #f3f3f3;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+  z-index: 5;
+  transition: transform 0.3s ease;
+}
+
+.wishlist-button img {
+  width: 30px;
+  height: 30px;
 }
 
 .wishlist-button:hover {
-  background-color: #d1d1d1;
+
+  transform: scale(1.1);
 }
