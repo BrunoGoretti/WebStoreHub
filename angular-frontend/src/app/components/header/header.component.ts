@@ -18,6 +18,7 @@ import { WishlistService } from '../../services/wishlist/wishlist.service';
 
 export class HeaderComponent implements OnInit {
   username: string | null = '';
+  role: number | null = null;
   isLoggedIn: boolean = false;
   searchQuery: string = '';
   isCatalogOpen: boolean = false;
@@ -45,6 +46,8 @@ export class HeaderComponent implements OnInit {
     this.authService.getUsername().subscribe((username) => {
       this.username = username;
     });
+
+    this.authService.getUserRole().subscribe(role => this.role = role);
 
     this.productTypeService.getAllProductTypes().subscribe((types) => {
       this.productTypes = types;

@@ -27,6 +27,7 @@ export class SearchProductComponent
   originalProducts: Product[] = [];
   wishlistedProducts = new Set<number>();
   userId: number | null = null;
+  isLoggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +66,12 @@ export class SearchProductComponent
             this.wishlistedProducts = new Set(wishlistSet);
           }
         );
+      }
+    });
+
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      if (loggedIn) {
       }
     });
   }

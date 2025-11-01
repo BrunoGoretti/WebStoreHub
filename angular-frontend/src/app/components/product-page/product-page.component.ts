@@ -20,40 +20,48 @@ export class ProductPageComponent {
   selectedImageUrl: string = '';
   userId: number | null = null;
   wishlistedProducts = new Set<number>();
+  isLoggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private ItemCartService: ItemCartService,
     private authService: AuthService,
-    private wishlistService: WishlistService) {}
+    private wishlistService: WishlistService
+  ) {}
 
-    ngOnInit(): void {
-      this.authService.getUserId().subscribe((id) => {
-        if (id) {
-          this.userId = id;
-          console.log('User ID retrieved:', this.userId);
-          this.wishlistService['wishlistSubject'].subscribe(
+  ngOnInit(): void {
+    this.authService.getUserId().subscribe((id) => {
+      if (id) {
+        this.userId = id;
+        console.log('User ID retrieved:', this.userId);
+        this.wishlistService['wishlistSubject'].subscribe(
           (wishlistSet: Set<number>) => {
             this.wishlistedProducts = new Set(wishlistSet);
           }
         );
-        } else {
-          console.warn('User is not logged in.');
-        }
-      });
-
-      const productId = Number(this.route.snapshot.paramMap.get('id'));
-      if (!isNaN(productId)) {
-        this.productService.getProductById(productId).subscribe(
-          (data) => {
-            console.log("Product loaded:", data);
-            this.product = data;
-          },
-          (error) => console.error('Error fetching product:', error)
-        );
+      } else {
+        console.warn('User is not logged in.');
       }
+    });
+
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
+    if (!isNaN(productId)) {
+      this.productService.getProductById(productId).subscribe(
+        (data) => {
+          console.log('Product loaded:', data);
+          this.product = data;
+        },
+        (error) => console.error('Error fetching product:', error)
+      );
     }
+
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      if (loggedIn) {
+      }
+    });
+  }
 
   openImage(imageUrl: string): void {
     this.selectedImageUrl = imageUrl;

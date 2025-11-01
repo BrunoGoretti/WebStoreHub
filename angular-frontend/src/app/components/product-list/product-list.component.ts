@@ -31,6 +31,7 @@ export class ProductListComponent
   productTypes: ProductTypeModel[] = [];
   userId: number | null = null;
   wishlistedProducts = new Set<number>();
+  isLoggedIn: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -48,6 +49,11 @@ export class ProductListComponent
       this.products = data;
       this.originalProducts = [...data];
       this.updatePaginatedProducts();
+    });
+
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      if (loggedIn) {}
     });
 
     this.productTypeService.getAllProductTypes().subscribe((data) => {

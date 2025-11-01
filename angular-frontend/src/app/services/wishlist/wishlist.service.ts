@@ -66,7 +66,6 @@ export class WishlistService {
     }
   }
 
-  /** ✅ Load wishlist once per user */
   loadUserWishlist(userId: number): void {
     this.getUserWishlist(userId).subscribe({
       next: (wishlistItems) => {
