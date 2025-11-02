@@ -1,4 +1,4 @@
-<button routerLink="/admindashboard" class="admin-dashboard-button">
+<button *ngIf="userRole === 1" title="Admin" routerLink="/admindashboard" class="admin-dashboard-button">
   Dashboard
 </button>
 

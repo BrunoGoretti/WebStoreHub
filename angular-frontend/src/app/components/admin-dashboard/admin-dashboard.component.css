@@ -4,7 +4,6 @@
   padding: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  background: #f4f7ff;
   min-height: 300px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -17,11 +16,6 @@
   width: 280px;
   text-align: center;
   transition: transform 0.3s ease;
-}
-
-.section-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .section-card h2 {
