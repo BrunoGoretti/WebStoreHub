@@ -78,4 +78,10 @@ export class WishlistService {
       error: (err) => console.error('Error loading wishlist:', err),
     });
   }
+
+    clearWishlist(): void {
+    this.wishlistedProducts.clear();
+    this.wishlistSubject.next(new Set<number>());
+    this.WishlistItemCountSubject.next(0);
+  }
 }

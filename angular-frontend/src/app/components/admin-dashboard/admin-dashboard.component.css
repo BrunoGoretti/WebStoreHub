@@ -1,0 +1,80 @@
+.admin-container {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: #f4f7ff;
+  min-height: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.section-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px 24px;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.section-card h2 {
+  margin-bottom: 18px;
+  font-weight: 600;
+  color: #003d99;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #0066ff;
+}
+
+.btn-primary:hover {
+  background-color: #004fcc;
+}
+
+.btn-secondary {
+  background-color: #6666ff;
+}
+
+.btn-secondary:hover {
+  background-color: #4b4bc2;
+}
+
+.btn-danger {
+  background-color: #ff3b3b;
+}
+
+.btn-danger:hover {
+  background-color: #cc2e2e;
+}
+
+.btn-info {
+  background-color: #00bcd4;
+}
+
+.btn-info:hover {
+  background-color: #009aa8;
+}

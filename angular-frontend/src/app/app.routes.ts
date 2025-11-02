@@ -11,6 +11,7 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { DatePipe } from '@angular/common';
 import { WishlistItemComponent } from './components/wishlist-item/wishlist-item.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'order', component: OrderComponent },
   { path: 'orderitem', component: OrderItemComponent },
   { path: 'wishlistitem', component: WishlistItemComponent },
+  { path: 'admindashboard', component: AdminDashboardComponent },
 ];
 
 @NgModule({
