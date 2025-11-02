@@ -93,3 +93,21 @@
   font-size: 18px;
   color: #666;
 }
+
+.admin-dashboard-button {
+  position: fixed;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 10%;
+  font-size: 1.1em;
+  left: 80%;
+}
+.admin-dashboard-button:hover {
+  background-color: #45a049;
+}
+

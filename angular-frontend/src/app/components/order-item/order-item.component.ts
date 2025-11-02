@@ -3,12 +3,12 @@ import { OrderService } from '../../services/order/order.service';
 import { OrderModel } from '../../models/order';
 import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-order-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './order-item.component.html',
   styleUrls: ['./order-item.component.css']
 })

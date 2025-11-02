@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class AuthService {
   private userId = new BehaviorSubject<number | null>(null);
   private userRole = new BehaviorSubject<number | null>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private wishlistService: WishlistService) {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     const userId = localStorage.getItem('userId');
@@ -61,6 +62,7 @@ export class AuthService {
     this.username.next(null);
     this.userId.next(null);
     this.userRole.next(null);
+    this.wishlistService.clearWishlist();
   }
 
 

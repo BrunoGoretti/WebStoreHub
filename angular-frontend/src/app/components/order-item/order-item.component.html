@@ -1,3 +1,7 @@
+<button routerLink="/admindashboard" class="admin-dashboard-button">
+  Dashboard
+</button>
+
 <div *ngIf="orders.length > 0; else emptyCart" class="order-container">
   <h2>Order History</h2>
   <div *ngFor="let order of orders" class="order">
