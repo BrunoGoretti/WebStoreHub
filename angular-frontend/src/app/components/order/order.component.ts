@@ -36,6 +36,10 @@ export class OrderComponent implements OnInit {
       if (this.userId) {
         this.loadCartItems();
       }
+      else {
+        console.error('User is not logged in.');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
