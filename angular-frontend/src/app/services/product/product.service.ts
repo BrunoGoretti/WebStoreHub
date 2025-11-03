@@ -12,6 +12,18 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
+  createProductAsync(
+    name: string,
+    description: string,
+    price: number,
+    stock: number,
+    productTypeId: number,
+    brandId: number
+  ): Observable<any> {
+
+    return this.http.post(`${this.baseUrl}/product/addProduct`, { name, description, price, stock, productTypeId, brandId });
+  }
+
   getAllProducts(): Observable<Product[]> {
     const url = `${this.baseUrl}/product/getAllProducts`;
     return this.http.get<any>(url).pipe(

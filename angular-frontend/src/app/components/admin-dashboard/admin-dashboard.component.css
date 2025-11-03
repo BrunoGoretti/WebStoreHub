@@ -2,11 +2,11 @@
   display: flex;
   gap: 24px;
   padding: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  background: #f4f7ff;
   min-height: 300px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-items: flex-start;
 }
 
 .section-card {
@@ -17,11 +17,7 @@
   width: 280px;
   text-align: center;
   transition: transform 0.3s ease;
-}
-
-.section-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  align-self: flex-start;
 }
 
 .section-card h2 {
@@ -77,4 +73,55 @@
 
 .btn-info:hover {
   background-color: #009aa8;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #003d99;
+  margin-bottom: 16px;
+}
+
+.add-product-form div {
+  margin-bottom: 12px;
+}
+
+.add-product-form label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #003d99;
+}
+
+.add-product-form input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.add-product-form button {
+  margin-right: 12px;
 }

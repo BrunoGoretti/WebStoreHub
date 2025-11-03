@@ -15,6 +15,7 @@ import { Router, RouterModule } from '@angular/router';
 export class OrderItemComponent implements OnInit {
   userId: number | null = null;
   orders: OrderModel[] = [];
+  userRole: number | null = null;
 
   constructor(
     private orderService: OrderService,
@@ -32,6 +33,8 @@ export class OrderItemComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+
+    this.authService. getUserRole().subscribe(userRole => this.userRole = userRole);
   }
 
   loadOrders(): void {
