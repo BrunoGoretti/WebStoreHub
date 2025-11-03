@@ -3,7 +3,7 @@
   <section class="product-section section-card">
     <h2>Products</h2>
     <div class="btn-group">
-      <button class="btn btn-primary">Add Product</button>
+      <button class="btn btn-primary" (click)="toggleAddProductForm()">Add Product</button>
       <button class="btn btn-secondary">Update Product</button>
       <button class="btn btn-danger">Delete Product</button>
       <button class="btn btn-info">Add Product Picture</button>
@@ -26,4 +26,49 @@
     </div>
   </section>
 
+</div>
+
+<div class="modal-backdrop" *ngIf="showAddProductForm" (click)="toggleAddProductForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Add Product</h3>
+    <form class="add-product-form" (submit)="onSubmitAddProduct($event)">
+      <div>
+        <label for="productName">Product Name</label>
+        <input id="productName" type="text" name="productName" required />
+      </div>
+
+      <div>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="3" required></textarea>
+      </div>
+
+      <div>
+        <label for="price">Price</label>
+        <input id="price" type="number" name="price" step="0.01" required />
+      </div>
+
+      <div>
+        <label for="stock">Stock</label>
+        <input id="stock" type="number" name="stock" required />
+      </div>
+
+      <div>
+        <label for="productType">Product Type</label>
+        <input id="productType" type="text" name="productType" required />
+      </div>
+
+      <div>
+        <label for="brand">Brand</label>
+        <input id="brand" type="text" name="brand" required />
+      </div>
+
+      <div>
+        <label for="images">Product Images</label>
+        <input id="images" type="file" name="images" accept="image/*" multiple />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Product</button>
+      <button type="button" class="btn btn-secondary" (click)="toggleAddProductForm()">Cancel</button>
+    </form>
+  </div>
 </div>
