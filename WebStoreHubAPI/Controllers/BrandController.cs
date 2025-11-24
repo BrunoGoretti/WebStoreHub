@@ -18,7 +18,7 @@ namespace WebStoreHubAPI.Controllers
 
         [HttpPost("addBrand")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddBrand(AddBrandDto brand)
+        public async Task<IActionResult> AddBrand([FromBody] AddBrandDto brand)
         {
             if (!ModelState.IsValid)
             {

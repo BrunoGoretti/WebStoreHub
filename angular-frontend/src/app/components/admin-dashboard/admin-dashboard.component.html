@@ -21,7 +21,9 @@
   <section class="brand-section section-card">
     <h2>Brands</h2>
     <div class="btn-group">
-      <button class="btn btn-primary">Add Brand</button>
+      <button class="btn btn-primary" (click)="toggleAddBrandForm()">
+        Add Brand
+      </button>
       <button class="btn btn-secondary">Update Brand</button>
       <button class="btn btn-danger">Delete Brand</button>
     </div>
@@ -29,16 +31,19 @@
 </div>
 
 <div
-  class="modal-backdrop"
-  *ngIf="showAddProductForm"
-  (click)="toggleAddProductForm()"
->
+  class="modal-backdrop" *ngIf="showAddProductForm" (click)="toggleAddProductForm()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h3>Add Product</h3>
     <form class="add-product-form" (submit)="onSubmitAddProduct($event)">
       <div>
         <label for="productName">Product Name</label>
-        <input id="productName" type="text" name="productName" required />
+        <input
+          id="productName"
+          type="text"
+          name="productName"
+          [(ngModel)]="productName"
+          required
+        />
       </div>
 
       <div>
@@ -47,18 +52,32 @@
           id="description"
           name="description"
           rows="3"
+          [(ngModel)]="productDescription"
           required
         ></textarea>
       </div>
 
       <div>
         <label for="price">Price</label>
-        <input id="price" type="number" name="price" step="0.01" required />
+        <input
+          id="price"
+          type="number"
+          name="price"
+          step="0.01"
+          [(ngModel)]="productPrice"
+          required
+        />
       </div>
 
       <div>
         <label for="stock">Stock</label>
-        <input id="stock" type="number" name="stock" required />
+        <input
+          id="stock"
+          type="number"
+          name="stock"
+          [(ngModel)]="productStock"
+          required
+        />
       </div>
 
       <div>
@@ -82,7 +101,7 @@
         <label for="brand">Brand</label>
         <select id="brand" [(ngModel)]="selectedBrand" name="brand" required>
           <option value="" disabled selected>Select a type</option>
-          <option *ngFor="let type of productBrands" [value]="type.BrandId">
+          <option *ngFor="let type of productBrands" [value]="type.brandId">
             {{ type.brandName }}
           </option>
         </select>
@@ -99,6 +118,7 @@
         />
       </div>
 
+      <!-- <button type="submit" class="btn btn-primary" (click)="addNewProduct()">Save Product</button> -->
       <button type="submit" class="btn btn-primary">Save Product</button>
       <button
         type="button"
@@ -107,6 +127,25 @@
       >
         Cancel
       </button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBrandNameForm" (click)="toggleAddBrandForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Add Brand</h3>
+   <form class="add-brand-form" (submit)="onSubmitAddBrand($event)">
+    <div>
+      <label for="productBrand">Brand Name</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="productBrandName" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Save Brand</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleAddBrandForm()"
+      >
+        Cancel</button>
     </form>
   </div>
 </div>
