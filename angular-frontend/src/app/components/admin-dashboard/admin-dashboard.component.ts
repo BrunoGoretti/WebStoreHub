@@ -73,6 +73,29 @@ export class AdminDashboardComponent implements OnInit {
 
   onSubmitAddProduct(event: Event) {
     event.preventDefault();
+
+    if(this.productPrice == null)
+    {
+      console.error("Price is empty")
+      return;
+    }
+    else if(this.productStock == null)
+    {
+      console.error("Stock is empty")
+      return;
+    }
+    else if(this.selectedType == null)
+    {
+      console.error("Type is empty")
+      return;
+    }
+    else if(this.selectedBrand == null)
+    {
+      console.error("Brand is empty")
+      return;
+    }
+
+    this.addNewProduct(this.productName, this.productDescription, this.productPrice, this.productStock, this.selectedType, this.selectedBrand);
     this.toggleAddProductForm();
   }
 

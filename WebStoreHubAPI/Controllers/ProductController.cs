@@ -22,7 +22,7 @@ namespace WebStoreHubAPI.Controllers
 
         [HttpPost("addProduct")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddProduct(ProductCreationDto dto)
+        public async Task<IActionResult> AddProduct([FromBody] ProductCreationDto dto)
         {
             if (!ModelState.IsValid)
             {
