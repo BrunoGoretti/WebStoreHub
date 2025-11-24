@@ -71,7 +71,7 @@ namespace WebStoreHubAPI.Controllers
         }
 
         [HttpDelete("deleteBrand/{brandId}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBrand(int brandId)
         {
             var success = await _brandService.DeleteBrandAsync(brandId);

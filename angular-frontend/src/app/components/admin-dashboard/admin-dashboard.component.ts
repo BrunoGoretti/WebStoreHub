@@ -22,6 +22,7 @@ export class AdminDashboardComponent implements OnInit {
   userId: number | null = null;
   showAddProductForm = false;
   showBrandNameForm = false;
+  showBrandRemoveForm = false;
 
   productTypes: ProductTypeModel[] = [];
   selectedType: number | null = null;
@@ -66,6 +67,10 @@ export class AdminDashboardComponent implements OnInit {
     this.showBrandNameForm = !this.showBrandNameForm;
   }
 
+  toggleRemoveBrandForm() {
+    this.showBrandRemoveForm = !this.showBrandRemoveForm;
+  }
+
   onSubmitAddProduct(event: Event) {
     event.preventDefault();
     this.toggleAddProductForm();
@@ -82,6 +87,18 @@ export class AdminDashboardComponent implements OnInit {
 
     this.addNewBrand(this.productBrandName);
     this.toggleAddBrandForm();
+  }
+
+  onSubmitRemoveBrand(event: Event) {
+    event.preventDefault();
+
+    if(!this.selectedBrand || this.selectedBrand == null)
+    {
+      console.warn("Brand ID is empty")
+      return;
+    }
+    this.removeBrand(this.selectedBrand)
+    this.toggleRemoveBrandForm();
   }
 
   addNewProduct(
@@ -110,5 +127,11 @@ export class AdminDashboardComponent implements OnInit {
     this.productBrandService.addBrand(brandName).subscribe((data) => {
       console.log('Brand Added!');
     });
+  }
+
+  removeBrand(brandId: number) {
+    this.productBrandService.revomeBrand(brandId).subscribe((data) => {
+      console.log('Brand Removed!')
+    })
   }
 }

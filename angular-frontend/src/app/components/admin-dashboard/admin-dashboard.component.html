@@ -25,7 +25,7 @@
         Add Brand
       </button>
       <button class="btn btn-secondary">Update Brand</button>
-      <button class="btn btn-danger">Delete Brand</button>
+      <button class="btn btn-danger" (click)="toggleRemoveBrandForm()">Delete Brand</button>
     </div>
   </section>
 </div>
@@ -144,6 +144,25 @@
         type="button"
         class="btn btn-secondary"
         (click)="toggleAddBrandForm()"
+      >
+        Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBrandRemoveForm" (click)="toggleRemoveBrandForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Remove Brand By ID</h3>
+   <form class="remove-brand-form" (submit)="onSubmitRemoveBrand($event)">
+    <div>
+      <label for="productBrand">Brand ID</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="selectedBrand" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Remove Brand</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleRemoveBrandForm()"
       >
         Cancel</button>
     </form>

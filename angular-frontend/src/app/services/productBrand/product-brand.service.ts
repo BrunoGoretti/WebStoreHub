@@ -4,16 +4,20 @@ import { Observable } from 'rxjs';
 import { ProductBrandModel } from '../../models/product-brand-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductBrandService {
-private baseUrl = 'https://localhost:7084/api';
+  private baseUrl = 'https://localhost:7084/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
- addBrand(brandName: string) {
-     return this.http.post(`${this.baseUrl}/Brand/addBrand`, {brandName});
- }
+  addBrand(brandName: string) {
+    return this.http.post(`${this.baseUrl}/Brand/addBrand`, { brandName });
+  }
+
+  revomeBrand(brandID: number) {
+    return this.http.delete(`${this.baseUrl}/Brand/deleteBrand/${brandID}`);
+  }
 
   getAllBrands(): Observable<ProductBrandModel[]> {
     const url = `${this.baseUrl}/Brand/getAllBrands`;
