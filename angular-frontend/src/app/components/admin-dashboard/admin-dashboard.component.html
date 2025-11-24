@@ -6,7 +6,7 @@
         Add Product
       </button>
       <button class="btn btn-secondary">Update Product</button>
-      <button class="btn btn-danger">Delete Product</button>
+      <button class="btn btn-danger" (click)="toggleRemoveProductForm()">Delete Product</button>
       <button class="btn btn-info">Add Product Picture</button>
     </div>
   </section>
@@ -126,6 +126,26 @@
       >
         Cancel
       </button>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" *ngIf="showRemoveProductForm" (click)="toggleRemoveProductForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Remove Product By ID</h3>
+   <form class="remove-brand-form" (submit)="onSubmitRemoveProduct($event)">
+    <div>
+      <label for="productBrand">Product ID</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="selectedProduct" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Remove Product</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleRemoveProductForm()"
+      >
+        Cancel</button>
     </form>
   </div>
 </div>

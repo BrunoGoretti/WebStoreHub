@@ -21,6 +21,7 @@ import { Observable } from 'rxjs';
 export class AdminDashboardComponent implements OnInit {
   userId: number | null = null;
   showAddProductForm = false;
+  showRemoveProductForm = false;
   showBrandNameForm = false;
   showBrandRemoveForm = false;
 
@@ -29,6 +30,8 @@ export class AdminDashboardComponent implements OnInit {
 
   productBrands: ProductBrandModel[] = [];
   selectedBrand: number | null = null;
+
+  selectedProduct: number | null = null;
 
   productName: string = '';
   productDescription: string = '';
@@ -61,6 +64,10 @@ export class AdminDashboardComponent implements OnInit {
 
   toggleAddProductForm() {
     this.showAddProductForm = !this.showAddProductForm;
+  }
+
+  toggleRemoveProductForm() {
+    this.showRemoveProductForm = !this.showRemoveProductForm;
   }
 
   toggleAddBrandForm() {
@@ -98,6 +105,20 @@ export class AdminDashboardComponent implements OnInit {
     this.addNewProduct(this.productName, this.productDescription, this.productPrice, this.productStock, this.selectedType, this.selectedBrand);
     this.toggleAddProductForm();
   }
+
+  onSubmitRemoveProduct(event: Event) {
+    event.preventDefault();
+
+    if(!this.selectedProduct || this.selectedProduct == null)
+    {
+      console.warn("Brand name is empty")
+      return;
+    }
+
+    this.removeProduct(this.selectedProduct);
+    this.toggleRemoveProductForm();
+  }
+
 
   onSubmitAddBrand(event: Event) {
     event.preventDefault();
@@ -146,6 +167,12 @@ export class AdminDashboardComponent implements OnInit {
       });
   }
 
+  removeProduct(productId: number) {
+    this.productService.removeProduct(productId).subscribe((data) => {
+      console.log('Product Removed!')
+    });
+  }
+
   addNewBrand(brandName: string) {
     this.productBrandService.addBrand(brandName).subscribe((data) => {
       console.log('Brand Added!');
@@ -155,6 +182,6 @@ export class AdminDashboardComponent implements OnInit {
   removeBrand(brandId: number) {
     this.productBrandService.revomeBrand(brandId).subscribe((data) => {
       console.log('Brand Removed!')
-    })
+    });
   }
 }

@@ -24,6 +24,10 @@ export class ProductService {
     return this.http.post(`${this.baseUrl}/Product/addProduct`, { name, description, price, stock, productTypeId, brandId });
   }
 
+  removeProduct(productId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Product/deleteProduct/${productId}`);
+  }
+
   getAllProducts(): Observable<Product[]> {
     const url = `${this.baseUrl}/product/getAllProducts`;
     return this.http.get<any>(url).pipe(

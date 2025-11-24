@@ -82,8 +82,8 @@ namespace WebStoreHubAPI.Controllers
             return Ok(product);
         }
 
-        [HttpDelete("deleteProduct")]
-        [Authorize(Roles = "Admin")]
+        [HttpDelete("deleteProduct/{productId}")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var success = await _productService.DeleteProductAsync(productId);
