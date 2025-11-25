@@ -10,6 +10,7 @@ import { ProductBrandModel } from '../../models/product-brand-model';
 import { Product } from '../../models/product-model';
 import { ProductService } from '../../services/product/product.service';
 import { Observable } from 'rxjs';
+import { ImageUploadService } from '../../services/imageUpload/imageImgbb.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -33,18 +34,23 @@ export class AdminDashboardComponent implements OnInit {
 
   selectedProduct: number | null = null;
 
+  producdId: number | null = null;
+  producdimageUrl: File | null = null;
   productName: string = '';
   productDescription: string = '';
   productPrice: number | null = null;
   productStock: number | null = null;
   productBrandName: string = '';
+  mainImage: number | null = null;
+  uploadedImage: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private productService: ProductService,
     private productTypeService: ProductTypeService,
-    private productBrandService: ProductBrandService
+    private productBrandService: ProductBrandService,
+    private imageUploadService: ImageUploadService
   ) {}
 
   ngOnInit(): void {
@@ -81,37 +87,36 @@ export class AdminDashboardComponent implements OnInit {
   onSubmitAddProduct(event: Event) {
     event.preventDefault();
 
-    if(this.productPrice == null)
-    {
-      console.error("Price is empty")
+    if (this.productPrice == null) {
+      console.error('Price is empty');
       return;
-    }
-    else if(this.productStock == null)
-    {
-      console.error("Stock is empty")
+    } else if (this.productStock == null) {
+      console.error('Stock is empty');
       return;
-    }
-    else if(this.selectedType == null)
-    {
-      console.error("Type is empty")
+    } else if (this.selectedType == null) {
+      console.error('Type is empty');
       return;
-    }
-    else if(this.selectedBrand == null)
-    {
-      console.error("Brand is empty")
+    } else if (this.selectedBrand == null) {
+      console.error('Brand is empty');
       return;
     }
 
-    this.addNewProduct(this.productName, this.productDescription, this.productPrice, this.productStock, this.selectedType, this.selectedBrand);
+    this.addNewProduct(
+      this.productName,
+      this.productDescription,
+      this.productPrice,
+      this.productStock,
+      this.selectedType,
+      this.selectedBrand
+    );
     this.toggleAddProductForm();
   }
 
   onSubmitRemoveProduct(event: Event) {
     event.preventDefault();
 
-    if(!this.selectedProduct || this.selectedProduct == null)
-    {
-      console.warn("Brand name is empty")
+    if (!this.selectedProduct || this.selectedProduct == null) {
+      console.warn('Brand name is empty');
       return;
     }
 
@@ -119,13 +124,11 @@ export class AdminDashboardComponent implements OnInit {
     this.toggleRemoveProductForm();
   }
 
-
   onSubmitAddBrand(event: Event) {
     event.preventDefault();
 
-    if(!this.productBrandName || this.productBrandName == "")
-    {
-      console.warn("Brand name is empty")
+    if (!this.productBrandName || this.productBrandName == '') {
+      console.warn('Brand name is empty');
       return;
     }
 
@@ -136,12 +139,11 @@ export class AdminDashboardComponent implements OnInit {
   onSubmitRemoveBrand(event: Event) {
     event.preventDefault();
 
-    if(!this.selectedBrand || this.selectedBrand == null)
-    {
-      console.warn("Brand ID is empty")
+    if (!this.selectedBrand || this.selectedBrand == null) {
+      console.warn('Brand ID is empty');
       return;
     }
-    this.removeBrand(this.selectedBrand)
+    this.removeBrand(this.selectedBrand);
     this.toggleRemoveBrandForm();
   }
 
@@ -162,15 +164,75 @@ export class AdminDashboardComponent implements OnInit {
         productItemType,
         brandId
       )
-      .subscribe((data) => {
+      .subscribe((createdProduct) => {
         console.log('New Product Added!');
+        if (!createdProduct || !createdProduct.productId) {
+          console.error('Created product ID is missing.');
+          return;
+        }
+
+        this.producdId = createdProduct.productId;
+
+        if (!this.producdimageUrl) {
+          console.warn('Main image file is not selected.');
+          return;
+        }
+        if (this.mainImage === null) {
+          console.warn('Main image flag not set.');
+          return;
+        }
+        if (!this.producdimageUrl) {
+          console.warn('Main image file is not selected.');
+          return;
+        }
+        if (this.mainImage === null) {
+          console.warn('Main image flag not set.');
+          return;
+        }
+        if (!this.producdId) {
+          console.log('Product Id is empty');
+          return;
+        }
+
+        this.addProductPicture(
+          this.producdId,
+          this.producdimageUrl,
+          this.mainImage
+        );
       });
+  }
+
+  onMainImageSelected(event: any) {
+    const file = event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    this.producdimageUrl = file;
+
+    this.mainImage = 1;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.uploadedImage = reader.result as string;
+      console.log('Main image loaded:', this.uploadedImage);
+    };
+    reader.readAsDataURL(file);
   }
 
   removeProduct(productId: number) {
     this.productService.removeProduct(productId).subscribe((data) => {
-      console.log('Product Removed!')
+      console.log('Product Removed!');
     });
+  }
+
+  addProductPicture(producdId: number, imageUrl: File, mainImage: number) {
+    this.imageUploadService
+      .addImage(producdId, imageUrl, mainImage)
+      .subscribe((data) => {
+        console.log('Picture Added!');
+      });
   }
 
   addNewBrand(brandName: string) {
@@ -181,7 +243,7 @@ export class AdminDashboardComponent implements OnInit {
 
   removeBrand(brandId: number) {
     this.productBrandService.revomeBrand(brandId).subscribe((data) => {
-      console.log('Brand Removed!')
+      console.log('Brand Removed!');
     });
   }
 }

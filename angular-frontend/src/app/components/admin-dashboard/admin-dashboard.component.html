@@ -7,14 +7,6 @@
       </button>
       <button class="btn btn-secondary">Update Product</button>
       <button class="btn btn-danger" (click)="toggleRemoveProductForm()">Delete Product</button>
-      <button class="btn btn-info">Add Product Picture</button>
-    </div>
-  </section>
-
-  <section class="discount-section section-card">
-    <h2>Upload Discounts</h2>
-    <div class="btn-group">
-      <button class="btn btn-primary">Upload Discounts</button>
     </div>
   </section>
 
@@ -28,6 +20,14 @@
       <button class="btn btn-danger" (click)="toggleRemoveBrandForm()">Delete Brand</button>
     </div>
   </section>
+
+    <section class="discount-section section-card">
+    <h2>Upload Discounts</h2>
+    <div class="btn-group">
+      <button class="btn btn-primary">Upload Discounts</button>
+    </div>
+  </section>
+
 </div>
 
 <div
@@ -108,7 +108,17 @@
       </div>
 
       <div>
-        <label for="images">Product Images</label>
+        <label for="images">Product Main Image</label>
+        <input
+          id="images"
+          type="file"
+          name="images"
+          accept="image/*"
+          (change)="onMainImageSelected($event)"
+        />
+      </div>
+      <div>
+        <label for="images">Additional Images</label>
         <input
           id="images"
           type="file"
