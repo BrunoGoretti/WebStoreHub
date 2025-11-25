@@ -22,7 +22,7 @@ namespace WebStoreHubAPI.Controllers
 
         [HttpPost("addProduct")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddProduct(ProductCreationDto dto)
+        public async Task<IActionResult> AddProduct([FromBody] ProductCreationDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -82,8 +82,8 @@ namespace WebStoreHubAPI.Controllers
             return Ok(product);
         }
 
-        [HttpDelete("deleteProduct")]
-        [Authorize(Roles = "Admin")]
+        [HttpDelete("deleteProduct/{productId}")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var success = await _productService.DeleteProductAsync(productId);

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ProductService {
   private baseUrl = 'https://localhost:7084/api';
 
@@ -20,8 +21,11 @@ export class ProductService {
     productTypeId: number,
     brandId: number
   ): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Product/addProduct`, { name, description, price, stock, productTypeId, brandId });
+  }
 
-    return this.http.post(`${this.baseUrl}/product/addProduct`, { name, description, price, stock, productTypeId, brandId });
+  removeProduct(productId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Product/deleteProduct/${productId}`);
   }
 
   getAllProducts(): Observable<Product[]> {

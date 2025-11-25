@@ -1,74 +1,199 @@
 <div class="admin-container">
-
   <section class="product-section section-card">
     <h2>Products</h2>
     <div class="btn-group">
-      <button class="btn btn-primary" (click)="toggleAddProductForm()">Add Product</button>
+      <button class="btn btn-primary" (click)="toggleAddProductForm()">
+        Add Product
+      </button>
       <button class="btn btn-secondary">Update Product</button>
-      <button class="btn btn-danger">Delete Product</button>
-      <button class="btn btn-info">Add Product Picture</button>
-    </div>
-  </section>
-
-  <section class="discount-section section-card">
-    <h2>Upload Discounts</h2>
-    <div class="btn-group">
-      <button class="btn btn-primary">Upload Discounts</button>
+      <button class="btn btn-danger" (click)="toggleRemoveProductForm()">Delete Product</button>
     </div>
   </section>
 
   <section class="brand-section section-card">
     <h2>Brands</h2>
     <div class="btn-group">
-      <button class="btn btn-primary">Add Brand</button>
+      <button class="btn btn-primary" (click)="toggleAddBrandForm()">
+        Add Brand
+      </button>
       <button class="btn btn-secondary">Update Brand</button>
-      <button class="btn btn-danger">Delete Brand</button>
+      <button class="btn btn-danger" (click)="toggleRemoveBrandForm()">Delete Brand</button>
+    </div>
+  </section>
+
+    <section class="discount-section section-card">
+    <h2>Upload Discounts</h2>
+    <div class="btn-group">
+      <button class="btn btn-primary">Upload Discounts</button>
     </div>
   </section>
 
 </div>
 
-<div class="modal-backdrop" *ngIf="showAddProductForm" (click)="toggleAddProductForm()">
+<div
+  class="modal-backdrop" *ngIf="showAddProductForm" (click)="toggleAddProductForm()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h3>Add Product</h3>
     <form class="add-product-form" (submit)="onSubmitAddProduct($event)">
       <div>
         <label for="productName">Product Name</label>
-        <input id="productName" type="text" name="productName" required />
+        <input
+          id="productName"
+          type="text"
+          name="productName"
+          [(ngModel)]="productName"
+          required
+        />
       </div>
 
       <div>
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="3" required></textarea>
+        <textarea
+          id="description"
+          name="description"
+          rows="3"
+          [(ngModel)]="productDescription"
+          required
+        ></textarea>
       </div>
 
       <div>
         <label for="price">Price</label>
-        <input id="price" type="number" name="price" step="0.01" required />
+        <input
+          id="price"
+          type="number"
+          name="price"
+          step="0.01"
+          [(ngModel)]="productPrice"
+          required
+        />
       </div>
 
       <div>
         <label for="stock">Stock</label>
-        <input id="stock" type="number" name="stock" required />
+        <input
+          id="stock"
+          type="number"
+          name="stock"
+          [(ngModel)]="productStock"
+          required
+        />
       </div>
 
       <div>
         <label for="productType">Product Type</label>
-        <input id="productType" type="text" name="productType" required />
+        <select
+          id="productType"
+          [(ngModel)]="selectedType"
+          name="productType"
+          required
+        >
+          <option value="" disabled selected>Select a type</option>
+          <option
+            *ngFor="let type of productTypes"
+            [value]="type.productTypeId"
+          >
+            {{ type.typeName }}
+          </option>
+        </select>
       </div>
-
       <div>
         <label for="brand">Brand</label>
-        <input id="brand" type="text" name="brand" required />
+        <select id="brand" [(ngModel)]="selectedBrand" name="brand" required>
+          <option value="" disabled selected>Select a type</option>
+          <option *ngFor="let type of productBrands" [value]="type.brandId">
+            {{ type.brandName }}
+          </option>
+        </select>
       </div>
 
       <div>
-        <label for="images">Product Images</label>
-        <input id="images" type="file" name="images" accept="image/*" multiple />
+        <label for="images">Product Main Image</label>
+        <input
+          id="images"
+          type="file"
+          name="images"
+          accept="image/*"
+          (change)="onMainImageSelected($event)"
+        />
+      </div>
+      <div>
+        <label for="images">Additional Images</label>
+        <input
+          id="images"
+          type="file"
+          name="images"
+          accept="image/*"
+          multiple
+        />
       </div>
 
       <button type="submit" class="btn btn-primary">Save Product</button>
-      <button type="button" class="btn btn-secondary" (click)="toggleAddProductForm()">Cancel</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleAddProductForm()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" *ngIf="showRemoveProductForm" (click)="toggleRemoveProductForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Remove Product By ID</h3>
+   <form class="remove-brand-form" (submit)="onSubmitRemoveProduct($event)">
+    <div>
+      <label for="productBrand">Product ID</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="selectedProduct" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Remove Product</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleRemoveProductForm()"
+      >
+        Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBrandNameForm" (click)="toggleAddBrandForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Add Brand</h3>
+   <form class="add-brand-form" (submit)="onSubmitAddBrand($event)">
+    <div>
+      <label for="productBrand">Brand Name</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="productBrandName" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Save Brand</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleAddBrandForm()"
+      >
+        Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBrandRemoveForm" (click)="toggleRemoveBrandForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+   <h3>Remove Brand By ID</h3>
+   <form class="remove-brand-form" (submit)="onSubmitRemoveBrand($event)">
+    <div>
+      <label for="productBrand">Brand ID</label>
+      <input id="productBrand" type="text" name="productBrand" [(ngModel)]="selectedBrand" required />
+    </div>
+       <button type="submit" class="btn btn-primary">Remove Brand</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="toggleRemoveBrandForm()"
+      >
+        Cancel</button>
     </form>
   </div>
 </div>
