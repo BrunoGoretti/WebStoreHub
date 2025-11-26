@@ -221,6 +221,17 @@ export class AdminDashboardComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  onAdditionalImageSelected(event: any) {
+    const file = event.target.files[0]
+
+    if(!file) {
+      return;
+    }
+    this.producdimageUrl = file;
+    this.mainImage = 0;
+
+  }
+
   removeProduct(productId: number) {
     this.productService.removeProduct(productId).subscribe((data) => {
       console.log('Product Removed!');

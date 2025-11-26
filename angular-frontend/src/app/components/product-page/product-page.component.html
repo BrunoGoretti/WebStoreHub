@@ -25,6 +25,14 @@
         alt="Wishlist"
       />
     </div>
+      <span
+        *ngIf="product.productId"
+        class="product-id pill"
+        (click)="copyId(product.productId)"
+        title="Click to copy"
+      >
+        ID: {{ product.productId }}
+      </span>
       <p class="description">{{ product.description }}</p>
       <div class="price-section">
         <span *ngIf="product.discountedPrice" class="original-price">
