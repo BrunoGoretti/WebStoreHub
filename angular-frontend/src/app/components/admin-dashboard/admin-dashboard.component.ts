@@ -173,21 +173,21 @@ export class AdminDashboardComponent implements OnInit {
       });
   }
 
-    uploadAllImages() {
+  uploadAllImages() {
     if (!this.producdId) return;
 
     if (this.mainImageFile) {
       this.imageUploadService
         .addImage(this.producdId, this.mainImageFile, 1)
-        .subscribe(() => console.log("Main image uploaded"));
+        .subscribe(() => console.log('Main image uploaded'));
     }
 
     for (let img of this.additionalImages) {
       this.imageUploadService
         .addImage(this.producdId, img, 0)
-        .subscribe(() => console.log("Extra image uploaded"));
+        .subscribe(() => console.log('Extra image uploaded'));
     }
-    }
+  }
 
   onMainImageSelected(event: any) {
     const file = event.target.files[0];
