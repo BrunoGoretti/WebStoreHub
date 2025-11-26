@@ -124,7 +124,7 @@
           type="file"
           name="images"
           accept="image/*"
-          multiple
+          (change)="onAdditionalImageSelected($event)"
         />
       </div>
 

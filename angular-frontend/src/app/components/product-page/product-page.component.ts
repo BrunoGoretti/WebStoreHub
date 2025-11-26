@@ -104,4 +104,10 @@ export class ProductPageComponent {
       product.name
     );
   }
+
+  copyId(id: number) {
+  navigator.clipboard.writeText(id.toString()).then(() => {
+    console.log('Copied:', id);
+  });
+}
 }

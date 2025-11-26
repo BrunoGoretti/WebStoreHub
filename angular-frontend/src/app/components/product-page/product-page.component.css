@@ -201,3 +201,23 @@
   background-color: #e0e0e0;
   transform: scale(1.05);
 }
+
+.pill {
+  padding: 4px 10px;
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.15s;
+  border: 1px solid #e5e7eb;
+}
+
+.pill:hover {
+  background: #e5e7eb;
+}
+
+.pill:active {
+  transform: scale(0.95);
+}
