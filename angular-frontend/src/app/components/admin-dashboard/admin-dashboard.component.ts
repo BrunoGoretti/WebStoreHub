@@ -42,7 +42,8 @@ export class AdminDashboardComponent implements OnInit {
   productStock: number | null = null;
   productBrandName: string = '';
   mainImage: number | null = null;
-  uploadedImage: string = '';
+  mainImageFile: File | null = null;
+  additionalImages: File[] = [];
 
   constructor(
     private authService: AuthService,
@@ -166,41 +167,27 @@ export class AdminDashboardComponent implements OnInit {
       )
       .subscribe((createdProduct) => {
         console.log('New Product Added!');
-        if (!createdProduct || !createdProduct.productId) {
-          console.error('Created product ID is missing.');
-          return;
-        }
 
         this.producdId = createdProduct.productId;
-
-        if (!this.producdimageUrl) {
-          console.warn('Main image file is not selected.');
-          return;
-        }
-        if (this.mainImage === null) {
-          console.warn('Main image flag not set.');
-          return;
-        }
-        if (!this.producdimageUrl) {
-          console.warn('Main image file is not selected.');
-          return;
-        }
-        if (this.mainImage === null) {
-          console.warn('Main image flag not set.');
-          return;
-        }
-        if (!this.producdId) {
-          console.log('Product Id is empty');
-          return;
-        }
-
-        this.addProductPicture(
-          this.producdId,
-          this.producdimageUrl,
-          this.mainImage
-        );
+        this.uploadAllImages();
       });
   }
+
+    uploadAllImages() {
+    if (!this.producdId) return;
+
+    if (this.mainImageFile) {
+      this.imageUploadService
+        .addImage(this.producdId, this.mainImageFile, 1)
+        .subscribe(() => console.log("Main image uploaded"));
+    }
+
+    for (let img of this.additionalImages) {
+      this.imageUploadService
+        .addImage(this.producdId, img, 0)
+        .subscribe(() => console.log("Extra image uploaded"));
+    }
+    }
 
   onMainImageSelected(event: any) {
     const file = event.target.files[0];
@@ -209,27 +196,15 @@ export class AdminDashboardComponent implements OnInit {
       return;
     }
 
-    this.producdimageUrl = file;
-
+    this.mainImageFile = file;
     this.mainImage = 1;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.uploadedImage = reader.result as string;
-      console.log('Main image loaded:', this.uploadedImage);
-    };
-    reader.readAsDataURL(file);
   }
 
   onAdditionalImageSelected(event: any) {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
+    if (!file) return;
 
-    if(!file) {
-      return;
-    }
-    this.producdimageUrl = file;
-    this.mainImage = 0;
-
+    this.additionalImages.push(file);
   }
 
   removeProduct(productId: number) {
