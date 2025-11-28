@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from '../../models/product-model';
+import { Subscription } from 'rxjs';
+import { PaginationStateService } from '../../services/pagination/pagination-state.service';
 
 @Component({
   template: ''
@@ -9,7 +11,21 @@ export abstract class PaginationComponent {
   products: Product[] = [];
   paginatedProducts: Product[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 15;
+  itemsPerPage: number = 5;
+
+  private pageSub?: Subscription;
+
+  constructor(public paginationState: PaginationStateService) {
+    this.pageSub = this.paginationState.currentPage$.subscribe((page) => {
+      this.currentPage = page;
+      this.updatePaginatedProducts();
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.pageSub?.unsubscribe();
+  }
+
 
   updatePaginatedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -18,23 +34,20 @@ export abstract class PaginationComponent {
   }
 
   changePage(page: number | string): void {
-    if (typeof page === 'number') {
-      this.currentPage = page;
-      this.updatePaginatedProducts();
+    if (typeof page === 'number' && page >= 1 && page <= this.totalPages) {
+      this.paginationState.setPage(page);
     }
   }
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.updatePaginatedProducts();
+      this.paginationState.setPage(this.currentPage + 1);
     }
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updatePaginatedProducts();
+      this.paginationState.setPage(this.currentPage - 1);
     }
   }
 

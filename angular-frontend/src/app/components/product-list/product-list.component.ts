@@ -11,6 +11,7 @@ import { ProductTypeService } from '../../services/productType/product-type.serv
 import { ProductTypeModel } from '../../models/product-type-model';
 import { WishlistService } from '../../services/wishlist/wishlist.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { PaginationStateService } from '../../services/pagination/pagination-state.service';
 
 @Component({
   selector: 'app-product-list',
@@ -39,21 +40,35 @@ export class ProductListComponent
     private sortingService: SortingService,
     private productTypeService: ProductTypeService,
     private wishlistService: WishlistService,
-    private authService: AuthService
+    private authService: AuthService,
+    paginationState: PaginationStateService
   ) {
-    super();
+    super(paginationState);
   }
 
   ngOnInit(): void {
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
+
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data;
       this.originalProducts = [...data];
+
+      const sortOption = this.paginationState.currentSortSubject.value;
+      if (sortOption) {
+        this.products = this.sortingService.sortProducts(data, sortOption);
+      }
+
       this.updatePaginatedProducts();
     });
 
     this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
-      if (loggedIn) {}
+      if (loggedIn) {
+      }
     });
 
     this.productTypeService.getAllProductTypes().subscribe((data) => {
@@ -80,31 +95,36 @@ export class ProductListComponent
   }
 
   onSortChange(sortOption: string): void {
-    if (sortOption === '') {
-      this.products = [...this.originalProducts];
-    } else {
-      this.products = this.sortingService.sortProducts(
-        this.products,
-        sortOption
-      );
-    }
-    this.currentPage = 1;
-    this.updatePaginatedProducts();
+  if (sortOption === this.paginationState.currentSortSubject.value) return;
+
+  this.paginationState.setSort(sortOption);
+
+  if (sortOption === '') {
+    this.products = [...this.originalProducts];
+  } else {
+    this.products = this.sortingService.sortProducts(
+      [...this.originalProducts],
+      sortOption
+    );
   }
+
+  this.paginationState.setPage(1);
+  this.updatePaginatedProducts();
+}
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {
-      this.products = data.filter(
-        (product) => product.productType?.typeName === typeName
-      );
+      this.products = data.filter((p) => p.productType?.typeName === typeName);
       this.originalProducts = [...this.products];
-      this.currentPage = 1;
+
+      this.paginationState.setPage(1);
       this.updatePaginatedProducts();
     });
   }
 
   filterByProductType(typeName: string): void {
     this.typeName = typeName;
+    this.paginationState.setPage(1);
     this.loadProductsByType(typeName);
   }
 

@@ -8,6 +8,7 @@ import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
 import { WishlistService } from '../../services/wishlist/wishlist.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { PaginationStateService } from '../../services/pagination/pagination-state.service';
 
 @Component({
   selector: 'app-search-product',
@@ -24,6 +25,7 @@ export class SearchProductComponent
   implements OnInit
 {
   searchQuery: string = '';
+  previousQuery: string = '';
   originalProducts: Product[] = [];
   wishlistedProducts = new Set<number>();
   userId: number | null = null;
@@ -35,20 +37,39 @@ export class SearchProductComponent
     private router: Router,
     private sortingService: SortingService,
     private wishlistService: WishlistService,
-    private authService: AuthService
+    private authService: AuthService,
+    paginationState: PaginationStateService
   ) {
-    super();
+    super(paginationState);
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['q'];
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
 
-      if (this.searchQuery) {
-        this.productService.searchProductsByName(this.searchQuery).subscribe(
+    this.route.queryParams.subscribe((params) => {
+      const newQuery = params['q'];
+
+      if (newQuery !== this.previousQuery) {
+        this.previousQuery = newQuery;
+        this.searchQuery = newQuery;
+
+        this.productService.searchProductsByName(newQuery).subscribe(
           (data) => {
             this.products = data;
             this.originalProducts = [...data];
+
+            const sortOption = this.paginationState.currentSortSubject.value;
+            if (sortOption) {
+              this.products = this.sortingService.sortProducts(
+                data,
+                sortOption
+              );
+            }
+
             this.updatePaginatedProducts();
           },
           (error) => console.error('Error fetching search results:', error)
@@ -81,15 +102,19 @@ export class SearchProductComponent
   }
 
   onSortChange(sortOption: string): void {
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
+
+    this.paginationState.setSort(sortOption);
+
     if (sortOption === '') {
       this.products = [...this.originalProducts];
     } else {
       this.products = this.sortingService.sortProducts(
-        this.products,
+        [...this.originalProducts],
         sortOption
       );
     }
-    this.currentPage = 1;
+    this.paginationState.setPage(1);
     this.updatePaginatedProducts();
   }
 

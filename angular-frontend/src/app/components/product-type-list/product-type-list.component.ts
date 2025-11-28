@@ -8,15 +8,22 @@ import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
 import { ProductTypeService } from '../../services/productType/product-type.service';
 import { ProductTypeModel } from '../../models/product-type-model';
+import { PaginationStateService } from '../../services/pagination/pagination-state.service';
 
 @Component({
   selector: 'app-product-type-list',
   standalone: true,
   imports: [CommonModule, CurrencyPipe, FilterSortComponent],
   templateUrl: './product-type-list.component.html',
-  styleUrls: ['./product-type-list.component.css', '../../components/pagination/pagination.component.css']
+  styleUrls: [
+    './product-type-list.component.css',
+    '../../components/pagination/pagination.component.css',
+  ],
 })
-export class ProductTypeListComponent extends PaginationComponent implements OnInit {
+export class ProductTypeListComponent
+  extends PaginationComponent
+  implements OnInit
+{
   originalProducts: Product[] = [];
   typeName: string = '';
   searchQuery: string = '';
@@ -27,13 +34,20 @@ export class ProductTypeListComponent extends PaginationComponent implements OnI
     private productTypeService: ProductTypeService,
     private route: ActivatedRoute,
     private router: Router,
-    private sortingService: SortingService
+    private sortingService: SortingService,
+    paginationState: PaginationStateService
   ) {
-    super();
+    super(paginationState);
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
+
+    this.route.params.subscribe((params) => {
       this.typeName = params['typeName'];
       this.loadProductsByType(this.typeName);
     });
@@ -45,9 +59,15 @@ export class ProductTypeListComponent extends PaginationComponent implements OnI
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {
-      this.products = data.filter(product => product.productType?.typeName === typeName);
+      this.products = data.filter((p) => p.productType?.typeName === typeName);
       this.originalProducts = [...this.products];
-      this.currentPage = 1;
+      this.paginationState.setPage(1);
+
+      const sortOption = this.paginationState.currentSortSubject.value;
+      if (sortOption) {
+        this.products = this.sortingService.sortProducts(data, sortOption);
+      }
+
       this.updatePaginatedProducts();
     });
   }
@@ -62,12 +82,20 @@ export class ProductTypeListComponent extends PaginationComponent implements OnI
   }
 
   onSortChange(sortOption: string): void {
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
+
+    this.paginationState.setSort(sortOption);
+
     if (sortOption === '') {
       this.products = [...this.originalProducts];
     } else {
-      this.products = this.sortingService.sortProducts(this.products, sortOption);
+      this.products = this.sortingService.sortProducts(
+        [...this.originalProducts],
+
+        sortOption
+      );
     }
-    this.currentPage = 1;
+    this.paginationState.setPage(1);
     this.updatePaginatedProducts();
   }
 }
