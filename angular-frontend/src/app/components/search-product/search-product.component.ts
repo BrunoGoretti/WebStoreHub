@@ -8,6 +8,7 @@ import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
 import { WishlistService } from '../../services/wishlist/wishlist.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { PaginationStateService } from '../../services/pagination/pagination-state.service';
 
 @Component({
   selector: 'app-search-product',
@@ -24,6 +25,7 @@ export class SearchProductComponent
   implements OnInit
 {
   searchQuery: string = '';
+  previousQuery: string = '';
   originalProducts: Product[] = [];
   wishlistedProducts = new Set<number>();
   userId: number | null = null;
@@ -35,17 +37,22 @@ export class SearchProductComponent
     private router: Router,
     private sortingService: SortingService,
     private wishlistService: WishlistService,
-    private authService: AuthService
+    private authService: AuthService,
+    paginationState: PaginationStateService
+
   ) {
-    super();
+    super(paginationState);
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['q'];
+      const newQuery = params['q'];
 
-      if (this.searchQuery) {
-        this.productService.searchProductsByName(this.searchQuery).subscribe(
+      if(newQuery !== this.previousQuery) {
+        this.previousQuery = newQuery;
+        this.searchQuery = newQuery;
+
+        this.productService.searchProductsByName(newQuery).subscribe(
           (data) => {
             this.products = data;
             this.originalProducts = [...data];
@@ -89,8 +96,8 @@ export class SearchProductComponent
         sortOption
       );
     }
-    this.currentPage = 1;
-    this.updatePaginatedProducts();
+    this.paginationState.setPage(1);
+  this.updatePaginatedProducts();
   }
 
   toggleWishlist(product: Product, event: MouseEvent) {
