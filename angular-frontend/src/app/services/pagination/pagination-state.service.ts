@@ -6,34 +6,49 @@ import { BehaviorSubject, filter } from 'rxjs';
   providedIn: 'root',
 })
 export class PaginationStateService {
-  private currentPageSubject = new BehaviorSubject<number>(1);
+  public currentPageSubject = new BehaviorSubject<number>(1);
   currentPage$ = this.currentPageSubject.asObservable();
+  public currentSortSubject = new BehaviorSubject<string>('');
+  currentSort$ = this.currentSortSubject.asObservable();
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        const pageFormUrl = this.route.snapshot.queryParamMap.get('page');
-        const pageNum = pageFormUrl ? +pageFormUrl : 1;
-        if (pageNum !== this.currentPageSubject.value) {
-          this, this.currentPageSubject.next(pageNum);
+        const page = +(this.route.snapshot.queryParamMap.get('page') ?? 1);
+        const sort = this.route.snapshot.queryParamMap.get('sort') ?? '';
+
+        if (page !== this.currentPageSubject.value) {
+          this.currentPageSubject.next(page);
+        }
+
+        if (sort !== this.currentSortSubject.value) {
+          this.currentSortSubject.next(sort);
         }
       });
   }
 
   setPage(page: number) {
-    if (page !== this.currentPageSubject.value) {
-      this.currentPageSubject.next(page);
-      this.updateUrl(page);
-    }
+    this.currentPageSubject.next(page);
+    this.updateUrl();
   }
 
-  private updateUrl(page: number) {
+  setSort(sort: string) {
+    if (sort === this.currentSortSubject.value) {
+      return;
+    }
+    this.currentSortSubject.next(sort);
+    this.updateUrl();
+  }
+
+  private updateUrl() {
     this.router.navigate([], {
-      queryParams: { page },
+      queryParams: {
+        page: this.currentPageSubject.value,
+        sort: this.currentSortSubject.value,
+      },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
   }
 }
-

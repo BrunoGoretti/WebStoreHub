@@ -47,9 +47,21 @@ export class ProductListComponent
   }
 
   ngOnInit(): void {
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
+
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data;
       this.originalProducts = [...data];
+
+      const sortOption = this.paginationState.currentSortSubject.value;
+      if (sortOption) {
+        this.products = this.sortingService.sortProducts(data, sortOption);
+      }
+
       this.updatePaginatedProducts();
     });
 
@@ -83,18 +95,22 @@ export class ProductListComponent
   }
 
   onSortChange(sortOption: string): void {
-    if (sortOption === '') {
-      this.products = [...this.originalProducts];
-    } else {
-      this.products = this.sortingService.sortProducts(
-        this.products,
-        sortOption
-      );
-    }
+  if (sortOption === this.paginationState.currentSortSubject.value) return;
 
-    this.paginationState.setPage(1);
-    this.updatePaginatedProducts();
+  this.paginationState.setSort(sortOption);
+
+  if (sortOption === '') {
+    this.products = [...this.originalProducts];
+  } else {
+    this.products = this.sortingService.sortProducts(
+      [...this.originalProducts],
+      sortOption
+    );
   }
+
+  this.paginationState.setPage(1);
+  this.updatePaginatedProducts();
+}
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {

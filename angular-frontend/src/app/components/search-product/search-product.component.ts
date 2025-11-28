@@ -39,16 +39,21 @@ export class SearchProductComponent
     private wishlistService: WishlistService,
     private authService: AuthService,
     paginationState: PaginationStateService
-
   ) {
     super(paginationState);
   }
 
   ngOnInit(): void {
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
+
     this.route.queryParams.subscribe((params) => {
       const newQuery = params['q'];
 
-      if(newQuery !== this.previousQuery) {
+      if (newQuery !== this.previousQuery) {
         this.previousQuery = newQuery;
         this.searchQuery = newQuery;
 
@@ -56,6 +61,15 @@ export class SearchProductComponent
           (data) => {
             this.products = data;
             this.originalProducts = [...data];
+
+            const sortOption = this.paginationState.currentSortSubject.value;
+            if (sortOption) {
+              this.products = this.sortingService.sortProducts(
+                data,
+                sortOption
+              );
+            }
+
             this.updatePaginatedProducts();
           },
           (error) => console.error('Error fetching search results:', error)
@@ -88,16 +102,20 @@ export class SearchProductComponent
   }
 
   onSortChange(sortOption: string): void {
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
+
+    this.paginationState.setSort(sortOption);
+
     if (sortOption === '') {
       this.products = [...this.originalProducts];
     } else {
       this.products = this.sortingService.sortProducts(
-        this.products,
+        [...this.originalProducts],
         sortOption
       );
     }
     this.paginationState.setPage(1);
-  this.updatePaginatedProducts();
+    this.updatePaginatedProducts();
   }
 
   toggleWishlist(product: Product, event: MouseEvent) {

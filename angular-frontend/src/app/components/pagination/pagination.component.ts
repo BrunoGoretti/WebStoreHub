@@ -11,7 +11,7 @@ export abstract class PaginationComponent {
   products: Product[] = [];
   paginatedProducts: Product[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 3;
+  itemsPerPage: number = 5;
 
   private pageSub?: Subscription;
 

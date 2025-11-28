@@ -41,6 +41,12 @@ export class ProductTypeListComponent
   }
 
   ngOnInit(): void {
+    this.paginationState.currentSort$.subscribe((sortOption) => {
+      if (sortOption) {
+        this.onSortChange(sortOption);
+      }
+    });
+
     this.route.params.subscribe((params) => {
       this.typeName = params['typeName'];
       this.loadProductsByType(this.typeName);
@@ -53,11 +59,15 @@ export class ProductTypeListComponent
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {
-      this.products = data.filter(
-        (p) => p.productType?.typeName === typeName
-      );
+      this.products = data.filter((p) => p.productType?.typeName === typeName);
       this.originalProducts = [...this.products];
       this.paginationState.setPage(1);
+
+      const sortOption = this.paginationState.currentSortSubject.value;
+      if (sortOption) {
+        this.products = this.sortingService.sortProducts(data, sortOption);
+      }
+
       this.updatePaginatedProducts();
     });
   }
@@ -72,11 +82,16 @@ export class ProductTypeListComponent
   }
 
   onSortChange(sortOption: string): void {
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
+
+    this.paginationState.setSort(sortOption);
+
     if (sortOption === '') {
       this.products = [...this.originalProducts];
     } else {
       this.products = this.sortingService.sortProducts(
-        this.products,
+        [...this.originalProducts],
+
         sortOption
       );
     }
