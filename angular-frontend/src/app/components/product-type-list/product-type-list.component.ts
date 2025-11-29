@@ -54,22 +54,27 @@ export class ProductTypeListComponent
       }
     });
 
-    this.route.params.subscribe((params) => {
-      this.typeName = params['typeName'];
-      this.loadProductsByType(this.typeName);
+    this.paginationState.currentPage$.subscribe((page) => {
+      this.currentPage = page;
+      this.updatePaginatedProducts();
     });
 
+    this.route.params.subscribe((params) => {
+      this.typeName = params['typeName'];
+      this.paginationState.setType(this.typeName);
+      this.loadProductsByType(this.typeName);
+    });
     this.productTypeService.getAllProductTypes().subscribe((data) => {
       this.productTypes = data;
     });
 
-     this.authService.isLoggedIn().subscribe((loggedIn) => {
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       if (loggedIn) {
       }
     });
 
-     this.authService.getUserId().subscribe((userId) => {
+    this.authService.getUserId().subscribe((userId) => {
       if (userId) {
         this.userId = userId;
         this.wishlistService.loadUserWishlist(userId);
@@ -88,7 +93,16 @@ export class ProductTypeListComponent
       this.products = data.filter((p) => p.productType?.typeName === typeName);
       this.originalProducts = [...this.products];
 
-      this.paginationState.setPage(1);
+      const sortOption = this.paginationState.currentSortSubject.value;
+      if (sortOption) {
+        this.products = this.sortingService.sortProducts(
+          [...this.products],
+          sortOption
+        );
+      }
+
+      this.currentPage = this.paginationState.currentPageSubject.value;
+
       this.updatePaginatedProducts();
     });
   }
@@ -98,8 +112,10 @@ export class ProductTypeListComponent
   }
 
   onTypeClick(typeName: string) {
+    this.paginationState.setType(typeName);
+    this.paginationState.setPage(1);
     this.router.navigate(['/category', typeName], {
-      queryParamsHandling: 'preserve',
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -120,7 +136,7 @@ export class ProductTypeListComponent
     this.updatePaginatedProducts();
   }
 
-    toggleWishlist(product: Product, event: MouseEvent) {
+  toggleWishlist(product: Product, event: MouseEvent) {
     event.stopPropagation();
 
     if (this.userId == null) {
