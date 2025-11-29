@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/product-model';
 import { CommonModule, CurrencyPipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { PaginationStateService } from '../../services/pagination/pagination-sta
 @Component({
   selector: 'app-product-type-list',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, FilterSortComponent],
+  imports: [CommonModule, CurrencyPipe, FilterSortComponent, RouterModule],
   templateUrl: './product-type-list.component.html',
   styleUrls: [
     './product-type-list.component.css',
@@ -72,15 +72,12 @@ export class ProductTypeListComponent
     });
   }
 
-  filterByProductType(typeName: string): void {
-    this.typeName = typeName;
-    this.loadProductsByType(typeName);
-  }
-
   onProductClick(product: Product): void {
     this.router.navigate(['/product', product.productId]);
   }
-
+onTypeClick(typeName: string) {
+  this.router.navigate(['/category', typeName], { queryParamsHandling: 'preserve' });
+}
   onSortChange(sortOption: string): void {
     if (sortOption === this.paginationState.currentSortSubject.value) return;
 

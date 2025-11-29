@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/product-model';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
@@ -16,7 +16,7 @@ import { PaginationStateService } from '../../services/pagination/pagination-sta
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FilterSortComponent],
+  imports: [CommonModule, HttpClientModule, FilterSortComponent, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: [
     './product-list.component.css',
@@ -122,11 +122,9 @@ export class ProductListComponent
     });
   }
 
-  filterByProductType(typeName: string): void {
-    this.typeName = typeName;
-    this.paginationState.setPage(1);
-    this.loadProductsByType(typeName);
-  }
+onTypeClick(typeName: string) {
+  this.router.navigate(['/category', typeName], { queryParamsHandling: 'preserve' });
+}
 
   toggleWishlist(product: Product, event: MouseEvent) {
     event.stopPropagation();

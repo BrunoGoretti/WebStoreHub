@@ -1,10 +1,10 @@
 <div class="background-container">
   <app-filter-sort (sortChange)="onSortChange($event)"></app-filter-sort>
   <p class="type-title"> {{ typeName }}</p>
-  <div class="catalog-bar">
-    <div *ngFor="let productType of productTypes" class="product-type-item" (click)="filterByProductType(productType.typeName)">
-      <img [src]="productType.imageUrl" alt="{{ productType.typeName }}" class="product-type-image" />
-      <span class="product-type-name">{{ productType.typeName }}</span>
+   <div class="catalog-bar">
+    <div *ngFor="let type of productTypes" class="product-type-item" (click)="onTypeClick(type.typeName)">
+      <img [src]="type.imageUrl" alt="{{ type.typeName }}" class="product-type-image" />
+      <span class="product-type-name">{{ type.typeName }}</span>
     </div>
   </div>
   <div *ngIf="products.length > 0; else noProducts" class="product-list-container">
