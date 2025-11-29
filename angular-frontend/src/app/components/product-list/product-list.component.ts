@@ -123,8 +123,15 @@ export class ProductListComponent
   }
 
   onTypeClick(typeName: string) {
+    this.paginationState.setType(typeName);
+
     this.router.navigate(['/category', typeName], {
-      queryParamsHandling: 'preserve',
+      queryParams: {
+        page: 1,
+        sort: this.paginationState.currentSortSubject.value,
+        type: typeName,
+      },
+      replaceUrl: true,
     });
   }
 
