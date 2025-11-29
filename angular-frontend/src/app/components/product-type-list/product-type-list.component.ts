@@ -61,9 +61,9 @@ export class ProductTypeListComponent
 
     this.route.params.subscribe((params) => {
       this.typeName = params['typeName'];
-      this.paginationState.setType(this.typeName);
       this.loadProductsByType(this.typeName);
     });
+
     this.productTypeService.getAllProductTypes().subscribe((data) => {
       this.productTypes = data;
     });
@@ -112,10 +112,13 @@ export class ProductTypeListComponent
   }
 
   onTypeClick(typeName: string) {
-    this.paginationState.setType(typeName);
-    this.paginationState.setPage(1);
     this.router.navigate(['/category', typeName], {
-      queryParamsHandling: 'merge',
+      queryParams: {
+        page: 1,
+        sort: this.paginationState.currentSortSubject.value,
+        type: typeName,
+      },
+      replaceUrl: true,
     });
   }
 
