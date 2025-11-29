@@ -95,22 +95,22 @@ export class ProductListComponent
   }
 
   onSortChange(sortOption: string): void {
-  if (sortOption === this.paginationState.currentSortSubject.value) return;
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
 
-  this.paginationState.setSort(sortOption);
+    this.paginationState.setSort(sortOption);
 
-  if (sortOption === '') {
-    this.products = [...this.originalProducts];
-  } else {
-    this.products = this.sortingService.sortProducts(
-      [...this.originalProducts],
-      sortOption
-    );
+    if (sortOption === '') {
+      this.products = [...this.originalProducts];
+    } else {
+      this.products = this.sortingService.sortProducts(
+        [...this.originalProducts],
+        sortOption
+      );
+    }
+
+    this.paginationState.setPage(1);
+    this.updatePaginatedProducts();
   }
-
-  this.paginationState.setPage(1);
-  this.updatePaginatedProducts();
-}
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {
@@ -122,9 +122,11 @@ export class ProductListComponent
     });
   }
 
-onTypeClick(typeName: string) {
-  this.router.navigate(['/category', typeName], { queryParamsHandling: 'preserve' });
-}
+  onTypeClick(typeName: string) {
+    this.router.navigate(['/category', typeName], {
+      queryParamsHandling: 'preserve',
+    });
+  }
 
   toggleWishlist(product: Product, event: MouseEvent) {
     event.stopPropagation();
