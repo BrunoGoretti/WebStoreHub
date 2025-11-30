@@ -3,23 +3,16 @@ WebStoreHub is a full-stack e-commerce web application built with C# (.NET) back
 ![Eshop](https://github.com/user-attachments/assets/30c23285-1017-4533-aaee-3a8939845533)
 
 # Features
-User Account Management
-
+# User Account Management
 * User registration with validation
-
 * Secure login with JWT authentication
-
 * Password reset via email link
-
 * Profile view and update
 
-Product Browsing & Searching
-
-Browse products by category and brand
-
-Search products by name or description
-
-Detailed product pages with images, pricing, and discounts
+# Product Browsing & Searching
+* Browse products by category and brand
+* Search products by name or description
+* Detailed product pages with images, pricing, and discounts
 
 Wishlist
 
