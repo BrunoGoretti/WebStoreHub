@@ -9,3 +9,19 @@ Clone repository in Visual Studio.
 Put your server name in DefaultConnection
 
 ![asdsdaasd](https://github.com/user-attachments/assets/7f002da3-2ded-47cf-999b-382bfdae65a5)
+
+Create appsetings.json in C# backend
+
+ConnectionStrings → DefaultConnection:
+Put your database server and database name here.
+
+Jwt:
+Add your secret key, issuer, and audience for authentication.
+
+EmailSettings:
+Add your Gmail address and app-specific password here (get the app password from your Google Account security settings).
+
+ImgbbSettings:
+Add your imgbb API key and upload URL if you use imgbb for image hosting.
+
+<img width="1098" height="437" alt="image" src="https://github.com/user-attachments/assets/777c45de-281c-4ed6-84e0-60d7a7263a7a" />
