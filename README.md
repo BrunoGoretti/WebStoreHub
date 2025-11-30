@@ -1,6 +1,55 @@
 # WebStoreHub 
-WebStoreHub is a full-stack e-commerce platform designed to provide a seamless shopping experience. The project consists of a backend API built with C# and a frontend application developed using Angular. The backend API handles various functionalities such as user management, product catalog, shopping cart, orders, and image uploads, while the frontend provides a responsive and interactive user interface.
+WebStoreHub is a full-stack e-commerce web application built with C# (.NET) backend and Angular frontend. It offers a complete shopping experience including user management, product catalog, cart and orders, discounts, and image uploads.
 ![Eshop](https://github.com/user-attachments/assets/30c23285-1017-4533-aaee-3a8939845533)
+
+# Features
+User Account Management
+
+* User registration with validation
+
+* Secure login with JWT authentication
+
+* Password reset via email link
+
+* Profile view and update
+
+Product Browsing & Searching
+
+Browse products by category and brand
+
+Search products by name or description
+
+Detailed product pages with images, pricing, and discounts
+
+Wishlist
+
+Add or remove products from wishlist
+
+View wishlist with live product info
+
+Shopping Cart
+
+Add/update/remove products with quantity control
+
+View cart total including discounts
+
+Checkout and place orders
+
+Orders
+
+View past orders and status
+
+Download order confirmation as PDF
+
+Admin Features
+
+Manage products, brands, and categories (product types)
+
+Upload images for categories and products
+
+Import and manage discounts via Excel files
+
+Update order statuses
 
 ## How to launch
 
