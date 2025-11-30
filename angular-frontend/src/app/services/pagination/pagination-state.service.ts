@@ -10,6 +10,8 @@ export class PaginationStateService {
   currentPage$ = this.currentPageSubject.asObservable();
   public currentSortSubject = new BehaviorSubject<string>('');
   currentSort$ = this.currentSortSubject.asObservable();
+  public currentTypeSubject = new BehaviorSubject<string>('');
+  currentType$ = this.currentTypeSubject.asObservable();
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.router.events
@@ -17,6 +19,7 @@ export class PaginationStateService {
       .subscribe(() => {
         const page = +(this.route.snapshot.queryParamMap.get('page') ?? 1);
         const sort = this.route.snapshot.queryParamMap.get('sort') ?? '';
+        const type = this.route.snapshot.queryParamMap.get('type') ?? '';
 
         if (page !== this.currentPageSubject.value) {
           this.currentPageSubject.next(page);
@@ -24,6 +27,9 @@ export class PaginationStateService {
 
         if (sort !== this.currentSortSubject.value) {
           this.currentSortSubject.next(sort);
+        }
+        if (type !== this.currentTypeSubject.value) {
+          this.currentTypeSubject.next(type);
         }
       });
   }
@@ -41,11 +47,20 @@ export class PaginationStateService {
     this.updateUrl();
   }
 
+ setType(type: string) {
+  if (type === this.currentTypeSubject.value) {
+    return;
+  }
+  this.currentTypeSubject.next(type);
+  this.updateUrl();
+}
+
   private updateUrl() {
     this.router.navigate([], {
       queryParams: {
         page: this.currentPageSubject.value,
         sort: this.currentSortSubject.value,
+        type: this.currentTypeSubject.value,
       },
       queryParamsHandling: 'merge',
       replaceUrl: true,

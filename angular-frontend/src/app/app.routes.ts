@@ -13,6 +13,8 @@ import { DatePipe } from '@angular/common';
 import { WishlistItemComponent } from './components/wishlist-item/wishlist-item.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
+import { PasswordRestoreComponent } from './components/password-restore/password-restore.component';
+import { ResetPasswordComponent } from './components/reset-password-component/reset-password-component.component'
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -28,6 +30,8 @@ export const routes: Routes = [
   { path: 'orderitem', component: OrderItemComponent },
   { path: 'wishlistitem', component: WishlistItemComponent },
   { path: 'admindashboard', component: AdminDashboardComponent, canActivate: [AdminGuard] },
+  { path: 'passwordreset', component: PasswordRestoreComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({

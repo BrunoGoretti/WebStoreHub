@@ -100,4 +100,16 @@ export class AuthService {
       })
     );
   }
+
+  requestPasswordReset(email: string): Observable<any> {
+    const url = `${this.baseUrl}/user/request-password-reset`;
+    const body = { email: email };
+
+    return this.http.post<any>(url, body);
+  }
+
+  resetPassword(token: string, newPassword: string) {
+  const url = `${this.baseUrl}/user/reset-password`;
+  return this.http.post(url, { token, newPassword });
+}
 }

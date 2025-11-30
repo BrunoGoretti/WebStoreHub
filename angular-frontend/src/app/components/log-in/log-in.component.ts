@@ -35,4 +35,8 @@ export class LogInComponent {
   redirectToRegistration(): void {
     this.router.navigate(['/registration']);
   }
+
+  forgotPasswordClick(): void {
+    this.router.navigate(['/passwordreset']);
+  }
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/product-model';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SortingService } from '../../services/sorting/sorting.service';
 import { FilterSortComponent } from '../../components/filter-sort/filter-sort.component';
@@ -16,7 +16,7 @@ import { PaginationStateService } from '../../services/pagination/pagination-sta
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FilterSortComponent],
+  imports: [CommonModule, HttpClientModule, FilterSortComponent, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: [
     './product-list.component.css',
@@ -95,22 +95,22 @@ export class ProductListComponent
   }
 
   onSortChange(sortOption: string): void {
-  if (sortOption === this.paginationState.currentSortSubject.value) return;
+    if (sortOption === this.paginationState.currentSortSubject.value) return;
 
-  this.paginationState.setSort(sortOption);
+    this.paginationState.setSort(sortOption);
 
-  if (sortOption === '') {
-    this.products = [...this.originalProducts];
-  } else {
-    this.products = this.sortingService.sortProducts(
-      [...this.originalProducts],
-      sortOption
-    );
+    if (sortOption === '') {
+      this.products = [...this.originalProducts];
+    } else {
+      this.products = this.sortingService.sortProducts(
+        [...this.originalProducts],
+        sortOption
+      );
+    }
+
+    this.paginationState.setPage(1);
+    this.updatePaginatedProducts();
   }
-
-  this.paginationState.setPage(1);
-  this.updatePaginatedProducts();
-}
 
   loadProductsByType(typeName: string): void {
     this.productService.getAllProducts().subscribe((data) => {
@@ -122,10 +122,17 @@ export class ProductListComponent
     });
   }
 
-  filterByProductType(typeName: string): void {
-    this.typeName = typeName;
-    this.paginationState.setPage(1);
-    this.loadProductsByType(typeName);
+  onTypeClick(typeName: string) {
+    this.paginationState.setType(typeName);
+
+    this.router.navigate(['/category', typeName], {
+      queryParams: {
+        page: 1,
+        sort: this.paginationState.currentSortSubject.value,
+        type: typeName,
+      },
+      replaceUrl: true,
+    });
   }
 
   toggleWishlist(product: Product, event: MouseEvent) {
