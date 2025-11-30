@@ -70,5 +70,21 @@ namespace WebStoreHubAPI.Controllers
 
             return Ok(new { message = "Password reset email sent." });
         }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] PasswordResetDto dto)
+        {
+            var user = await _userService.GetUserByResetTokenAsync(dto.Token);
+
+            if (user == null || user.PasswordResetTokenExpiration < DateTime.UtcNow)
+            {
+                return BadRequest("Invalid or expired token.");
+            }
+
+            await _userService.ResetPasswordAsync(user, dto.NewPassword);
+
+            return Ok(new { message = "Password has been reset successfully." });
+
+        }
     }
 }

@@ -15,5 +15,9 @@ namespace WebStoreHubAPI.Services.Interfaces
         Task SendPasswordResetEmailAsync(string email, string token);
 
         Task<UserModel?> GetUserByEmailAsync(string email);
+
+        Task<UserModel> GetUserByResetTokenAsync(string token);
+
+        Task ResetPasswordAsync(UserModel user, string newPassword);
     }
 }

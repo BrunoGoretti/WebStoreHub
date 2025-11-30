@@ -15,7 +15,7 @@ export class PasswordRestoreComponent {
   constructor(private authService: AuthService) {}
 
   onSubmit(): void {
-    this.authService.passwordReset(this.email).subscribe({
+    this.authService.requestPasswordReset(this.email).subscribe({
       next: (response) => {
         console.log('Email sended!', response)
       },

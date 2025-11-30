@@ -115,7 +115,7 @@ namespace WebStoreHubAPI.Services
             message.To.Add(new MailboxAddress("", email));
             message.Subject = "Password Reset";
 
-            var resetLink = $"https://yourfrontend.com/reset-password?token={token}";
+            var resetLink = $"http://localhost:4200/reset-password?token={token}";
 
             message.Body = new TextPart("plain")
             {
