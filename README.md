@@ -14,35 +14,25 @@ WebStoreHub is a full-stack e-commerce web application built with C# (.NET) back
 * Search products by name or description
 * Detailed product pages with images, pricing, and discounts
 
-Wishlist
+# Wishlist
+* Add or remove products from wishlist
+* View wishlist with live product info
 
-Add or remove products from wishlist
+# Shopping Cart
+* Add/update/remove products with quantity control
+* View cart total including discounts
+* Checkout and place orders
 
-View wishlist with live product info
+# Orders
+* View past orders and status
+* Download order confirmation as PDF
 
-Shopping Cart
+# Admin Features
 
-Add/update/remove products with quantity control
-
-View cart total including discounts
-
-Checkout and place orders
-
-Orders
-
-View past orders and status
-
-Download order confirmation as PDF
-
-Admin Features
-
-Manage products, brands, and categories (product types)
-
-Upload images for categories and products
-
-Import and manage discounts via Excel files
-
-Update order statuses
+* Manage products, brands, and categories (product types)
+* Upload images for categories and products
+* Import and manage discounts via Excel files
+* Update order statuses
 
 ## How to launch
 
