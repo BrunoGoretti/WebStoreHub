@@ -13,7 +13,7 @@ Put your server name in DefaultConnection
 Create appsetings.json in C# backend
 
 ConnectionStrings → DefaultConnection:
-Put your database server and database name here.
+Put your database server and database name.
 
 Jwt:
 Add your secret key, issuer, and audience for authentication.
@@ -25,3 +25,13 @@ ImgbbSettings:
 Add your imgbb API key and upload URL if you use imgbb for image hosting.
 
 <img width="1098" height="437" alt="image" src="https://github.com/user-attachments/assets/777c45de-281c-4ed6-84e0-60d7a7263a7a" />
+
+Create migrations for SQL.
+
+![sadaewrds](https://github.com/user-attachments/assets/91c6723b-2ba0-4811-8667-ac19ef895160)
+
+Update migrations
+
+![sadae32wrds](https://github.com/user-attachments/assets/ccc8d4e0-4e64-40db-b637-12a278052ebf)
+
+Now you can launch and use!:)
